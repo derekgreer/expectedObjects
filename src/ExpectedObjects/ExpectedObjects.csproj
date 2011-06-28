@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A5D5DB00-8AEE-4625-8040-EC3367B5255E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExpectedObjects</RootNamespace>
+    <AssemblyName>ExpectedObjects</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Strategies\ClassComparisonStrategy.cs" />
+    <Compile Include="Strategies\ComparableComparisonStrategy.cs" />
+    <Compile Include="ConfigurationContext.cs" />
+    <Compile Include="Strategies\DefaultComparisonStrategy.cs" />
+    <Compile Include="Strategies\EnumerableComparisonStrategy.cs" />
+    <Compile Include="EqualityComparer.cs" />
+    <Compile Include="EqualityResult.cs" />
+    <Compile Include="Strategies\EqualsOverrideComparisionStrategy.cs" />
+    <Compile Include="ExpectedObject.cs" />
+    <Compile Include="ExpectedObjectExtensions.cs" />
+    <Compile Include="Strategies\IComparisionStrategy.cs" />
+    <Compile Include="IComparisonContext.cs" />
+    <Compile Include="Strategies\IComparisonStrategy.cs" />
+    <Compile Include="IConfigurationContext.cs" />
+    <Compile Include="IConfiguredContext.cs" />
+    <Compile Include="IMissingElement.cs" />
+    <Compile Include="IUnexpectedElement.cs" />
+    <Compile Include="IWriter.cs" />
+    <Compile Include="Strategies\KeyValuePairComparisonStrategy.cs" />
+    <Compile Include="MemberType.cs" />
+    <Compile Include="MissingElement.cs" />
+    <Compile Include="MissingMember.cs" />
+    <Compile Include="NullWriter.cs" />
+    <Compile Include="Strategies\PrimitiveComparisonStrategy.cs" />
+    <Compile Include="ShouldExtensions.cs" />
+    <Compile Include="ShouldWriter.cs" />
+    <Compile Include="UnexpectedElement.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)..\scripts\install-packages.bat</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
