@@ -5,8 +5,8 @@
     <version>0.0.0</version>
     <authors>Derek Greer</authors>
     <owners>Derek Greer</owners>
-    <licenseUrl>https://github.com/derekgreer/expectedObject/raw/master/license.txt</licenseUrl>
-    <projectUrl>http://github.com/derekgreer/expectedObject</projectUrl>
+    <licenseUrl>https://github.com/derekgreer/expectedObjects/raw/master/license.txt</licenseUrl>
+    <projectUrl>http://github.com/derekgreer/expectedObjects</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Testing library for creating Expected Objects.</description>
     <tags>bdd tdd testing</tags>
