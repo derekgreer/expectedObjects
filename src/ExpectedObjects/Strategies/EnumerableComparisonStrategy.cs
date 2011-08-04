@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace ExpectedObjects
+namespace ExpectedObjects.Strategies
 {
     public class EnumerableComparisonStrategy : IComparisonStrategy
     {

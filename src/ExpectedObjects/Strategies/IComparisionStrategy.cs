@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ExpectedObjects
+namespace ExpectedObjects.Strategies
 {
     public class EqualityResults
     {

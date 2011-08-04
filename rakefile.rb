@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'albacore'
 
 MSBUILD_PATH = "C:/Windows/Microsoft.NET/Framework/v4.0.30319/"
@@ -15,11 +16,11 @@ task :default => ["build:all"]
 
 namespace :build do
 
-	task :all => [:clean, :versioning, :compile, :tests, :package]
+	task :all => [:clean, :compile, :tests, :package]
 
 	assemblyinfo :versioning do |asm|
-  	asm.output_file = "src/CommonAssemblyInfo.cs"
-  	asm.version = "#{BUILD_VERSION}"
+  		asm.output_file = "src/CommonAssemblyInfo.cs"
+  		asm.version = "#{BUILD_VERSION}"
 	end
 
 	task :clean do
@@ -30,7 +31,8 @@ namespace :build do
 		rm_rf "#{LIB_PATH}"
 	end
 
-	task :compile do
+	task :compile => [:versioning] do
+
 		mkdir "#{BUILD_PATH}"
 		sh "#{MSBUILD_PATH}msbuild.exe /p:Configuration=#{COMPILE_TARGET} #{SOLUTION}"
 		copyOutputFiles "src/ExpectedObjects/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", "#{BUILD_PATH}"
@@ -46,7 +48,7 @@ namespace :build do
 		mkdir_p "#{ARTIFACTS_PATH}"
 		rm Dir.glob("#{ARTIFACTS_PATH}/*.nupkg")
 		FileList["packaging/nuget/*.nuspec"].each do |spec|
-		sh "#{nuget} pack #{spec} -o #{ARTIFACTS_PATH} -Version #{BUILD_VERSION} -Symbols"
+		sh "#{nuget} pack #{spec} -o #{ARTIFACTS_PATH} -Version #{BUILD_VERSION} -Symbols -BasePath ."
 	end
   end
 	def copyOutputFiles(fromDir, filePattern, outDir)

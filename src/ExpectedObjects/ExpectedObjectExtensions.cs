@@ -1,3 +1,5 @@
+using ExpectedObjects.Strategies;
+
 namespace ExpectedObjects
 {
 	public static class ExpectedObjectExtensions

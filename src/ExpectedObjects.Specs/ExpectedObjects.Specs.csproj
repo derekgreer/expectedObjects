@@ -89,6 +89,7 @@
     <Compile Include="TestTypes\TypeWithString.cs" />
     <Compile Include="TestTypes\TypeWithString2.cs" />
     <Compile Include="TestTypes\TypeWithStringField.cs" />
+    <Compile Include="HidingPropertiesSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExpectedObjects\ExpectedObjects.csproj">

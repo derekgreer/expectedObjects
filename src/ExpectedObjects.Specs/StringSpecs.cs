@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ExpectedObjects.Specs.TestTypes;
+using ExpectedObjects.Strategies;
 using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;

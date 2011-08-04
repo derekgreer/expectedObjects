@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace ExpectedObjects
+namespace ExpectedObjects.Strategies
 {
     public class EqualsOverrideComparisonStrategy : IComparisonStrategy
     {

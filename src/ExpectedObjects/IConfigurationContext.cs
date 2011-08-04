@@ -1,4 +1,6 @@
-﻿namespace ExpectedObjects
+﻿using ExpectedObjects.Strategies;
+
+namespace ExpectedObjects
 {
     public interface IConfigurationContext
     {

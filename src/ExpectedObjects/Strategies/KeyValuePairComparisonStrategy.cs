@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ExpectedObjects
+namespace ExpectedObjects.Strategies
 {
     class KeyValuePairComparisonStrategy : IComparisonStrategy
     {

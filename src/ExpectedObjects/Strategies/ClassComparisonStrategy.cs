@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ExpectedObjects
+namespace ExpectedObjects.Strategies
 {
     public class ClassComparisonStrategy : IComparisonStrategy
     {

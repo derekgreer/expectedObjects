@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExpectedObjects
+namespace ExpectedObjects.Strategies
 {
     public class PrimitiveComparisonStrategy : IComparisonStrategy
     {
