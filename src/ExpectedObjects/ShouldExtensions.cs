@@ -22,8 +22,8 @@ namespace ExpectedObjects
         public static void ShouldNotEqual<T>(this ExpectedObject expected, T actual)
         {
             if (expected.Equals(actual))
-                throw new Exception(string.Format("For {0}, should not equal expected object but does.",
-                                                  actual.ToUsefulString()));
+                throw new Exception(string.Format("For {0}, should not equal expected object but does.{1}",
+                                                  actual.ToUsefulString(), Environment.NewLine));
         }
 
         public static void ShouldMatch<T>(this ExpectedObject expected, T actual)
@@ -44,8 +44,8 @@ namespace ExpectedObjects
         public static void ShouldNotMatch<T>(this ExpectedObject expected, T actual)
         {
             if (expected.Configure(ctx => ctx.IgnoreTypes()).Equals(actual))
-                throw new Exception(string.Format("For {0}, should not equal expected object but does.",
-                                                   actual.ToUsefulString()));
+                throw new Exception(string.Format("For {0}, should not equal expected object but does.{1}",
+                                                   actual.ToUsefulString(), Environment.NewLine));
         }
 
 

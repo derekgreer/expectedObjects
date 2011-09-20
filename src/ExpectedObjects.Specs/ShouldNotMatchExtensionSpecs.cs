@@ -50,6 +50,7 @@ namespace ExpectedObjects.Specs
 		Because of = () => _exception = Catch.Exception(() => _expected.ShouldNotMatch(_actual));
 
 		It should_throw_exception_with_StringProperty_message = () => _exception.Message.ShouldEqual(
-			string.Format("For {0}, should not equal expected object but does.", typeof (TypeWithString2).FullName));
+			string.Format("For {0}, should not equal expected object but does.{1}",
+            typeof(TypeWithString2).FullName, Environment.NewLine));
 	}
 }
