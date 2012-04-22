@@ -24,3 +24,5 @@ TestResult.xml
 node_modules
 yarn-error.log
 .yarnclean
+.vs
+*.orig

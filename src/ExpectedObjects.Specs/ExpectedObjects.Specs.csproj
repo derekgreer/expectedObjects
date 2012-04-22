@@ -1,23 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1;net40</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <NoWarn>1701;1702;1705;0169;</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.1'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.*" />
     <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
-    <PackageReference Include="Moq" Version="4.7.10" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+  <ItemGroup>
     <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-    <PackageReference Include="Moq" Version="4.2.1510.2205" /> 
+    <PackageReference Include="Moq" Version="4.7.99" />
   </ItemGroup>
 
   <ItemGroup>
