@@ -19,6 +19,21 @@ namespace ExpectedObjects
 			return expectedObject.Configure(ctx => ctx.IgnoreTypes());
 		}
 
+        public static void Like(this object actual, object expected)
+        {
+            expected.ToExpectedObject().ShouldEqual(actual);
+        }
+
+        public static void IsExpectedToBeLike(this object actual, object expected)
+        {
+            expected.ToExpectedObject().ShouldEqual(actual);
+        }
+
+        public static void IsExpectedToBeSimilar(this object actual, object expected)
+        {
+            expected.ToExpectedObject().IgnoreTypes().ShouldEqual(actual);
+        }
+
 		static void AddDefaultStrategies(IConfigurationContext context)
 		{
 			context.PushStrategy<DefaultComparisonStrategy>();
