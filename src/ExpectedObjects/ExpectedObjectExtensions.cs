@@ -1,3 +1,5 @@
+using System;
+using System.Linq.Expressions;
 using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
@@ -24,9 +26,9 @@ namespace ExpectedObjects
             expected.ToExpectedObject().ShouldEqual(actual);
         }
 
-        public static void IsExpectedToBeLike(this object actual, object expected)
+        public static void IsExpectedToBeLike<T>(this T actual, T expected, params Expression<Func<T, object>>[] propertiesToIgnore)
         {
-            expected.ToExpectedObject().ShouldEqual(actual);
+            expected.SetToDefault(propertiesToIgnore).ToExpectedObject().ShouldEqual(actual.SetToDefault(propertiesToIgnore));
         }
 
         public static void IsExpectedToBeSimilar(this object actual, object expected)
