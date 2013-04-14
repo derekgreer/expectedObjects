@@ -33,10 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Machine.Specifications">
-      <HintPath>..\..\lib\Machine.Specifications.0.4.9.0\lib\Machine.Specifications.dll</HintPath>
+      <HintPath>..\packages\Machine.Specifications.0.5.10\lib\net40\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications.Clr4">
+      <HintPath>..\packages\Machine.Specifications.0.5.10\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
-      <HintPath>..\..\lib\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,6 +63,7 @@
     <Compile Include="EqualsOverrideSpecs.cs" />
     <Compile Include="EqualsSpecs.cs" />
     <Compile Include="ExtensionsSpecs.cs" />
+    <Compile Include="IgnoringPropertiesDuringComparison.cs" />
     <Compile Include="IndexSpecs.cs" />
     <Compile Include="NullSpecs.cs" />
     <Compile Include="ObjectShouldEqualExtensionSpecs.cs" />
@@ -68,6 +72,7 @@
     <Compile Include="ObjectShouldNotMatchSpecs.cs" />
     <Compile Include="ObjectSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingFieldsToDefaultValues.cs" />
     <Compile Include="ShouldEqualExtensionDoubleSpecs.cs" />
     <Compile Include="ShouldEqualExtensionEnumerableSpecs.cs" />
     <Compile Include="ShouldEqualExtensionIndexSpecs.cs" />
@@ -100,6 +105,9 @@
       <Project>{A5D5DB00-8AEE-4625-8040-EC3367B5255E}</Project>
       <Name>ExpectedObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

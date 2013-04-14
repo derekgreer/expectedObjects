@@ -1,3 +1,5 @@
+using System;
+using System.Linq.Expressions;
 using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
@@ -18,6 +20,21 @@ namespace ExpectedObjects
 		{
 			return expectedObject.Configure(ctx => ctx.IgnoreTypes());
 		}
+
+        public static void Like(this object actual, object expected)
+        {
+            expected.ToExpectedObject().ShouldEqual(actual);
+        }
+
+        public static void IsExpectedToBeLike<T>(this T actual, T expected, params Expression<Func<T, object>>[] propertiesToIgnore)
+        {
+            expected.SetToDefault(propertiesToIgnore).ToExpectedObject().ShouldEqual(actual.SetToDefault(propertiesToIgnore));
+        }
+
+        public static void IsExpectedToBeSimilar(this object actual, object expected)
+        {
+            expected.ToExpectedObject().IgnoreTypes().ShouldEqual(actual);
+        }
 
 		static void AddDefaultStrategies(IConfigurationContext context)
 		{
