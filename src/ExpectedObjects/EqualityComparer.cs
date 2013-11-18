@@ -87,6 +87,13 @@ namespace ExpectedObjects
 					}
 				}
 
+				if (actual == null)
+				{
+					_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
+					return false;
+				}
+
+
 				foreach (IComparisonStrategy strategy in _configurationContext.Strategies)
 				{
 					if (strategy.CanCompare(expected.GetType()))

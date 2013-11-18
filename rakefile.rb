@@ -46,6 +46,13 @@ task :package do
 	end
 end
 
+task :publish => [:all] do
+        FileList["#{ARTIFACTS_PATH}/*.nupkg"].gsub(File::SEPARATOR,
+     File::ALT_SEPARATOR || File::SEPARATOR).each do | file |
+                sh "nuget push #{file}"
+        end
+end
+
 def copyOutputFiles(fromDir, filePattern, outDir)
 	Dir.glob(File.join(fromDir, filePattern)){|file| 		
 		copy(file, outDir) if File.file?(file)
