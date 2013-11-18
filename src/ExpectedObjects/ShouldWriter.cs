@@ -68,9 +68,7 @@ namespace ExpectedObjects
 
         public bool IsLeaf(EqualityResult result)
         {
-            return _results.Where(x => x.Member.StartsWith(result.Member + ".") || x.Member.StartsWith(result.Member + "[")).Count() == 0;
+            return !_results.Any(x => x.Member.StartsWith(result.Member + ".") || x.Member.StartsWith(result.Member + "["));
         }
-
-        
     }
 }

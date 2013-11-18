@@ -3,7 +3,6 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-	[Subject(typeof (ExpectedObject))]
 	public class when_comparing_types_which_hide_properties
 	{
 		static HidingType _expected;

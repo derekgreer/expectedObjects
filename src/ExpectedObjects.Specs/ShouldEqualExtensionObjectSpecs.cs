@@ -16,8 +16,7 @@ namespace ExpectedObjects.Specs
                 _actual = new TypeWithString {StringProperty = "this is a test"};
             };
 
-        Because of =
-            () => _exception = Catch.Exception(() => _expected.ToExpectedObject().IgnoreTypes().ShouldEqual(_actual));
+        Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().IgnoreTypes().ShouldEqual(_actual));
 
         It should_thow_exception_with_missing_member_message = () => _exception.Message.ShouldEqual(string.Format(
             "For TypeWithString.DecimalProperty, expected [10.0] but member was missing.{0}", Environment.NewLine));

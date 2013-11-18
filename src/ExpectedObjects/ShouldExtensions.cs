@@ -51,7 +51,10 @@ namespace ExpectedObjects
 
         internal static string ToUsefulString(this object obj)
         {
-            string str;
+	        if (obj is IExpectedDescription)
+		        return obj.ToString();
+
+			string str;
             if (obj == null) return "[null]";
             if (obj.GetType() == typeof(string))
             {

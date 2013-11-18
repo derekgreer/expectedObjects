@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using ExpectedObjects.Strategies;
 
@@ -34,7 +35,7 @@ namespace ExpectedObjects
 					return true;
 				}
 
-				if (expected == null || actual == null)
+				if (expected == null && actual != null)
 				{
 					_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
 					return false;
@@ -42,16 +43,48 @@ namespace ExpectedObjects
 
 				if (_configurationContext.IgnoreTypes)
 				{
-					if (actual.GetType() == typeof (MissingMember<>).MakeGenericType(expected.GetType()))
+					var comparison = expected as IComparison;
+
+					if (comparison != null)
+					{
+						if (actual != null && actual is IMissing)
+						{
+							_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(),
+							                                                      new ExpectedDescription(comparison.GetExpectedResult()),
+							                                                      actual));
+							return false;
+						}
+
+						areEqual = comparison.AreEqual(actual);
+
+						if (!areEqual)
+						{
+							_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(),
+							                                                      new ExpectedDescription(comparison.GetExpectedResult()),
+							                                                      actual));
+						}
+
+						return areEqual;
+					}
+					
+					if (actual is IMissing)
+					{
+						_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
+						return false;
+					}
+					else if (IsLeaf(expected) && !expected.GetType().IsInstanceOfType(actual))
 					{
 						_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
 						return false;
 					}
 				}
-				else if (!_configurationContext.IgnoreTypes && !expected.GetType().IsAssignableFrom(actual.GetType()))
+				else
 				{
-					_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-					return false;
+					if (expected != null && !expected.GetType().IsInstanceOfType(actual))
+					{
+						_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
+						return false;
+					}
 				}
 
 				foreach (IComparisonStrategy strategy in _configurationContext.Strategies)
@@ -64,8 +97,7 @@ namespace ExpectedObjects
 						{
 							if (_stack.Count > 0)
 							{
-								_configurationContext.Writer
-									.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
+								_configurationContext.Writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
 							}
 						}
 
@@ -87,16 +119,14 @@ namespace ExpectedObjects
 		{
 			const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
 			IEnumerable<PropertyInfo> expectedPropertyInfos = expected.GetType().GetProperties(flags)
-				.ExcludeHiddenProperties(expected.GetType());
+			                                                          .ExcludeHiddenProperties(expected.GetType());
 			IEnumerable<PropertyInfo> actualPropertyInfos =
 				actual.GetType().GetProperties(flags).ExcludeHiddenProperties(expected.GetType());
 			bool areEqual = true;
 			expectedPropertyInfos.ToList().ForEach(pi =>
 				{
-					areEqual = propertyComparison(pi,
-					                              actualPropertyInfos
-					                              	.Where(p => p.Name.Equals(pi.Name))
-					                              	.SingleOrDefault()) & areEqual;
+					areEqual = propertyComparison(pi, actualPropertyInfos
+						                                  .SingleOrDefault(p => p.Name.Equals(pi.Name))) & areEqual;
 				});
 
 			return areEqual;
@@ -110,12 +140,24 @@ namespace ExpectedObjects
 			bool areEqual = true;
 			expectedFieldInfos.ToList().ForEach(pi =>
 				{
-					areEqual = comparison(pi,
-					                      actualFieldInfos.Where(p => p.Name.Equals(pi.Name)).SingleOrDefault
-					                      	()) & areEqual;
+					areEqual = comparison(pi, actualFieldInfos
+						                          .SingleOrDefault(p => p.Name.Equals(pi.Name))) & areEqual;
 				});
 
 			return areEqual;
+		}
+
+		bool IsLeaf(object expected)
+		{
+			const BindingFlags propertyFlags = BindingFlags.Public | BindingFlags.Instance;
+			IEnumerable<PropertyInfo> expectedPropertyInfos = expected.GetType()
+			                                                          .GetProperties(propertyFlags)
+			                                                          .ExcludeHiddenProperties(expected.GetType());
+
+			BindingFlags fieldFlags = _configurationContext.GetFieldBindingFlags();
+			FieldInfo[] expectedFieldInfos = expected.GetType().GetFields(propertyFlags);
+
+			return !expectedPropertyInfos.Any() && !expectedFieldInfos.Any();
 		}
 
 		public bool AreEqual(object expected, object actual)
@@ -138,10 +180,10 @@ namespace ExpectedObjects
 		public static IEnumerable<PropertyInfo> ExcludeHiddenProperties(this IEnumerable<PropertyInfo> infos, Type originType)
 		{
 			const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-			IEnumerable<string> newProperties =
-				originType.GetProperties(flags).GroupBy(p => p.Name).Where(g => g.Count() > 1).Select(g => g.Key);
+			List<string> newProperties =
+				originType.GetProperties(flags).GroupBy(p => p.Name).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
 
-			if (newProperties.Count() == 0)
+			if (!newProperties.Any())
 				return infos;
 
 			List<PropertyInfo> properties = infos.Where(p => !newProperties.Contains(p.Name)).ToList();
@@ -154,9 +196,8 @@ namespace ExpectedObjects
 				while (closestPropertyDeclaration == null)
 				{
 					PropertyInfo pi = declaringType.GetProperties(flags)
-						.Where(p => p.Name == newProperty)
-						.Where(p => p.DeclaringType == declaringType)
-						.SingleOrDefault();
+					                               .Where(p => p.Name == newProperty)
+					                               .SingleOrDefault(p => p.DeclaringType == declaringType);
 
 					if (pi != null)
 						closestPropertyDeclaration = pi;

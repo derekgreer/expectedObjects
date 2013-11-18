@@ -15,7 +15,7 @@ namespace ExpectedObjects.Specs
                 _actual = 111.397720540215d;
             };
 
-        Because of = () => _exception = Catch.Exception(() => _actual.ShouldEqual(_expected));
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldEqual(_actual));
 
         It should_not_throw_an_exception = () => _exception.ShouldBeNull();
     }
@@ -32,7 +32,7 @@ namespace ExpectedObjects.Specs
             _actual = 111.397720540216d;
         };
 
-        Because of = () => _exception = Catch.Exception(() => _actual.ShouldEqual(_expected));
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldEqual(_actual));
 
         It should_throw_an_exception_with_message =
             () =>

@@ -5,6 +5,7 @@ reports/
 TestResults/
 PrecompiledWeb/
 src/CommonAssemblyInfo.cs
+src/packages/
 artifacts
 lib
 *.gpState

@@ -39,7 +39,7 @@ namespace ExpectedObjects.Specs
         It should_write_errors_to_the_writer =
             () => _mockWriter.Verify(x => x.Write(Moq.It.IsAny<EqualityResult>()), Times.AtLeastOnce());
 
-        It should_write_string_compare_expected_result_to_the_writer =
+        It _shouldWriteStringCompareItResultToTheWriter =
             () => ShouldExtensionMethods.ShouldNotBeNull(_results.Select(x => x.Member.Equals("StringProperty")));
     }
 

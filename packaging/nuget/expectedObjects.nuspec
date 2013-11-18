@@ -12,8 +12,8 @@
     <tags>bdd tdd testing</tags>
   </metadata>
   <files>
-	<file src="build\ExpectedObjects.dll" target="lib" />
-	<file src="build\ExpectedObjects.pdb" target="lib" />
+	<file src="build\ExpectedObjects.dll" target="lib\net40" />
+	<file src="build\ExpectedObjects.pdb" target="lib\net40" />
 	<file src="src\ExpectedObjects\**\*.cs" target="src" />
   </files>
 </package>

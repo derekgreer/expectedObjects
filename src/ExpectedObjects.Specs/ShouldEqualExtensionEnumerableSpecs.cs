@@ -86,6 +86,27 @@ namespace ExpectedObjects.Specs
                               Environment.NewLine));
     }
 
+	public class when_asserting_equality_for_enumerables_with_fewer_elements_with_ignore_types
+	{
+		static List<string> _actual;
+		static Exception _exception;
+		static List<string> _expected;
+
+		Establish context = () =>
+		{
+			_expected = new List<string> { "test1", "test2", "test3" };
+			_actual = new List<string> { "test1", "test2" };
+		};
+
+
+		Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().IgnoreTypes().ShouldEqual(_actual));
+
+		It should_throw_exception_with_subscripted_values =
+			() =>
+			_exception.Message.ShouldEqual(
+				string.Format("For List`1[2], expected \"test3\" but element was missing.{0}", Environment.NewLine));
+	}
+
     public class when_asserting_equality_for_enumerables_with_fewer_elements
     {
         static List<string> _actual;
@@ -122,9 +143,7 @@ namespace ExpectedObjects.Specs
 
         Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldEqual(_actual));
 
-        It should_throw_exception_with_subscripted_values =
-            () =>
-            _exception.Message.ShouldEqual(
-                string.Format("For List`1[2], expected nothing but found \"test3\".{0}", Environment.NewLine));
+        It should_throw_exception_with_subscripted_values = () =>
+            _exception.Message.ShouldEqual(string.Format("For List`1[2], expected nothing but found \"test3\".{0}", Environment.NewLine));
     }
 }
