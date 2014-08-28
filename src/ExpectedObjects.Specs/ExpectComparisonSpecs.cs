@@ -11,9 +11,6 @@ namespace ExpectedObjects.Specs
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
-
-		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 		static Exception _exception;
 
 		Establish context = () =>
@@ -43,9 +40,6 @@ namespace ExpectedObjects.Specs
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
-
-		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 		static Exception _exception;
 
 		Establish context = () =>
@@ -75,9 +69,7 @@ namespace ExpectedObjects.Specs
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
-
 		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 
 		Establish context = () =>
 			{
@@ -91,6 +83,54 @@ namespace ExpectedObjects.Specs
 						StringProperty = "test string"
 					};
 			};
+
+		Because of = () => _result = _expected.Equals(_actual);
+
+		It should_be_equal = () => _result.ShouldBeTrue();
+	}
+
+	public class when_comparing_any_with_non_matching_comparison_using_it_isany_matching_predicate
+	{
+		static ComplexType _actual;
+		static ExpectedObject _expected;
+		static bool _result;
+
+		Establish context = () =>
+		{
+			_expected = new
+			{
+				StringProperty = Expect.Any<string>(s => s != "test string")
+			}.ToExpectedObject().IgnoreTypes();
+
+			_actual = new ComplexType
+			{
+				StringProperty = "test string"
+			};
+		};
+
+		Because of = () => _result = _expected.Equals(_actual);
+
+		It should_not_be_equal = () => _result.ShouldBeFalse();
+	}
+
+	public class when_comparing_any_with_matching_comparison_using_it_isany_matching_predicate
+	{
+		static ComplexType _actual;
+		static ExpectedObject _expected;
+		static bool _result;
+
+		Establish context = () =>
+		{
+			_expected = new
+			{
+				StringProperty = Expect.Any<string>(s => s.Length == 11)
+			}.ToExpectedObject().IgnoreTypes();
+
+			_actual = new ComplexType
+			{
+				StringProperty = "test string"
+			};
+		};
 
 		Because of = () => _result = _expected.Equals(_actual);
 

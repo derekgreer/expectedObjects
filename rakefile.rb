@@ -35,7 +35,7 @@ end
 task :specs do
 	mkdir_p "#{REPORTS_PATH}"
 	specs = FileList.new("src/ExpectedObjects.Specs/bin/#{COMPILE_TARGET}/*.Specs.dll")
-	sh "src/packages/Machine.Specifications.0.5.16/tools/mspec-x86-clr4.exe -x integration #{specs}"
+	sh "src/packages/Machine.Specifications.0.8.3/tools/mspec-x86-clr4.exe -x integration #{specs}"
 end
 
 task :package do

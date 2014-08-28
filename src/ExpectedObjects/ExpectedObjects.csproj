@@ -44,6 +44,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Comparisons\Any.cs" />
+    <Compile Include="Comparisons\AnyMatchingPredicate.cs" />
     <Compile Include="Comparisons\NotNullComparison.cs" />
     <Compile Include="Comparisons\NullComparison.cs" />
     <Compile Include="Expect.cs" />

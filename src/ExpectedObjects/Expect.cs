@@ -1,4 +1,6 @@
-﻿using ExpectedObjects.Comparisons;
+﻿using System;
+using System.Linq.Expressions;
+using ExpectedObjects.Comparisons;
 
 namespace ExpectedObjects
 {
@@ -15,6 +17,11 @@ namespace ExpectedObjects
 		public static Any<T> Any<T>()
 		{
 			return new Any<T>();
+		}
+
+		public static AnyMatchingPredicate<T> Any<T>(Expression<Func<T, bool>> predicateExpression)
+		{
+			return new AnyMatchingPredicate<T>(predicateExpression);
 		}
 
 		public static NotNullComparison NotNull()

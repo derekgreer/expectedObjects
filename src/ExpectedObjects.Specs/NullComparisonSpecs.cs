@@ -12,9 +12,6 @@ namespace ExpectedObjects.Specs
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
-
-		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 		static Exception _exception;
 
 		Establish context = () =>
@@ -44,9 +41,7 @@ namespace ExpectedObjects.Specs
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
-
 		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 
 		Establish context = () =>
 			{
@@ -72,9 +67,6 @@ namespace ExpectedObjects.Specs
 	{
 		static TypeWithDecimal _actual;
 		static ExpectedObject _expected;
-
-		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 		static Exception _exception;
 
 		Establish context = () =>
