@@ -40,9 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="Comparisons\Any.cs" />
     <Compile Include="Comparisons\AnyMatchingPredicate.cs" />
     <Compile Include="Comparisons\NotNullComparison.cs" />
@@ -54,6 +51,7 @@
     <Compile Include="IMissing.cs" />
     <Compile Include="IMissingMember.cs" />
     <Compile Include="ObjectShouldExtensions.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Strategies\ClassComparisonStrategy.cs" />
     <Compile Include="Strategies\ComparableComparisonStrategy.cs" />
     <Compile Include="ConfigurationContext.cs" />
