@@ -16,7 +16,7 @@ namespace ExpectedObjects
 
         public static ExpectedObject ToExpectedObject(this object expected, bool checkUnmappedPropertiesOnActualMeetDefaultComparisons)
         {
-            return new ExpectedObject(expected, checkUnmappedPropertiesOnActualMeetDefaultComparisons).Configure(AddDefaultStrategies);
+            return new ExpectedObject(expected, checkUnmappedPropertiesOnActualMeetDefaultComparisons).IgnoreTypes().Configure(AddDefaultStrategies);
         }
 
 		public static ExpectedObject WithDefaultStrategies(this ExpectedObject expectedObject)
@@ -43,7 +43,7 @@ namespace ExpectedObjects
 
         public static ExpectedObject ToEoDto<TSource, TResult>(this TSource obj, params Expression<Func<TSource, dynamic>>[] items) where TSource : class
         {
-            return ToDto<TSource, TResult>(obj, items).ToExpectedObject();
+            return ToDto<TSource, TResult>(obj, items).ToExpectedObject(true);
         }
 
         public static TResult ToDto<TSource, TResult>(this TSource obj, params Expression<Func<TSource, dynamic>>[] items) where TSource : class
@@ -76,15 +76,21 @@ namespace ExpectedObjects
                     else
                     {
                         var compiled = item.Compile();
-                        var result = (KeyValuePair<string, object>)compiled.Invoke(obj);
-                        props[result.Key] = result.Value;
+                        var output = (KeyValuePair<string, object>)compiled.Invoke(obj);
+                        props[output.Key] = obj.GetType()
+                        .GetProperty(output.Value.ToString())
+                        .GetValue(obj, null);
                     }
                 }
             }
 
-            return Activator.CreateInstance<TResult>();
+            TResult result = Activator.CreateInstance<TResult>();
+            foreach (var item in props)
+            {
+                result.GetType().GetProperty(item.Key).SetValue(result, item.Value, null);
+            }
+
+            return result;
         }
-
-
 	}
 }
