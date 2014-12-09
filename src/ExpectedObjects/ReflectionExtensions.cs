@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Remoting;
 
 namespace ExpectedObjects
 {
@@ -25,6 +25,30 @@ namespace ExpectedObjects
                 return !unequalProperties.Any();
             }
             return self == to;
+        }
+
+        public static void CopyObject<TFrom,TTo>(TFrom sourceObject, ref TTo destObject)
+        {
+            if (sourceObject == null || destObject == null)
+                return;
+
+            //  Get the type of each object
+            Type sourceType = sourceObject.GetType();
+            Type targetType = destObject.GetType();
+
+            //  Loop through the source properties
+            foreach (PropertyInfo sourceProp in sourceType.GetProperties())
+            {
+                //  Get the matching property in the destination object
+                PropertyInfo destProp = targetType.GetProperty(sourceProp.Name);
+                //  If there is none, skip
+                if (destProp == null)
+                    continue;
+
+                //  Set the value in the destination
+                object value = sourceProp.GetValue(sourceObject, null);
+                destProp.SetValue(destObject, value, null);
+            }
         }
 
         public static KeyValuePair<string, object> Map<TFrom, TTo>(this TFrom instance, Expression<Func<TFrom, object>> from, Expression<Func<TTo, object>> to)

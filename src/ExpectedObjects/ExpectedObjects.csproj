@@ -46,6 +46,7 @@
     <Compile Include="Comparisons\NullComparison.cs" />
     <Compile Include="Expect.cs" />
     <Compile Include="ExpectedDescription.cs" />
+    <Compile Include="Expected.cs" />
     <Compile Include="IComparison.cs" />
     <Compile Include="IExpectedDescription.cs" />
     <Compile Include="IMissing.cs" />

@@ -67,7 +67,7 @@
     <Compile Include="DecimalSpecs.cs" />
     <Compile Include="DictionarySpecs.cs" />
     <Compile Include="DoubleSpecs.cs" />
-    <Compile Include="DtoMapperSpecs.cs" />
+    <Compile Include="ExpectedSpecs.cs" />
     <Compile Include="EnumerableSecs.cs" />
     <Compile Include="EnumerableSpecs.cs" />
     <Compile Include="EnumSpecs.cs" />
@@ -97,6 +97,9 @@
     <Compile Include="ShouldWriterSpecs.cs" />
     <Compile Include="StringSpecs.cs" />
     <Compile Include="StructureSpecs.cs" />
+    <Compile Include="TestTypes\TestDto1.cs" />
+    <Compile Include="TestTypes\TestDto2.cs" />
+    <Compile Include="TestTypes\TestDto.cs" />
     <Compile Include="TestTypes\ComparableType.cs" />
     <Compile Include="TestTypes\ComplexType.cs" />
     <Compile Include="TestTypes\EnumType.cs" />
