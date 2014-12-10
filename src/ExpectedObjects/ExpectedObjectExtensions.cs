@@ -16,13 +16,8 @@ namespace ExpectedObjects
 
         public static ExpectedObject ToExpectedObject(this object expected, bool checkUnmappedPropertiesOnActualMeetDefaultComparisons)
         {
-            return new ExpectedObject(expected, checkUnmappedPropertiesOnActualMeetDefaultComparisons).IgnoreTypes().Configure(AddDefaultStrategies);
+            return new ExpectedObject(expected, checkUnmappedPropertiesOnActualMeetDefaultComparisons).IgnoreTypes().Configure(AutoPropertyStrategies);
         }
-
-		public static ExpectedObject WithDefaultStrategies(this ExpectedObject expectedObject)
-		{
-			return expectedObject.Configure(AddDefaultStrategies);
-		}
 
 		public static ExpectedObject IgnoreTypes(this ExpectedObject expectedObject)
 		{
@@ -40,6 +35,19 @@ namespace ExpectedObjects
 			context.PushStrategy<ComparableComparisonStrategy>();
 		}
 
+        static void AutoPropertyStrategies(IConfigurationContext context)
+        {
+           
+            context.PushStrategy<KeyValuePairComparisonStrategy>();
+          //  context.PushStrategy<ClassComparisonStrategy>();
+            context.PushStrategy<EnumerableComparisonStrategy>();
+            context.PushStrategy<EqualsOverrideComparisonStrategy>();
+            context.PushStrategy<PrimitiveComparisonStrategy>();
+            context.PushStrategy<ComparableComparisonStrategy>();
+      //      context.PushStrategy<DefaultComparisonStrategy>();
+        }
+
 	   
 	}
+
 }

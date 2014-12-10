@@ -13,11 +13,34 @@ namespace ExpectedObjects.Specs
     public class when_expected_created_from_single_stub
     {
         private static ComplexType _testStub;
+        private static TestDto _expected = new TestDto()
+        {
+            StringProperty = "aaaaaa",
+            TypeWithIEnumerable = new TypeWithIEnumerable() { Objects = new[] { 1, 2, 3 } },
+            TypeWithString = new TypeWithString() { StringProperty = "bbbb" }
+        };
+        private static ExpectedObject _actual;
+        private static bool _result;
+        private static Mock<IComparison> _comparisionSpy;
+
+        Establish context = () =>
+        {
+            _actual = Expected.WithPropertiesFrom<TestDto, TestDto1>(_expected);
+        };
+
+        Because of = () => _result = _actual.Equals(_expected);
+
+        It should_match_expected_with_actual = () => _result.ShouldBeTrue();
+    }
+
+    public class when_actual_missing_property_but_default_comparison_on
+    {
+        private static ComplexType _testStub;
         private static TestDto _expected =  new TestDto()
             {
                 StringProperty = "aaaaaa",
                 TypeWithIEnumerable = new TypeWithIEnumerable(){Objects = new[]{1,2,3}},
-                TypeWithString = new TypeWithString() { StringProperty = "bbbb"}
+            //    TypeWithString = new TypeWithString() { StringProperty = "bbbb"}
             };
         private static ExpectedObject _actual;
         private static bool _result;
@@ -25,19 +48,38 @@ namespace ExpectedObjects.Specs
 
         Establish context = () =>
         {
-            _expected = new TestDto()
-            {
-                StringProperty = "aaaaaa",
-                TypeWithIEnumerable = new TypeWithIEnumerable() { Objects = new[] { 1, 2, 3 } },
-                TypeWithString = new TypeWithString() { StringProperty = "bbbb" }
-            };
 
-            _actual = Expected.WithPropertiesFrom<TestDto, TestDto1>(_expected);
+            _actual = _expected.ToDto<TestDto, TestDto>(true);
         };
 
         Because of = () => _result = _actual.Equals(_expected);
 
         It should_match_expected_with_actual = () => _result.ShouldBeTrue();
+    }
+
+    public class when_actual_is_missing_property_and_autofill_properties_with_default_comparisons_is_off
+    {
+        private static ComplexType _testStub;
+        private static TestDto _expected = new TestDto()
+        {
+            StringProperty = "aaaaaa",
+            TypeWithIEnumerable = new TypeWithIEnumerable() { Objects = new[] { 1, 2, 3 } },
+            //    TypeWithString = new TypeWithString() { StringProperty = "bbbb"}
+        };
+        private static ExpectedObject _actual;
+        private static bool _result;
+        private static Mock<IComparison> _comparisionSpy;
+
+        Establish context = () =>
+        {
+            _actual = _expected.ToDto<TestDto, TestDto>(false,a=>a.StringProperty,a=>a.TypeWithIEnumerable);
+            _exception = Catch.Exception(() => _actual.Equals(_expected));
+        };
+
+        Because of = () =>  _exception.ShouldNotBeNull();
+
+        private It should_match_expected_with_actual = () => _result.ShouldBeFalse();
+        private static Exception _exception;
     }
 
     public class when_expected_created_from_multiple_stubs
@@ -80,7 +122,7 @@ namespace ExpectedObjects.Specs
 
         Establish context = () =>
         {
-            _testStub = new Mock<ComplexType>().Object;
+            _testStub = TestUtil.BuildComplexType();
 
             _expected = _testStub.WithSelectedProperties<ComplexType, TestDto>(
                 a => a.TypeWithIEnumerable,
@@ -94,6 +136,8 @@ namespace ExpectedObjects.Specs
                 TypeWithString = _testStub.TypeWithString
             };
         };
+
+     
 
         Because of = () => _result = _expected.Equals(_actual);
 
@@ -110,7 +154,7 @@ namespace ExpectedObjects.Specs
 
         private Establish context = () =>
         {
-            _testStub = new Mock<ComplexType>().Object;
+            _testStub = TestUtil.BuildComplexType();
 
             _expected = _testStub.WithSelectedProperties<ComplexType, object>(
                 a => a.TypeWithIEnumerable,
@@ -166,6 +210,24 @@ namespace ExpectedObjects.Specs
     }
 
 
+    public static class TestUtil
+    {
+        public static ComplexType BuildComplexType()
+        {
+            var testStub = new ComplexType
+            {
+                DecimalProperty = 2m,
+                StringProperty = "abcd987",
+                TypeWithIEnumerable = new TypeWithIEnumerable() {Objects = new[] {1, 2, 3, 45}},
+                IntegerProperty = 9,
+                TypeWithString = new TypeWithString() {StringProperty = "typewithstring.stringproperty"}
+            };
+            testStub.IntegerProperty = 999;
+            return testStub;
+        }
+    }
+
+   
 }
 
 
