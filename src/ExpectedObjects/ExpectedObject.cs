@@ -4,18 +4,12 @@ namespace ExpectedObjects
 {
     public class ExpectedObject
     {
-        public bool EnsureUnmappedProperitiesMeetDefaultComparisons { get; protected set; }
         readonly IConfigurationContext _configurationContext = new ConfigurationContext();
         readonly object _expected;
 
         public ExpectedObject(object expected)
         {
             _expected = expected;
-        }
-        public ExpectedObject(object expected, bool ensureUnmappedProperitiesMeetDefaultComparisons)
-        {
-            _expected = expected;
-            EnsureUnmappedProperitiesMeetDefaultComparisons = ensureUnmappedProperitiesMeetDefaultComparisons;
         }
 
         public override bool Equals(object actual)

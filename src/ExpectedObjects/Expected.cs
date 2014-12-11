@@ -19,7 +19,7 @@ namespace ExpectedObjects
         {
             var to = Activator.CreateInstance<TTo>();
             ReflectionExtensions.CopyObject(from, ref to);
-            return to.ToDto<TTo, TTo>(true).ToExpectedObject(true);
+            return to.ToDto<TTo, TTo>(true);
         }
 
         public static ExpectedObject WithSelectedProperties<TSource, TResult>(this TSource obj,
@@ -27,7 +27,7 @@ namespace ExpectedObjects
             where TSource : class
             where TResult : class
         {
-            return ToDto<TSource, TResult>(obj, true, items).ToExpectedObject(true);
+            return ToDto<TSource, TResult>(obj, true, items);
         }
 
         public static ExpectedObject ToDto<TSource, TResult>(this TSource obj, bool remainingPropertiesHaveDefaultComparisons,
