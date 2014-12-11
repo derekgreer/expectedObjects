@@ -25,7 +25,7 @@ namespace ExpectedObjects.Specs
 
         Establish context = () =>
         {
-            _actual = Expected.WithPropertiesFrom<TestDto, TestDto1>(_expected);
+            _actual = _expected.WithSameProperties<TestDto1>();
         };
 
         Because of = () => _result = _actual.Equals(_expected);
@@ -104,7 +104,7 @@ namespace ExpectedObjects.Specs
                 TypeWithString = new TypeWithString() { StringProperty = "bbbb" }
             };
 
-            _actual = Expected.WithPropertiesFrom<TestDto, TestDto1>(_expected);
+            _actual = _expected.WithSameProperties<TestDto1>();
         };
 
         Because of = () => _result = _actual.Equals(_expected);

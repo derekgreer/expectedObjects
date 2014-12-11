@@ -5,7 +5,6 @@ using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Serialization;
 using ExpectedObjects.Strategies;
@@ -15,8 +14,7 @@ namespace ExpectedObjects
 
     public static class Expected
     {
-        public static ExpectedObject WithPropertiesFrom<TFrom, TTo>(TFrom from)
-            where TFrom : class
+        public static ExpectedObject WithSameProperties<TTo>(this object from)            
             where TTo : class
         {
             var to = Activator.CreateInstance<TTo>();
