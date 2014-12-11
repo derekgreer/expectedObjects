@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 using Moq;
@@ -33,7 +30,7 @@ namespace ExpectedObjects.Specs
         It should_match_expected_with_actual = () => _result.ShouldBeTrue();
     }
 
-    public class when_actual_has_unaccounted_for_properties
+    public class when_actual_has_unexpected_properties
     {
         private static ComplexType _testStub;
         private static TestDto _expected =  new TestDto()
@@ -54,10 +51,10 @@ namespace ExpectedObjects.Specs
 
         Because of = () => _result = _actual.Equals(_expected);
 
-        It should_fill_with_default_comparison_and_pass_if_not_null = () => _result.ShouldBeTrue();
+        It should_fill_remainding_properties_with_default_comparisons = () => _result.ShouldBeTrue();
     }
 
-    public class when_actual_is_missing_property_and_autofill_properties_with_default_comparisons_is_off
+    public class when_actual_is_missing_property_and_autofill_properties_with_default_comparisons_disabled
     {
         private static ComplexType _testStub;
         private static TestDto _expected = new TestDto()
@@ -78,73 +75,11 @@ namespace ExpectedObjects.Specs
 
         Because of = () =>  _exception.ShouldNotBeNull();
 
-        private It should_throw_error_as_property_was_missing = () => _result.ShouldBeFalse();
+        private It should_throw_error_with_missing_property_detail = () => _result.ShouldBeFalse();
         private static Exception _exception;
     }
 
-    public class when_expected_created_from_multiple_stubs
-    {
-        private static ComplexType _testStub;
-        private static TestDto _expected = new TestDto()
-        {
-            StringProperty = "aaaaaa",
-            TypeWithIEnumerable = new TypeWithIEnumerable() { Objects = new[] { 1, 2, 3 } },
-            TypeWithString = new TypeWithString() { StringProperty = "bbbb" }
-        };
-        private static ExpectedObject _actual;
-        private static bool _result;
-        private static Mock<IComparison> _comparisionSpy;
-
-        Establish context = () =>
-        {
-            _expected = new TestDto()
-            {
-                StringProperty = "aaaaaa",
-                TypeWithIEnumerable = new TypeWithIEnumerable() { Objects = new[] { 1, 2, 3 } },
-                TypeWithString = new TypeWithString() { StringProperty = "bbbb" }
-            };
-
-            _actual = _expected.WithSameProperties<TestDto1>();
-        };
-
-        Because of = () => _result = _actual.Equals(_expected);
-
-        It should_match_expected_with_actual = () => _result.ShouldBeTrue();
-    }
-
-    public class when_mapping_from_basic_stub_to_dto
-    {
-        private static ComplexType _testStub;
-        private static ExpectedObject _expected;
-        private static TestDto _actual;
-        private static bool _result;
-        private static Mock<IComparison> _comparisionSpy;
-
-        Establish context = () =>
-        {
-            _testStub = TestUtil.BuildComplexType();
-
-            _expected = _testStub.WithSelectedProperties<ComplexType, TestDto>(
-                a => a.TypeWithIEnumerable,
-                a => a.TypeWithString,
-                a => a.StringProperty);
-
-            _actual = new TestDto()
-            {
-                StringProperty = _testStub.StringProperty,
-                TypeWithIEnumerable = _testStub.TypeWithIEnumerable,
-                TypeWithString = _testStub.TypeWithString
-            };
-        };
-
-     
-
-        Because of = () => _result = _expected.Equals(_actual);
-
-        It should_match_expected_with_actual = () => _result.ShouldBeTrue();
-    }
-
-    public class when_mapping_from_basic_stub_to_anon
+    public class when_mapping_from_basic_stub_to_plain_object
     {
         private static ComplexType _testStub;
         private static ExpectedObject _expected;
@@ -174,7 +109,7 @@ namespace ExpectedObjects.Specs
         private It should_match_expected_with_actual = () => _result.ShouldBeTrue();
     }
 
-    public class when_mapping_from_stub_with_anon_name_to_dto
+    public class when_mapping_from_stub_with_anonymous_name_to_dto
     {
         private static ComplexType _testStub;
         private static ExpectedObject _expected;
@@ -226,8 +161,6 @@ namespace ExpectedObjects.Specs
             return testStub;
         }
     }
-
-   
 }
 
 
