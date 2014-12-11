@@ -33,14 +33,14 @@ namespace ExpectedObjects.Specs
         It should_match_expected_with_actual = () => _result.ShouldBeTrue();
     }
 
-    public class when_actual_missing_property_but_default_comparison_on
+    public class when_actual_has_unaccounted_for_properties
     {
         private static ComplexType _testStub;
         private static TestDto _expected =  new TestDto()
             {
                 StringProperty = "aaaaaa",
                 TypeWithIEnumerable = new TypeWithIEnumerable(){Objects = new[]{1,2,3}},
-            //    TypeWithString = new TypeWithString() { StringProperty = "bbbb"}
+                TypeWithString = new TypeWithString() { StringProperty = "bbbb"}  // no mention of this is expected- actual should default to not not comparison
             };
         private static ExpectedObject _actual;
         private static bool _result;
@@ -49,12 +49,12 @@ namespace ExpectedObjects.Specs
         Establish context = () =>
         {
 
-            _actual = _expected.ToDto<TestDto, TestDto>(true);
+            _actual = _expected.WithSelectedProperties<TestDto, TestDto>(a=>a.StringProperty,a=>a.TypeWithIEnumerable);
         };
 
         Because of = () => _result = _actual.Equals(_expected);
 
-        It should_match_expected_with_actual = () => _result.ShouldBeTrue();
+        It should_fill_with_default_comparison_and_pass_if_not_null = () => _result.ShouldBeTrue();
     }
 
     public class when_actual_is_missing_property_and_autofill_properties_with_default_comparisons_is_off
@@ -78,7 +78,7 @@ namespace ExpectedObjects.Specs
 
         Because of = () =>  _exception.ShouldNotBeNull();
 
-        private It should_match_expected_with_actual = () => _result.ShouldBeFalse();
+        private It should_throw_error_as_property_was_missing = () => _result.ShouldBeFalse();
         private static Exception _exception;
     }
 

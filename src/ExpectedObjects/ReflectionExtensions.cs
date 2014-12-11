@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -9,31 +7,10 @@ namespace ExpectedObjects
 {
     public static class ReflectionExtensions
     {
-        public static bool PublicInstancePropertiesEqual<T>(this T self, T to, params string[] ignore) where T : class
-        {
-            if (self != null && to != null)
-            {
-                Type type = typeof (T);
-                var ignoreList = new List<string>(ignore);
-                IEnumerable<object> unequalProperties =
-                    from pi in type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    where !ignoreList.Contains(pi.Name)
-                    let selfValue = type.GetProperty(pi.Name).GetValue(self, null)
-                    let toValue = type.GetProperty(pi.Name).GetValue(to, null)
-                    where selfValue != toValue && (selfValue == null || !selfValue.Equals(toValue))
-                    select selfValue;
-                return !unequalProperties.Any();
-            }
-            return self == to;
-        }
 
-        public static object GetProperty(object target, string name)
-        {
-            var site = System.Runtime.CompilerServices.CallSite<Func<System.Runtime.CompilerServices.CallSite, object, object>>.Create(Microsoft.CSharp.RuntimeBinder.Binder.GetMember(0, name, target.GetType(), new[] { Microsoft.CSharp.RuntimeBinder.CSharpArgumentInfo.Create(0, null) }));
-            return site.Target(site, target);
-        }
-
-        public static void CopyObject<TFrom,TTo>(TFrom sourceObject, ref TTo destObject)
+        public static void CopyObject<TFrom, TTo>(TFrom sourceObject, ref TTo destObject)
+            where TFrom : class
+            where TTo : class
         {
             if (sourceObject == null || destObject == null)
                 return;
@@ -114,7 +91,7 @@ namespace ExpectedObjects
             {
                 // Reference type property or field
                 var memberExpression =
-                    (MemberExpression) expression;
+                    (MemberExpression)expression;
                 return memberExpression.Member.Name;
             }
 
@@ -122,14 +99,14 @@ namespace ExpectedObjects
             {
                 // Reference type method
                 var methodCallExpression =
-                    (MethodCallExpression) expression;
+                    (MethodCallExpression)expression;
                 return methodCallExpression.Method.Name;
             }
 
             if (expression is UnaryExpression)
             {
                 // Property, field of method returning value type
-                var unaryExpression = (UnaryExpression) expression;
+                var unaryExpression = (UnaryExpression)expression;
                 return GetMemberName(unaryExpression);
             }
 
@@ -142,11 +119,11 @@ namespace ExpectedObjects
             if (unaryExpression.Operand is MethodCallExpression)
             {
                 var methodExpression =
-                    (MethodCallExpression) unaryExpression.Operand;
+                    (MethodCallExpression)unaryExpression.Operand;
                 return methodExpression.Method.Name;
             }
 
-            return ((MemberExpression) unaryExpression.Operand)
+            return ((MemberExpression)unaryExpression.Operand)
                 .Member.Name;
         }
     }

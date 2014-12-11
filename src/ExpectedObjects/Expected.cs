@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Serialization;
+using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
 {
@@ -23,16 +24,16 @@ namespace ExpectedObjects
             return to.ToDto<TTo, TTo>(true).ToExpectedObject(true);
         }
 
-        public static ExpectedObject WithSelectedProperties<TSource, TResult>(this TSource obj, 
-            params Expression<Func<TSource, dynamic>>[] items) 
+        public static ExpectedObject WithSelectedProperties<TSource, TResult>(this TSource obj,
+            params Expression<Func<TSource, dynamic>>[] items)
             where TSource : class
-            where TResult : class 
+            where TResult : class
         {
-            return ToDto<TSource, TResult>(obj, false, items).ToExpectedObject(true);
+            return ToDto<TSource, TResult>(obj, true, items).ToExpectedObject(true);
         }
 
         public static ExpectedObject ToDto<TSource, TResult>(this TSource obj, bool remainingPropertiesHaveDefaultComparisons,
-            params Expression<Func<TSource, dynamic>>[] items) 
+            params Expression<Func<TSource, dynamic>>[] items)
             where TSource : class
             where TResult : class
         {
@@ -64,7 +65,7 @@ namespace ExpectedObjects
                     else
                     {
                         Func<TSource, dynamic> compiled = item.Compile();
-                        var output = (KeyValuePair<string, object>) compiled.Invoke(obj);
+                        var output = (KeyValuePair<string, object>)compiled.Invoke(obj);
                         props[output.Key] = obj.GetType()
                             .GetProperty(output.Value.ToString())
                             .GetValue(obj, null);
@@ -89,10 +90,10 @@ namespace ExpectedObjects
             var dyn = new Expando();
             foreach (var item in props)
             {
-                dyn.Properties.Add(item.Key,  item.Value);
+                dyn.Properties.Add(item.Key, item.Value);
             }
             Debug.Assert(dyn.Properties.Any());
-         
+
             return dyn.ToExpectedObject(true);
         }
 
@@ -108,7 +109,7 @@ namespace ExpectedObjects
                 nullableType = ExtractTypeFromNullable(infoType);
             }
 
-            if (!info.CanWrite) return new NotDefaultComparison<object>(); 
+            if (!info.CanWrite) return new NotDefaultComparison<object>();
             if (infoType == typeof(DateTime) || infoType == typeof(DateTime?))
             {
                 return new NotDefaultComparison<DateTime>();
@@ -132,7 +133,7 @@ namespace ExpectedObjects
                       infoType.Equals(typeof(int?))) && !info.Name.ToLower().EndsWith("id") &&
                      !info.Name.ToLower().Equals("pk"))
             {
-                
+
                 return new NotDefaultComparison<int>();
             }
 
@@ -171,7 +172,7 @@ namespace ExpectedObjects
         /// <summary>Indentify and extracting type from Nullable Type</summary>
         public static Type ExtractTypeFromNullable(Type type)
         {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof (Nullable<>))
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 PropertyInfo valueProp = type.GetProperty("Value");
 
@@ -179,6 +180,19 @@ namespace ExpectedObjects
             }
 
             return null;
+        }
+
+        public static ExpectedObject ToExpectedObject(this object expected, bool checkUnmappedPropertiesOnActualMeetDefaultComparisons)
+        {
+            return new ExpectedObject(expected).IgnoreTypes().Configure(GetConfigurationContext);
+        }
+
+        public static void GetConfigurationContext(IConfigurationContext context)
+        {
+            context.PushStrategy<EnumerableComparisonStrategy>();
+            context.PushStrategy<EqualsOverrideComparisonStrategy>();
+            context.PushStrategy<PrimitiveComparisonStrategy>();
+            context.PushStrategy<ComparableComparisonStrategy>();
         }
     }
 
@@ -256,9 +270,6 @@ namespace ExpectedObjects
         }
     }
 
-
-
-
     /// <summary>
     /// Class that provides extensible properties and methods. This
     /// dynamic object stores 'extra' properties in a dictionary or
@@ -304,7 +315,7 @@ namespace ExpectedObjects
         /// </summary>        
         /// <remarks>Using PropertyBag to support XML Serialization of the dictionary</remarks>
 
-        public SerializableDictionary<string, object> Properties = new SerializableDictionary<string, object>();
+        public readonly SerializableDictionary<string, object> Properties = new SerializableDictionary<string, object>();
 
         /// <summary>
         /// This constructor just works off the internal dictionary and any 
@@ -312,7 +323,7 @@ namespace ExpectedObjects
         /// 
         /// Note you can subclass Expando.
         /// </summary>
-        public Expando() 
+        public Expando()
         {
             Initialize(this);
         }
@@ -538,7 +549,7 @@ namespace ExpectedObjects
                     // try to get from properties collection first
                     return Properties[key];
                 }
-                catch (KeyNotFoundException ex)
+                catch (KeyNotFoundException)
                 {
                     // try reflection on instanceType
                     object result = null;
@@ -567,11 +578,6 @@ namespace ExpectedObjects
         }
 
 
-        /// <summary>
-        /// Returns and the properties of 
-        /// </summary>
-        /// <param name="includeProperties"></param>
-        /// <returns></returns>
         public IEnumerable<KeyValuePair<string, object>> GetProperties(bool includeInstanceProperties = false)
         {
             if (includeInstanceProperties && Instance != null)
@@ -586,12 +592,6 @@ namespace ExpectedObjects
         }
 
 
-        /// <summary>
-        /// Checks whether a property exists in the Property collection
-        /// or as a property on the instance
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
         public bool Contains(KeyValuePair<string, object> item, bool includeInstanceProperties = false)
         {
             bool res = Properties.ContainsKey(item.Key);
@@ -621,8 +621,7 @@ namespace ExpectedObjects
                 {
                     if (!this.Properties.ContainsKey(pi.Name))
                     {
-                       throw new MissingMemberException("  "  + pi.Name + " missing");
-                        return false;
+                        throw new MissingMemberException("  " + pi.Name + " missing");
                     }
 
                     object selfValue = this[pi.Name];
@@ -635,15 +634,24 @@ namespace ExpectedObjects
                     }
                     else
                     {
-                        if (selfValue != toValue && (selfValue == null || !selfValue.Equals(toValue))) return false;                        
+                        if (selfValue != toValue && (selfValue == null || !selfValue.Equals(toValue))) return false;
                     }
                 }
             }
 
             return true;
         }
-    }
 
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = Properties.GetHashCode();
+                hashCode = (hashCode * 397) ^ InstancePropertyInfo.GetHashCode();
+                return hashCode;
+            }
+        }
+    }
 
 
     [XmlRoot("dictionary")]
