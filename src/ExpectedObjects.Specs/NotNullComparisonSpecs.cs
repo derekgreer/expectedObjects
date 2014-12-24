@@ -61,7 +61,7 @@ namespace ExpectedObjects.Specs
 
 
 		It should_throw_an_expection_with_message = () => _exception.Message.ShouldEqual(
-			string.Format("For <>f__AnonymousType5`2.StringProperty, expected a non-null value but member was missing.{0}",
+			string.Format("For <>f__AnonymousType6`2.StringProperty, expected a non-null value but member was missing.{0}",
 			              Environment.NewLine));
 	}
 

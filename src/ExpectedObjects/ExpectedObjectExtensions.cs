@@ -9,11 +9,6 @@ namespace ExpectedObjects
 			return new ExpectedObject(expected).Configure(AddDefaultStrategies);
 		}
 
-		public static ExpectedObject WithDefaultStrategies(this ExpectedObject expectedObject)
-		{
-			return expectedObject.Configure(AddDefaultStrategies);
-		}
-
 		public static ExpectedObject IgnoreTypes(this ExpectedObject expectedObject)
 		{
 			return expectedObject.Configure(ctx => ctx.IgnoreTypes());
@@ -29,5 +24,7 @@ namespace ExpectedObjects
 			context.PushStrategy<PrimitiveComparisonStrategy>();
 			context.PushStrategy<ComparableComparisonStrategy>();
 		}
+	   
 	}
+
 }

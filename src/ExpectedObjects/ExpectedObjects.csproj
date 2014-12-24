@@ -40,20 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="Comparisons\Any.cs" />
     <Compile Include="Comparisons\AnyMatchingPredicate.cs" />
     <Compile Include="Comparisons\NotNullComparison.cs" />
     <Compile Include="Comparisons\NullComparison.cs" />
     <Compile Include="Expect.cs" />
     <Compile Include="ExpectedDescription.cs" />
+    <Compile Include="Expected.cs" />
     <Compile Include="IComparison.cs" />
     <Compile Include="IExpectedDescription.cs" />
     <Compile Include="IMissing.cs" />
     <Compile Include="IMissingMember.cs" />
     <Compile Include="ObjectShouldExtensions.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="Strategies\ClassComparisonStrategy.cs" />
     <Compile Include="Strategies\ComparableComparisonStrategy.cs" />
     <Compile Include="ConfigurationContext.cs" />
