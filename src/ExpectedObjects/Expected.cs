@@ -14,12 +14,17 @@ namespace ExpectedObjects
 
     public static class Expected
     {
+        public static ExpectedObject ToExpectedObject(this object expected, bool fillRemainingPropertiesWithDefaultComparisons)
+        {
+            return fillRemainingPropertiesWithDefaultComparisons ? new ExpectedObject(expected).IgnoreTypes().Configure(GetConfigurationContext) : expected.ToExpectedObject();
+        }
+
         public static ExpectedObject WithSameProperties<TTo>(this object from)            
             where TTo : class
         {
             var to = Activator.CreateInstance<TTo>();
             ReflectionExtensions.CopyObject(from, ref to);
-            return to.ToDto<TTo, TTo>(true);
+            return to.ToDto<TTo>(true);
         }
 
         public static ExpectedObject WithSelectedProperties<TSource, TResult>(this TSource obj,
@@ -27,13 +32,12 @@ namespace ExpectedObjects
             where TSource : class
             where TResult : class
         {
-            return ToDto<TSource, TResult>(obj, true, items);
+            return ToDto<TSource>(obj, true, items);
         }
 
-        public static ExpectedObject ToDto<TSource, TResult>(this TSource obj, bool remainingPropertiesHaveDefaultComparisons,
+        public static ExpectedObject ToDto<TSource>(this TSource obj, bool remainingPropertiesHaveDefaultComparisons,
             params Expression<Func<TSource, dynamic>>[] items)
             where TSource : class
-            where TResult : class
         {
             var eo = new ExpandoObject();
             var props = eo as IDictionary<String, object>;
@@ -178,11 +182,6 @@ namespace ExpectedObjects
             }
 
             return null;
-        }
-
-        public static ExpectedObject ToExpectedObject(this object expected, bool checkUnmappedPropertiesOnActualMeetDefaultComparisons)
-        {
-            return new ExpectedObject(expected).IgnoreTypes().Configure(GetConfigurationContext);
         }
 
         public static void GetConfigurationContext(IConfigurationContext context)

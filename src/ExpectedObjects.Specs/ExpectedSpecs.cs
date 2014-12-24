@@ -69,7 +69,7 @@ namespace ExpectedObjects.Specs
 
         Establish context = () =>
         {
-            _actual = _expected.ToDto<TestDto, TestDto>(false,a=>a.StringProperty,a=>a.TypeWithIEnumerable);
+            _actual = _expected.ToDto<TestDto>(false,a=>a.StringProperty,a=>a.TypeWithIEnumerable);
             _exception = Catch.Exception(() => _actual.Equals(_expected));
         };
 
