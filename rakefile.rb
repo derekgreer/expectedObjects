@@ -6,7 +6,8 @@ BUILD_PATH = File.expand_path('build')
 REPORTS_PATH = File.expand_path('reports')
 ARTIFACTS_PATH = File.expand_path('artifacts')
 SOLUTION = "src/ExpectedObjects.sln"
-COMPILE_TARGET = "Release"
+CONFIGURATION = ENV['CONFIGURATION'] || "Release"
+VISUAL_STUDIO_VERSION= ENV['VISUAL_STUDIO_VERSION'] || "12.0"
 nuget = 'nuget'
 load "VERSION.txt"
 
@@ -14,9 +15,9 @@ task :default => ["all"]
 
 task :all => [:clean, :compile, :specs, :package]
 
-assemblyinfo :versioning do |asm|
-	asm.output_file = "src/CommonAssemblyInfo.cs"
- 	asm.version = "#{BUILD_VERSION}"
+asmver :versioning do |a|
+        a.file_path = "src/CommonAssemblyInfo.cs"
+        a.attributes assembly_version: "#{BUILD_VERSION}"
 end
 
 task :clean do
@@ -28,13 +29,14 @@ end
 task :compile => [:versioning] do
 
 	mkdir "#{BUILD_PATH}"
-	sh "#{MSBUILD_PATH}msbuild.exe /p:Configuration=#{COMPILE_TARGET} #{SOLUTION}"
-	copyOutputFiles "src/ExpectedObjects/bin/#{COMPILE_TARGET}", "*.{dll,pdb}", "#{BUILD_PATH}"
+	system("#{MSBUILD_PATH}/msbuild.exe", "/p:Configuration=#{CONFIGURATION}", "/p:Platform=Any CPU",  "/p:VisualStudioVersion=#{VISUAL_STUDIO_VERSION}", "/t:Build", "#{SOLUTION}")
+
+	copyOutputFiles "src/ExpectedObjects/bin/#{CONFIGURATION}", "*.{dll,pdb}", "#{BUILD_PATH}"
 end
 
 task :specs do
 	mkdir_p "#{REPORTS_PATH}"
-	specs = FileList.new("src/ExpectedObjects.Specs/bin/#{COMPILE_TARGET}/*.Specs.dll")
+	specs = FileList.new("src/ExpectedObjects.Specs/bin/#{CONFIGURATION}/*.Specs.dll")
 	sh "src/packages/Machine.Specifications.0.8.3/tools/mspec-x86-clr4.exe -x integration #{specs}"
 end
 
