@@ -53,6 +53,7 @@
     <Compile Include="IExpectedDescription.cs" />
     <Compile Include="IMissing.cs" />
     <Compile Include="IMissingMember.cs" />
+    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Strategies\ClassComparisonStrategy.cs" />
     <Compile Include="Strategies\ComparableComparisonStrategy.cs" />
     <Compile Include="ConfigurationContext.cs" />
