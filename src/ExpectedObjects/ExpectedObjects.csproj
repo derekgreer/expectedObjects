@@ -40,9 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonAssemblyInfo.cs">
-      <Link>CommonAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="Comparisons\Any.cs" />
     <Compile Include="Comparisons\AnyMatchingPredicate.cs" />
     <Compile Include="Comparisons\NotNullComparison.cs" />
@@ -64,7 +61,7 @@
     <Compile Include="Strategies\EqualsOverrideComparisionStrategy.cs" />
     <Compile Include="ExpectedObject.cs" />
     <Compile Include="ExpectedObjectExtensions.cs" />
-    <Compile Include="Strategies\IComparisionStrategy.cs" />
+    <Compile Include="Strategies\EqualityResults.cs" />
     <Compile Include="IComparisonContext.cs" />
     <Compile Include="Strategies\IComparisonStrategy.cs" />
     <Compile Include="IConfigurationContext.cs" />
