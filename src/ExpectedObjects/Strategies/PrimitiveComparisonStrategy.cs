@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace ExpectedObjects.Strategies
 {
@@ -6,7 +7,11 @@ namespace ExpectedObjects.Strategies
     {
         public bool CanCompare(Type type)
         {
+#if NET40
             return type.IsPrimitive;
+#else
+            return type.GetTypeInfo().IsPrimitive;
+#endif
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)

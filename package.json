@@ -1,0 +1,44 @@
+{
+  "name": "ExpectedObjects",
+  "version": "1.2.3",
+  "configuration": "Release",
+  "description": "A testing library for creating Expected Objects",
+  "dotnetPath": "\"c:/Program Files/dotnet/dotnet.exe\"",
+  "publishSource": "https://www.nuget.org/api/v2/package",
+  "scripts": {
+    "prebuild": "npm run clean",
+    "clean": "rimraf dist build",
+    "build": "npm-run-all build:* tests package",
+    "build:restore": "cross-env globstar -- ${npm_package_dotnetPath} restore \"**/*.sln\" /p:Version=${npm_package_version}",
+    "build:build": "cross-env globstar -- ${npm_package_dotnetPath} build \"**/*.sln\" --configuration ${npm_package_configuration} /p:Version=${npm_package_version}",
+    "tests": "npm-run-all tests:*",
+    "tests:core": "cross-env globstar -- ${npm_package_dotnetPath} test -f netcoreapp1.1 \"src/${npm_package_name}.Specs/*.csproj",
+    "pretests:net40": "cross-env globstar -- node ./scripts/nuget.js install Machine.Specifications.Runner.Console -Output build",
+    "tests:net40": "cross-env globstar run ./build/Machine.Specifications.Runner.Console.0.9.3/tools/mspec-x86-clr4.exe \"./src/**/bin/${npm_package_configuration}/**/net40/*.Specs.dll\"",
+    "package": "npm-run-all package:*",
+    "package:main": "cross-env globstar -- ${npm_package_dotnetPath} pack \"./src/**/${npm_package_name}.csproj\" -c ${npm_package_configuration} --no-build -o ../../dist --include-symbols /p:Version=${npm_package_version}",
+    "publish": "npm-run-all publish:*",
+    "publish:main": "cross-env globstar -- ${npm_package_dotnetPath} nuget push dist/${npm_package_name}.${npm_package_version}.nupkg --source ${npm_package_publishSource}"
+  },
+  "keywords": [
+    "bdd tdd testing"
+  ],
+  "author": "Derek Greer",
+  "dependencies": {},
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "cross-env": "^4.0.0",
+    "cross-run": "^1.0.1",
+    "download-cli": "^1.0.1",
+    "extend": "^3.0.0",
+    "globstar": "^1.0.0",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "npm-run-all": "^4.0.2",
+    "path": "^0.12.7",
+    "request": "^2.81.0",
+    "rimraf": "^2.6.1",
+    "tmp": "^0.0.31",
+    "which": "^1.2.14"
+  }
+}

@@ -7,7 +7,7 @@ namespace ExpectedObjects.Strategies
     {
         public bool CanCompare(Type type)
         {
-            return (type.IsClass && !type.IsArray);
+            return (type.GetTypeInfo().IsClass && !type.IsArray);
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace ExpectedObjects
@@ -21,7 +22,7 @@ namespace ExpectedObjects
 
 				return "\"" + str.Replace("\n", "\\n") + "\"";
 			}
-			if (obj.GetType().IsValueType) return "[" + obj + "]";
+			if (obj.GetType().GetTypeInfo().IsValueType) return "[" + obj + "]";
 
 			if (obj is IEnumerable)
 			{

@@ -8,7 +8,7 @@ namespace ExpectedObjects.Strategies
     {
         public bool CanCompare(Type type)
         {
-            if (type.IsGenericType)
+            if (type.GetTypeInfo().IsGenericType)
             {
                 if (type.GetGenericTypeDefinition().Equals(typeof (KeyValuePair<,>)))
                 {

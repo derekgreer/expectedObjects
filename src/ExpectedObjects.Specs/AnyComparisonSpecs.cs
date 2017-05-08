@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using ExpectedObjects.Comparisons;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
-using Moq;
 using It = Machine.Specifications.It;
 
 namespace ExpectedObjects.Specs
 {
-	public class when_comparing_any_with_matching_comparison
+    [Subject("Any Comparision")]
+    public class when_comparing_any_with_matching_comparison
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
 
 		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 
 		Establish context = () =>
 			{
@@ -34,13 +33,12 @@ namespace ExpectedObjects.Specs
 		It should_be_equal = () => _result.ShouldBeTrue();
 	}
 
+    [Subject("Any Comparision")]
 	public class when_asserting_equality_for_equal_any_comparison
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
-
-		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
+		
 		static Exception _exception;
 
 		Establish context = () =>
@@ -58,7 +56,7 @@ namespace ExpectedObjects.Specs
 					};
 			};
 
-		Because of = () => _exception = Catch.Exception(() => _actual.ShouldEqual(_expected));
+		Because of = () => _exception = Catch.Exception(() => _expected.ShouldEqual(_actual));
 
 
 		It should_throw_an_expection_with_message = () => _exception.Message.ShouldEqual(
@@ -66,13 +64,13 @@ namespace ExpectedObjects.Specs
 			              Environment.NewLine));
 	}
 
-	public class when_comparing_any_with_nonmatching_comparison
+    [Subject("Any Comparision")]
+    public class when_comparing_any_with_nonmatching_comparison
 	{
 		static ComplexType _actual;
 		static ExpectedObject _expected;
 
 		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
 
 		Establish context = () =>
 			{

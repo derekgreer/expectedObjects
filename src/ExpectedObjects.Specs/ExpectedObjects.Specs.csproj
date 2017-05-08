@@ -1,132 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1A038C47-AE91-417E-88E4-22D524A19672}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExpectedObjects.Specs</RootNamespace>
-    <AssemblyName>ExpectedObjects.Specs</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
+    <TargetFrameworks>netcoreapp1.1;net40</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>169</NoWarn>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1705;0169;</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Machine.Specifications, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Machine.Specifications.0.8.3\lib\net40\Machine.Specifications.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications.Clr4, Version=0.8.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Machine.Specifications.0.8.3\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications.Should">
-      <HintPath>..\packages\Machine.Specifications.Should.0.7.2\lib\net40\Machine.Specifications.Should.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq, Version=4.2.1502.911, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.1'">
+    <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.*" />
+    <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
+    <PackageReference Include="Moq" Version="4.7.10" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AnonymousSpecs.cs" />
-    <Compile Include="ComparableSpecs.cs" />
-    <Compile Include="ComparisonSpecs.cs" />
-    <Compile Include="ComparisonStrategySpecs.cs" />
-    <Compile Include="ComplexTypeSpecs.cs" />
-    <Compile Include="DecimalSpecs.cs" />
-    <Compile Include="DictionarySpecs.cs" />
-    <Compile Include="DoubleSpecs.cs" />
-    <Compile Include="EnumerableSecs.cs" />
-    <Compile Include="EnumerableSpecs.cs" />
-    <Compile Include="EnumSpecs.cs" />
-    <Compile Include="EqualsOverrideSpecs.cs" />
-    <Compile Include="EqualsSpecs.cs" />
-    <Compile Include="ExpectComparisonSpecs.cs" />
-    <Compile Include="ExtensionsSpecs.cs" />
-    <Compile Include="IndexSpecs.cs" />
-    <Compile Include="NotNullComparisonSpecs.cs" />
-    <Compile Include="NullComparisonSpecs.cs" />
-    <Compile Include="NullSpecs.cs" />
-    <Compile Include="ObjectShouldEqualExtensionSpecs.cs" />
-    <Compile Include="ObjectShouldMatchExtensionSpecs.cs" />
-    <Compile Include="ObjectShouldNotEqualExtensionSpecs.cs" />
-    <Compile Include="ObjectShouldNotMatchSpecs.cs" />
-    <Compile Include="ObjectSpecs.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShouldEqualExtensionDoubleSpecs.cs" />
-    <Compile Include="ShouldEqualExtensionEnumerableSpecs.cs" />
-    <Compile Include="ShouldEqualExtensionIndexSpecs.cs" />
-    <Compile Include="ShouldEqualExtensionKeyValuePairSpecs.cs" />
-    <Compile Include="ShouldEqualExtensionObjectSpecs.cs" />
-    <Compile Include="ShouldEqualExtensionStringSpecs.cs" />
-    <Compile Include="ShouldMatchExtensionSpecs.cs" />
-    <Compile Include="ShouldNotEqualExtensionSpecs.cs" />
-    <Compile Include="ShouldNotMatchExtensionSpecs.cs" />
-    <Compile Include="ShouldWriterSpecs.cs" />
-    <Compile Include="StringSpecs.cs" />
-    <Compile Include="StructureSpecs.cs" />
-    <Compile Include="TestTypes\ComparableType.cs" />
-    <Compile Include="TestTypes\ComplexType.cs" />
-    <Compile Include="TestTypes\EnumType.cs" />
-    <Compile Include="TestTypes\EqualsOverrideType.cs" />
-    <Compile Include="TestTypes\IndexType.cs" />
-    <Compile Include="TestTypes\MultiIndexType.cs" />
-    <Compile Include="TestTypes\SimpleType.cs" />
-    <Compile Include="TestTypes\StructureType.cs" />
-    <Compile Include="TestTypes\TypeWithIEnumerable.cs" />
-    <Compile Include="TestTypes\TypeWithIndexType.cs" />
-    <Compile Include="TestTypes\TypeWithString.cs" />
-    <Compile Include="TestTypes\TypeWithString2.cs" />
-    <Compile Include="TestTypes\TypeWithStringField.cs" />
-    <Compile Include="HidingPropertiesSpecs.cs" />
-    <Compile Include="TypeMismatchSpecs.cs" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
+    <PackageReference Include="Moq" Version="4.2.1510.2205" /> 
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\ExpectedObjects\ExpectedObjects.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExpectedObjects\ExpectedObjects.csproj">
-      <Project>{a5d5db00-8aee-4625-8040-ec3367b5255e}</Project>
-      <Name>ExpectedObjects</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

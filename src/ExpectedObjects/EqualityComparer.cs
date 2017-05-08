@@ -210,7 +210,7 @@ namespace ExpectedObjects
 						closestPropertyDeclaration = pi;
 					else
 					{
-						declaringType = declaringType.BaseType;
+						declaringType = declaringType.GetTypeInfo().BaseType;
 					}
 				}
 

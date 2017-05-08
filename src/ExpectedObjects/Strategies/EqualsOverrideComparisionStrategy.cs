@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -9,17 +10,14 @@ namespace ExpectedObjects.Strategies
         public bool CanCompare(Type type)
         {
             if (IsAnonymousType(type))
-            {
                 return false;
-            }
 
-            MethodInfo mi = type.GetMethod("Equals",
-                                           BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
-                                           null, new[] {typeof (object)}, null);
+            var overriddenEquals = type
+                .GetTypeInfo()
+                .GetDeclaredMethods("Equals")
+                .FirstOrDefault(m => m.IsVirtual && (m.Attributes & MethodAttributes.VtableLayoutMask) == MethodAttributes.ReuseSlot);
 
-            return (mi != null &&
-                    ((mi.Attributes & MethodAttributes.Virtual) != 0) &&
-                    ((mi.Attributes & MethodAttributes.VtableLayoutMask) == MethodAttributes.ReuseSlot));
+            return overriddenEquals != null;
         }
 
 
@@ -30,10 +28,10 @@ namespace ExpectedObjects.Strategies
 
         public bool IsAnonymousType(Type type)
         {
-            bool hasCompilerGeneratedAttribute =
-                type.GetCustomAttributes(typeof (CompilerGeneratedAttribute), false).Length > 0;
-            bool nameContainsAnonymousType = type.FullName.Contains("AnonymousType");
-            bool isAnonymousType = hasCompilerGeneratedAttribute && nameContainsAnonymousType;
+            var hasCompilerGeneratedAttribute =
+                type.GetTypeInfo().GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any();
+            var nameContainsAnonymousType = type.FullName.Contains("AnonymousType");
+            var isAnonymousType = hasCompilerGeneratedAttribute && nameContainsAnonymousType;
 
             return isAnonymousType;
         }

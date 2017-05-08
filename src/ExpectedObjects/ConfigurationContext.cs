@@ -53,7 +53,7 @@ namespace ExpectedObjects
 
 		public BindingFlags GetFieldBindingFlags()
 		{
-			var flags = BindingFlags.Default;
+			BindingFlags flags = 0;
 
 			if ((_memberType & MemberType.PublicFields) == MemberType.PublicFields)
 			{

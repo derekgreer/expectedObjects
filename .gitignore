@@ -1,10 +1,12 @@
 build/
+dist/
+tools/
 reports/
 [Bb]in/
 [Oo]bj/
 TestResults/
 PrecompiledWeb/
-src/CommonAssemblyInfo.cs
+build/CommonAssemblyInfo.cs
 src/packages/
 artifacts
 lib
@@ -18,3 +20,7 @@ _UpgradeReport_Files/
 *.bak
 *.log
 *.log.*
+TestResult.xml
+node_modules
+yarn-error.log
+.yarnclean
