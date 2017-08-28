@@ -11,11 +11,11 @@ namespace ExpectedObjects.Specs
 		static Exception _exception;
 
 		Establish context = () =>
-			{
-				_expected = new
-					{
-						StringProperty = 1
-					}.ToExpectedObject().IgnoreTypes();
+		{
+		    _expected = new
+		    {
+		        StringProperty = 1
+		    }.ToExpectedObject();
 
 				_actual = new SimpleType
 					{
@@ -24,7 +24,7 @@ namespace ExpectedObjects.Specs
 			};
 
 
-		Because of = () => _exception = Catch.Exception(() => _expected.Equals(_actual));
+		Because of = () => _exception = Catch.Exception(() => _expected.Matches(_actual));
 
 		It should_not_throw_an_exception = () => _exception.ShouldBeNull();
 	}

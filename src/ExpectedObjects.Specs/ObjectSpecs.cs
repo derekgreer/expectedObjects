@@ -40,7 +40,7 @@ namespace ExpectedObjects.Specs
                               };
             };
 
-        Because of = () => _result = _expected.ToExpectedObject().IgnoreTypes().Equals(_actual);
+        Because of = () => _result = _expected.ToExpectedObject().Matches(_actual);
 
         It should_be_equal = () => _result.ShouldBeTrue();
     }

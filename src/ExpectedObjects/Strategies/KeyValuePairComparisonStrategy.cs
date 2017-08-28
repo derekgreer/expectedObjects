@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ExpectedObjects.Strategies
 {
-    class KeyValuePairComparisonStrategy : IComparisonStrategy
+    public class KeyValuePairComparisonStrategy : IComparisonStrategy
     {
         public bool CanCompare(Type type)
         {
@@ -28,14 +28,14 @@ namespace ExpectedObjects.Strategies
             object key1 = getKey.Invoke(this, new[] {expected});
             object key2 = getKey.Invoke(this, new[] {actual});
 
-            areEqual = comparisonContext.AreEqual(key1, key2, "Key");
+            areEqual = comparisonContext.ReportEquality(key1, key2, "Key");
 
 
             MethodInfo getValue = GetMethodInfo("GetValue", genericTypes);
             object value1 = getValue.Invoke(this, new[] {expected});
             object value2 = getValue.Invoke(this, new[] {actual});
 
-            areEqual = comparisonContext.AreEqual(value1, value2, "Value") && areEqual;
+            areEqual = comparisonContext.ReportEquality(value1, value2, "Value") && areEqual;
 
             return areEqual;
         }

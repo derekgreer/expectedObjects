@@ -20,48 +20,17 @@ namespace ExpectedObjects.Specs
 				_expected = new
 					{
 						StringProperty = new Any<string>()
-					}.ToExpectedObject().IgnoreTypes();
+					}.ToExpectedObject();
 
-				_actual = new ComplexType
+                _actual = new ComplexType
 					{
 						StringProperty = "test string"
 					};
 			};
 
-		Because of = () => _result = _expected.Equals(_actual);
+		Because of = () => _result = _expected.Matches(_actual);
 
 		It should_be_equal = () => _result.ShouldBeTrue();
-	}
-
-    [Subject("Any Comparision")]
-	public class when_asserting_equality_for_equal_any_comparison
-	{
-		static ComplexType _actual;
-		static ExpectedObject _expected;
-		
-		static Exception _exception;
-
-		Establish context = () =>
-			{
-				_expected = new
-					{
-						StringProperty = new Any<object>()
-					}.ToExpectedObject().IgnoreTypes();
-
-				_actual = new ComplexType
-					{
-						StringProperty = null,
-						DecimalProperty = 10.10m,
-						IndexType = new IndexType<int>(new List<int> { 1, 2, 3, 4, 5 })
-					};
-			};
-
-		Because of = () => _exception = Catch.Exception(() => _expected.ShouldEqual(_actual));
-
-
-		It should_throw_an_expection_with_message = () => _exception.Message.ShouldEqual(
-			string.Format("For ComplexType.StringProperty, expected any instance of System.Object but found [null].{0}",
-			              Environment.NewLine));
 	}
 
     [Subject("Any Comparision")]
@@ -77,7 +46,7 @@ namespace ExpectedObjects.Specs
 				_expected = new
 					{
 						StringProperty = new Any<int>()
-					}.ToExpectedObject().IgnoreTypes();
+					}.ToExpectedObject();
 
 				_actual = new ComplexType
 					{
@@ -85,7 +54,7 @@ namespace ExpectedObjects.Specs
 					};
 			};
 
-		Because of = () => _result = _expected.Equals(_actual);
+		Because of = () => _result = _expected.Matches(_actual);
 
 		It should_not_be_equal = () => _result.ShouldBeFalse();
 	}

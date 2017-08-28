@@ -9,7 +9,7 @@ namespace ExpectedObjects.Specs
 	public class when_comparing_with_custom_comparison
 	{
 		static ComplexType _actual;
-		static object _expected;
+		static ExpectedObject _expected;
 		static bool _called;
 
 		static bool _result;
@@ -25,7 +25,7 @@ namespace ExpectedObjects.Specs
 				_expected = new
 					{
 						StringProperty = _comparisionSpy.Object
-					}.ToExpectedObject().IgnoreTypes();
+					}.ToExpectedObject();
 
 				_actual = new ComplexType
 					{
@@ -35,7 +35,7 @@ namespace ExpectedObjects.Specs
 					};
 			};
 
-		Because of = () => _result = _expected.Equals(_actual);
+		Because of = () => _result = _expected.Matches(_actual);
 
 		It should_use_custom_comparison = () => _called.ShouldBeTrue();
 	}

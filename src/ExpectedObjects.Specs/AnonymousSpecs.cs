@@ -8,13 +8,13 @@ namespace ExpectedObjects.Specs
 	public class when_comparing_partial_anonymous_to_matching_type
 	{
 		static ComplexType _actual;
-		static object _expected;
+		static ExpectedObject _expected;
 
 		static bool _result;
 
 		Establish context = () =>
 			{
-				_expected = new {StringProperty = "test string"}.ToExpectedObject().IgnoreTypes();
+				_expected = new {StringProperty = "test string"}.ToExpectedObject();
 
 				_actual = new ComplexType
 					{
@@ -24,7 +24,7 @@ namespace ExpectedObjects.Specs
 					};
 			};
 
-		Because of = () => _result = _expected.Equals(_actual);
+		Because of = () => _result = _expected.Matches(_actual);
 
 		It should_be_equal = () => _result.ShouldBeTrue();
 	}
@@ -82,7 +82,7 @@ namespace ExpectedObjects.Specs
 					};
 			};
 
-		Because of = () => _result = _expected.ToExpectedObject().IgnoreTypes().Equals(_actual);
+		Because of = () => _result = _expected.ToExpectedObject().Matches(_actual);
 
 		It should_be_equal = () => _result.ShouldBeTrue();
 	}

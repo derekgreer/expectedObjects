@@ -13,8 +13,8 @@ namespace ExpectedObjects.Specs
 
         Establish context = () =>
             {
+                _expected = new Dictionary<string, string> { { "key2", "value2" } };
                 _actual = new Dictionary<string, string> {{"key1", "value1"}, {"key2", "value2"}};
-                _expected = new Dictionary<string, string> {{"key2", "value2"}};
             };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);

@@ -23,7 +23,7 @@ namespace ExpectedObjects.Specs
 				_expected = new
 					{
 						TypeWithString = new { StringProperty = "test" }
-					}.ToExpectedObject().IgnoreTypes();
+					}.ToExpectedObject();
 
 				_actual = new ComplexType
 					{
@@ -31,7 +31,7 @@ namespace ExpectedObjects.Specs
 					};
 			};
 
-		Because of = () => _result = _expected.Equals(_actual);
+		Because of = () => _result = _expected.Matches(_actual);
 
 		It should_not_be_equal = () => _result.ShouldBeFalse();
 	}

@@ -1,33 +1,40 @@
 ﻿using System;
+using ExpectedObjects.Reporting;
 
 namespace ExpectedObjects
 {
     public class ExpectedObject
     {
-        readonly IConfigurationContext _configurationContext = new ConfigurationContext();
         readonly object _expected;
+        readonly IConfiguration _configuration;
 
-        public ExpectedObject(object expected)
+        public ExpectedObject(object instance, IConfiguration configuration)
         {
-            _expected = expected;
+            _expected = instance;
+            _configuration = configuration;
         }
-
+        
         public override bool Equals(object actual)
         {
-            return new EqualityComparer((IConfiguredContext)_configurationContext).AreEqual(_expected, actual);
+            return Equals(actual, new NullWriter());
+        }
+
+        public bool Equals(object actual, IWriter writer, bool ignoreTypeInformation = false)
+        {
+            return new EqualityComparer(_configuration).AreEqual(_expected, actual, writer, ignoreTypeInformation);
         }
 
         public bool Equals(ExpectedObject other)
         {
-            throw new Exception("ExpectedObject is not intended to be compared to another ExpectedObject");
+            throw new Exception($"Objects of type {nameof(ExpectedObject)} can not be compared to another instance of {nameof(ExpectedObject)}.");
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return ((_expected != null ? _expected.GetHashCode() : 0)*397) ^
-                       (_configurationContext != null ? _configurationContext.GetHashCode() : 0);
+                return ((_expected != null ? _expected.GetHashCode() : 0) * 397) ^
+                       (_configuration != null ? _configuration.GetHashCode() : 0);
             }
         }
 
@@ -39,12 +46,6 @@ namespace ExpectedObjects
         public static bool operator !=(ExpectedObject left, ExpectedObject right)
         {
             return !Equals(left, right);
-        }
-
-        public ExpectedObject Configure(Action<IConfigurationContext> configuration)
-        {
-            configuration(_configurationContext);
-            return this;
         }
     }
 }

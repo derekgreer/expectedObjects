@@ -33,12 +33,12 @@ namespace ExpectedObjects.Strategies
             if (actualFieldInfo == null)
             {
                 return comparisonContext
-                    .AreEqual(value1, Activator.CreateInstance(typeof(MissingMember<>)
-                                                                   .MakeGenericType(expectedFieldInfo.FieldType)), expectedFieldInfo.Name);
+                    .ReportEquality(value1, Activator.CreateInstance(typeof(MissingMember<>)
+                        .MakeGenericType(expectedFieldInfo.FieldType)), expectedFieldInfo.Name);
             }
 
             object value2 = actualFieldInfo.GetValue(actual);
-            return comparisonContext.AreEqual(value1, value2, expectedFieldInfo.Name);  
+            return comparisonContext.ReportEquality(value1, value2, expectedFieldInfo.Name);  
         }
 
         static bool CompareProperty(PropertyInfo expectedPropertyInfo, PropertyInfo actualPropertyInfo, object expected, object actual,
@@ -89,7 +89,7 @@ namespace ExpectedObjects.Strategies
                             object value1 = pi.GetValue(expected, indexValues);
                             object value2 = pi.GetValue(actual, indexValues);
 
-                            if (!comparisonContext.AreEqual(value1, value2, pi.Name + "[" + i + "]"))
+                            if (!comparisonContext.ReportEquality(value1, value2, pi.Name + "[" + i + "]"))
                             {
                                 areEqual = false;
                             }
@@ -109,12 +109,12 @@ namespace ExpectedObjects.Strategies
             if (pi2 == null)
             {
                 return comparisonContext
-                    .AreEqual(value1, Activator.CreateInstance(typeof (MissingMember<>)
-                                                                   .MakeGenericType(pi1.PropertyType)), pi1.Name);
+                    .ReportEquality(value1, Activator.CreateInstance(typeof (MissingMember<>)
+                        .MakeGenericType(pi1.PropertyType)), pi1.Name);
             }
 
             object value2 = pi2.GetValue(actual, null);
-            return comparisonContext.AreEqual(value1, value2, pi1.Name);
+            return comparisonContext.ReportEquality(value1, value2, pi1.Name);
         }
     }
 }

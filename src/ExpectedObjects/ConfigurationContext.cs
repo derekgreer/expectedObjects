@@ -1,66 +1,51 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
 {
-	public class ConfigurationContext : IConfigurationContext, IConfiguredContext
-	{
-		readonly Stack<IComparisonStrategy> _strategies = new Stack<IComparisonStrategy>();
-		bool _ignoreTypes;
-		MemberType _memberType;
-		IWriter _writer = NullWriter.Instance;
+    public class ConfigurationContext : IConfigurationContext, IConfiguration
+    {
+        MemberType _memberType;
+        Stack<IComparisonStrategy> _strategies = new Stack<IComparisonStrategy>();
 
-		public void SetWriter(IWriter writer)
-		{
-			_writer = writer;
-		}
+        public IEnumerable<IComparisonStrategy> Strategies => _strategies;
 
-		void IConfigurationContext.IgnoreTypes()
-		{
-			_ignoreTypes = true;
-		}
+        public BindingFlags GetFieldBindingFlags()
+        {
+            BindingFlags flags = 0;
 
-		public void PushStrategy<T>() where T : IComparisonStrategy, new()
-		{
-			_strategies.Push(new T());
-		}
+            if ((_memberType & MemberType.PublicFields) == MemberType.PublicFields)
+                flags |= BindingFlags.Public | BindingFlags.Instance;
 
-		public void PushStrategy(IComparisonStrategy comparisonStrategy)
-		{
-			_strategies.Push(comparisonStrategy);
-		}
+            return flags;
+        }
 
-		public void Include(MemberType memberType)
-		{
-			_memberType |= memberType;
-		}
+        public void PushStrategy<T>() where T : IComparisonStrategy, new()
+        {
+            _strategies.Push(new T());
+        }
 
-		public IEnumerable<IComparisonStrategy> Strategies
-		{
-			get { return _strategies; }
-		}
+        public void PushStrategy(IComparisonStrategy comparisonStrategy)
+        {
+            _strategies.Push(comparisonStrategy);
+        }
 
-		public IWriter Writer
-		{
-			get { return _writer; }
-		}
+        public void IncludeMemberTypes(MemberType memberType)
+        {
+            _memberType |= memberType;
+        }
 
-		bool IConfiguredContext.IgnoreTypes
-		{
-			get { return _ignoreTypes; }
-		}
-
-		public BindingFlags GetFieldBindingFlags()
-		{
-			BindingFlags flags = 0;
-
-			if ((_memberType & MemberType.PublicFields) == MemberType.PublicFields)
-			{
-				flags |= BindingFlags.Public | BindingFlags.Instance;
-			}
-
-			return flags;
-		}
-	}
+        public void ReplaceStrategy<TExistingStrategy, TNewStrategy>() where TExistingStrategy : IComparisonStrategy
+            where TNewStrategy : IComparisonStrategy, new()
+        {
+            var list = _strategies.ToList();
+            var existingIndex = list.FindIndex(s => typeof(TExistingStrategy) == s.GetType());
+            list.RemoveAt(existingIndex);
+            list.Insert(existingIndex, new TNewStrategy());
+            list.Reverse();
+            _strategies = new Stack<IComparisonStrategy>(list);
+        }
+    }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using ExpectedObjects.Reporting;
 
 namespace ExpectedObjects
 {
@@ -7,41 +9,55 @@ namespace ExpectedObjects
 		public static void ShouldEqual<T>(this ExpectedObject expected, T actual)
 		{
 			IWriter writer = new ShouldWriter();
-			expected.Configure(ctx => ctx.SetWriter(writer));
-			expected.Equals(actual);
-			string results = writer.GetFormattedResults();
 
-			if (!string.IsNullOrEmpty(results))
-				throw new Exception(results);
+            if (!expected.Equals(actual, writer))
+            { 
+		        string results = writer.GetFormattedResults();
+
+		        if (!string.IsNullOrEmpty(results))
+		            throw new Exception(results);
+		    }
 		}
 
 		public static void ShouldNotEqual<T>(this ExpectedObject expected, T actual)
 		{
-			if (expected.Equals(actual))
-				throw new Exception(string.Format("For {0}, should not equal expected object but does.{1}",
-					actual.ToUsefulString(), Environment.NewLine));
+		    var writer = new ShouldWriter();
+
+			if (expected.Equals(actual, writer))
+			{
+                var sb = new StringBuilder();
+			    sb.Append($"The expected object should not equal the actual object.");
+			    sb.Append(Environment.NewLine);
+			    sb.Append(Environment.NewLine);
+                sb.Append(writer.GetTrunkFormattedResults());
+                throw new Exception(sb.ToString());
+			}
 		}
 
 		public static void ShouldMatch<T>(this ExpectedObject expected, T actual)
 		{
-			var writer = new ShouldWriter();
-			expected.Configure(ctx =>
-			{
-				ctx.SetWriter(writer);
-				ctx.IgnoreTypes();
-			});
-			expected.Equals(actual);
-			string results = writer.GetFormattedResults();
+		    IWriter writer = new ShouldWriter();
 
-			if (!string.IsNullOrEmpty(results))
-				throw new Exception(results);
+		    if (!expected.Equals(actual, writer, true))
+		    {
+		        string results = writer.GetFormattedResults();
+		        throw new Exception(results);
+		    }
 		}
 
 		public static void ShouldNotMatch<T>(this ExpectedObject expected, T actual)
 		{
-			if (expected.Configure(ctx => ctx.IgnoreTypes()).Equals(actual))
-				throw new Exception(string.Format("For {0}, should not equal expected object but does.{1}",
-					actual.ToUsefulString(), Environment.NewLine));
-		}
+		    var writer = new ShouldWriter();
+
+		    if (expected.Equals(actual, writer, true))
+		    {
+		        var sb = new StringBuilder();
+		        sb.Append($"The expected object should not match the actual object.");
+		        sb.Append(Environment.NewLine);
+		        sb.Append(Environment.NewLine);
+		        sb.Append(writer.GetTrunkFormattedResults());
+		        throw new Exception(sb.ToString());
+		    }
+        }
 	}
 }

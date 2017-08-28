@@ -8,14 +8,20 @@
   "scripts": {
     "prebuild": "npm run clean",
     "clean": "rimraf dist build",
-    "build": "npm-run-all build:* tests package",
-    "build:restore": "cross-env globstar -- ${npm_package_dotnetPath} restore \"**/*.sln\" /p:Version=${npm_package_version}",
-    "build:build": "cross-env globstar -- ${npm_package_dotnetPath} build \"**/*.sln\" --configuration ${npm_package_configuration} /p:Version=${npm_package_version}",
-    "tests": "cross-env globstar -- ${npm_package_dotnetPath} test -f netcoreapp1.1 \"src/${npm_package_name}.Specs/*.csproj",
-    "package": "npm-run-all package:*",
-    "package:main": "cross-env globstar -- ${npm_package_dotnetPath} pack \"./src/**/${npm_package_name}.csproj\" -c ${npm_package_configuration} --no-build -o ../../dist --include-symbols /p:Version=${npm_package_version}",
-    "publish": "npm-run-all publish:*",
-    "publish:main": "cross-env globstar -- ${npm_package_dotnetPath} nuget push dist/${npm_package_name}.${npm_package_version}.nupkg --source ${npm_package_publishSource}"
+    "build": "npm-run-all build:release:* tests package",
+    "build:release:restore": "cross-env-shell globstar -- ${npm_package_dotnetPath} restore \"**/*.sln\" /p:Version=${npm_package_version}",
+    "build:release:compile": "cross-env-shell globstar -- ${npm_package_dotnetPath} build \"**/*.sln\" --configuration ${npm_package_configuration} /p:Version=${npm_package_version}",
+    "prebuild:pre-release": "npm run clean",
+    "build:pre-release": "npm-run-all build:pre-release:* tests package:pre-release",
+    "build:pre-release:restore": "cross-env-shell globstar -- ${npm_package_dotnetPath} restore \"**/*.sln\" /p:Version=${PreReleaseVersion}",
+    "build:pre-release:compile": "cross-env-shell globstar -- ${npm_package_dotnetPath} build \"**/*.sln\" --configuration ${npm_package_configuration} /p:Version=${PreReleaseVersion}",
+    "tests": "cross-env-shell globstar -- ${npm_package_dotnetPath} test -f netcoreapp1.1 \"src/${npm_package_name}.Specs/*.csproj",
+    "package": "npm-run-all package:release:*",
+    "package:release:main": "cross-env-shell globstar -- ${npm_package_dotnetPath} pack \"./src/**/${npm_package_name}.csproj\" -c ${npm_package_configuration} --no-build -o ../../dist --include-symbols /p:Version=${npm_package_version}",
+    "package:pre-release": "npm-run-all package:pre-release:*",
+    "package:pre-release:main": "cross-env-shell globstar -- ${npm_package_dotnetPath} pack --version-suffix ${VersionSuffix} \"./src/**/${npm_package_name}.csproj\" -c ${npm_package_configuration} --no-build -o ../../dist --include-symbols -p:VersionPrefix=${PreReleaseVersion}",
+    "publish": "cross-env-shell globstar -- ${npm_package_dotnetPath} nuget push dist/*.nupkg --source ${npm_package_publishSource}",
+    "publish:local": "cross-env-shell cpx dist/*.nupkg ${APPDATA}/Packages/"
   },
   "keywords": [
     "bdd tdd testing"
@@ -24,7 +30,7 @@
   "dependencies": {},
   "devDependencies": {
     "cpx": "^1.5.0",
-    "cross-env": "^4.0.0",
+    "cross-env": "^5.0.5",
     "cross-run": "^1.0.1",
     "download-cli": "^1.0.1",
     "extend": "^3.0.0",

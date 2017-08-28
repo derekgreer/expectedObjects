@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace ExpectedObjects.Strategies
 {
@@ -8,41 +11,76 @@ namespace ExpectedObjects.Strategies
     {
         public bool CanCompare(Type type)
         {
-            return (typeof (IEnumerable).IsAssignableFrom(type));
+            return typeof(IEnumerable).IsAssignableFrom(type);
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)
         {
-            bool areEqual = true;
-            var expectedEnumerable = (IEnumerable)expected;
-            var actualEnumerable = (IEnumerable)actual;
-            IEnumerator expectedEnumerator = expectedEnumerable.GetEnumerator();
-            IEnumerator actualEnumerator = actualEnumerable.GetEnumerator();
-            bool expectedHasValue = expectedEnumerator.MoveNext();
-            bool actualHasValue = actualEnumerator.MoveNext();
+            var areEqual = true;
+            var expectedEnumerable = (IEnumerable) expected;
+            var actualEnumerable = (IEnumerable) actual;
+            var expectedList = expectedEnumerable.Cast<object>().ToList();
+            var actualList = actualEnumerable.Cast<object>().ToList();
+            var expectedDictionary = GetDictionary(expectedList);
+            var actualDictionary = GetDictionary(actualList);
 
-            int yield = 0;
+            Action emptyDelegate = () => { };
+            Action removeDelegate;
 
-            while (expectedHasValue && actualHasValue)
+            foreach (var expectedEntry in expectedDictionary.ToList())
             {
-                areEqual = comparisonContext.AreEqual(expectedEnumerator.Current, actualEnumerator.Current, "[" + yield++ + "]") && areEqual;
-                
-                expectedHasValue = expectedEnumerator.MoveNext();
-                actualHasValue = actualEnumerator.MoveNext();
+                removeDelegate = emptyDelegate;
+                if (!actualDictionary.Any(actualEntry =>
+                {
+                    if (!comparisonContext.AreEqual(expectedEntry.Value, actualEntry.Value, $"[{expectedEntry.Key}]")) return false;
+                    removeDelegate = () => actualDictionary.Remove(actualEntry.Key);
+                    return true;
+                }))
+                {
+                    areEqual = comparisonContext.ReportEquality(expectedEntry.Value, new MissingElement(), $"[{expectedEntry.Key}]") && areEqual;
+                }
+
+                removeDelegate();
             }
 
-            if (!expectedHasValue && actualHasValue)
+
+            var unexpectedValues = new List<object>();
+            for (var actualIndex = 0; actualIndex < actualList.Count; actualIndex++)
             {
-                areEqual = comparisonContext.AreEqual(null, new UnexpectedElement(actualEnumerator.Current), "[" + yield + "]") &&
-                areEqual;
-            }
-            else if (expectedHasValue)
-            {
-                areEqual = comparisonContext.AreEqual(expectedEnumerator.Current, new MissingElement(), "[" + yield + "]") &&
-                areEqual;
+                removeDelegate = emptyDelegate;
+
+                if (!expectedDictionary.Any(expectedEntry =>
+                {
+                    var equal = comparisonContext.AreEqual(expectedEntry.Value, actualList[actualIndex], $"[{expectedEntry.Key}]");
+
+                    if (equal)
+                    {
+                        removeDelegate = () => expectedDictionary.Remove(expectedEntry.Key);
+                    }
+
+                    return equal;
+                }))
+                    unexpectedValues.Add(actualList[actualIndex].ToObjectString());
+
+                removeDelegate();
             }
 
+            if (unexpectedValues.Any())
+            {
+                var unexpectedElements = string.Join($",{Environment.NewLine}{Environment.NewLine}", unexpectedValues.Select(s => $"{s}"));
+                comparisonContext.Report(false, $"The following elements were unexpected:{Environment.NewLine}{Environment.NewLine}{unexpectedElements}", null, null);
+                areEqual = false;
+            }
             return areEqual;
+        }
+
+        static Dictionary<int, object> GetDictionary(List<object> list)
+        {
+            var dictionary = new Dictionary<int, object>();
+            for (var index = 0; index < list.Count; index++)
+                dictionary.Add(index, list[index]);
+
+            return dictionary;
         }
     }
 }

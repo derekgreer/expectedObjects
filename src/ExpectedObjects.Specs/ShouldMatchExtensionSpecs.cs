@@ -8,12 +8,12 @@ namespace ExpectedObjects.Specs
     {
         static TypeWithString2 _actual;
         static Exception _exception;
-        static ExpectedObjects.ExpectedObject _expected;
+        static ExpectedObject _expected;
 
         Establish context = () =>
         {
-            _expected = new TypeWithString { StringProperty = "this is a test" }.ToExpectedObject();
-            _actual = new TypeWithString2 { StringProperty = "this is a test" };
+            _expected = new TypeWithString {StringProperty = "this is a test"}.ToExpectedObject();
+            _actual = new TypeWithString2 {StringProperty = "this is a test"};
         };
 
         Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
