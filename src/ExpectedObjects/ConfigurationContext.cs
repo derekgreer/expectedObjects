@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ExpectedObjects.Strategies;
@@ -42,10 +43,22 @@ namespace ExpectedObjects
         {
             var list = _strategies.ToList();
             var existingIndex = list.FindIndex(s => typeof(TExistingStrategy) == s.GetType());
-            list.RemoveAt(existingIndex);
-            list.Insert(existingIndex, new TNewStrategy());
-            list.Reverse();
-            _strategies = new Stack<IComparisonStrategy>(list);
+
+            if(existingIndex == -1)
+                throw new Exception($"The strategy {typeof(TExistingStrategy)} was not registered.");
+
+            if (existingIndex >= 0)
+            {
+                list.RemoveAt(existingIndex);
+                list.Insert(existingIndex, new TNewStrategy());
+                list.Reverse();
+                _strategies = new Stack<IComparisonStrategy>(list);
+            }
+        }
+
+        public void ClearStrategies()
+        {
+            _strategies.Clear();
         }
     }
 }

@@ -1,6 +1,5 @@
-using System.Collections.Generic;
+using System;
 using ExpectedObjects.Reporting;
-using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
 {
@@ -8,19 +7,16 @@ namespace ExpectedObjects
     {
         public static ExpectedObject ToExpectedObject(this object expected)
         {
-            return new ExpectedObjectBuilder()
-                .UsingInstance(expected)
-                .UsingStrategies(new List<IComparisonStrategy>
-                {
-                    new DefaultComparisonStrategy(),
-                    new KeyValuePairComparisonStrategy(),
-                    new ClassComparisonStrategy(),
-                    new EnumerableComparisonStrategy(),
-                    new EqualsOverrideComparisonStrategy(),
-                    new PrimitiveComparisonStrategy(),
-                    new ComparableComparisonStrategy()
-                })
-                .Build();
+            return expected.ToExpectedObject(ctx => { ctx.UseAllStrategies(); });
+        }
+
+        public static ExpectedObject ToExpectedObject(this object expected,
+            Action<IConfigurationContext> configurationAction)
+        {
+            var configurationContext = new ConfigurationContext();
+            configurationContext.UseAllStrategies();
+            configurationAction(configurationContext);
+            return new ExpectedObject(expected, configurationContext);
         }
 
         public static bool Matches(this ExpectedObject expected, object actual)

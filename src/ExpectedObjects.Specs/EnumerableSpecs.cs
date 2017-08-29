@@ -117,6 +117,24 @@ namespace ExpectedObjects.Specs
     }
 
     [Subject("Enumerables")]
+    public class when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration
+    {
+        static TypeWithIEnumerable _actual;
+        static TypeWithIEnumerable _expected;
+        static bool _result;
+
+        Establish context = () =>
+        {
+            _expected = new TypeWithIEnumerable { Objects = new List<string> { "test2", "test1" } };
+            _actual = new TypeWithIEnumerable { Objects = new List<string> { "test1", "test2" } };
+        };
+
+        Because of = () => _result = _expected.ToExpectedObject(ctx => ctx.UseOrdinalComparision()).Equals(_actual);
+
+        It should_be_equal = () => _result.ShouldBeFalse();
+    }
+
+    [Subject("Enumerables")]
     public class when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration
     {
         static TypeWithIEnumerable _actual;

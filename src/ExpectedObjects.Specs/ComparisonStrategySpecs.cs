@@ -25,11 +25,8 @@ namespace ExpectedObjects.Specs
                     x => x.AreEqual(Moq.It.IsAny<object>(), Moq.It.IsAny<object>(), Moq.It.IsAny<IComparisonContext>()))
                 .Returns(false);
 
-            var expected = new TypeWithIEnumerable {Objects = new List<string> {"test string"}};
-
-            _expected = new ExpectedObjectBuilder()
-                .UsingInstance(expected)
-                .UsingStrategies(new List<IComparisonStrategy> {_comparisonStrategyMock.Object}).Build();
+            _expected = new TypeWithIEnumerable {Objects = new List<string> {"test string"}}
+                .ToExpectedObject(ctx => ctx.UseStrategies(new List<IComparisonStrategy> {_comparisonStrategyMock.Object}));
             _actual = new TypeWithIEnumerable {Objects = new List<string> {"test string"}};
         };
 
