@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/derekgreer/expectedObjects/compare/v1.3.1...v2.0.0) (2017-08-29)
+
+
+### Features
+
+* feat(test-output): Redesign test output to display approximation of expected and actual values ([1454dc2](https://github.com/derekgreer/expectedObjects/commit/1454dc2))
+
+
+### BREAKING CHANGES
+
+* Add ability to ignore the order when comparing instances of IEnumerable ([1454dc2](https://github.com/derekgreer/expectedObjects/commit/1454dc2))
+* Replace ExpectedObject.Configure() method with ExpectedObjectBuilder ([1454dc2](https://github.com/derekgreer/expectedObjects/commit/1454dc2))
+* Replace the IgnoreTypes() method with ExpectedObject extension methods: Matches(), DoesNotMatch() ([1454dc2](https://github.com/derekgreer/expectedObjects/commit/1454dc2))
+
+
+### Chores
+
+* chore(build): Add build support for packing and publishing pre-releases ([1454dc2](https://github.com/derekgreer/expectedObjects/commit/1454dc2))
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/derekgreer/expectedObjects/compare/v1.3.0...v1.3.1) (2017-08-26)
 
