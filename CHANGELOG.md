@@ -2,13 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/derekgreer/expectedObjects/compare/v2.0.0...v2.1.0) (2017-08-29)
+
+
+### Features
+
+* Add configuration to enable ordinal comparisons. ([2b26e25](https://github.com/derekgreer/expectedObjects/commit/2b26e25))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/derekgreer/expectedObjects/compare/v1.3.1...v2.0.0) (2017-08-29)
 
 
 ### Features
 
-* feat(test-output): Redesign test output to display approximation of expected and actual values ([1454dc2](https://github.com/derekgreer/expectedObjects/commit/1454dc2))
+* Redesign test output to display approximation of expected and actual values ([1454dc2](https://github.com/derekgreer/expectedObjects/commit/1454dc2))
 
 
 ### BREAKING CHANGES
