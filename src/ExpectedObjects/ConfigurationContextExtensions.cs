@@ -32,7 +32,7 @@ namespace ExpectedObjects
         /// </summary>
         /// <param name="configurationContext"></param>
         /// <returns></returns>
-        public static IConfigurationContext UseOrdinalComparision(this IConfigurationContext configurationContext)
+        public static IConfigurationContext UseOrdinalComparison(this IConfigurationContext configurationContext)
         {
             configurationContext.ReplaceStrategy<EnumerableComparisonStrategy, OrdinalEnumerableComparisonStrategy>();
             return configurationContext;

@@ -2,13 +2,13 @@
 {
     public enum EqualityResultType
     {
-        Comparision,
+        Comparison,
         Custom
     }
 
     public class EqualityResult
     {
-        public EqualityResult(bool status, string member, object expected, object actual, EqualityResultType resultType = EqualityResultType.Comparision, string message = null)
+        public EqualityResult(bool status, string member, object expected, object actual, EqualityResultType resultType = EqualityResultType.Comparison, string message = null)
         {
             Status = status;
             Member = member;

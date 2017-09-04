@@ -7,7 +7,7 @@ using It = Machine.Specifications.It;
 
 namespace ExpectedObjects.Specs
 {
-    [Subject("Any Comparision")]
+    [Subject("Any Comparison")]
     public class when_comparing_any_with_matching_comparison
 	{
 		static ComplexType _actual;
@@ -33,7 +33,7 @@ namespace ExpectedObjects.Specs
 		It should_be_equal = () => _result.ShouldBeTrue();
 	}
 
-    [Subject("Any Comparision")]
+    [Subject("Any Comparison")]
     public class when_comparing_any_with_nonmatching_comparison
 	{
 		static ComplexType _actual;

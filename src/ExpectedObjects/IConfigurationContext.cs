@@ -17,7 +17,7 @@ namespace ExpectedObjects
         void PushStrategy(IComparisonStrategy comparisonStrategy);
 
         /// <summary>
-        /// Specify which member types should be used in comparisions.
+        /// Specify which member types should be used in comparisons.
         /// </summary>
         /// <param name="memberType">member type flags</param>
         void IncludeMemberTypes(MemberType memberType);

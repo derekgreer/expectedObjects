@@ -4,7 +4,7 @@ using Machine.Specifications;
 namespace ExpectedObjects.Specs
 {
     [Subject("Results Formatting")]
-    public class when_retrieving_formatted_result_from_composite_comparision
+    public class when_retrieving_formatted_result_from_composite_comparison
     {
         static string _results;
         static IWriter _writer;
@@ -22,7 +22,7 @@ namespace ExpectedObjects.Specs
     }
 
     [Subject("Results Formatting")]
-    public class when_retrieving_formatted_result_from_equal_comparision
+    public class when_retrieving_formatted_result_from_equal_comparison
     {
         static EqualityResult _result;
         static IWriter _writer;

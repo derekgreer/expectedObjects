@@ -129,7 +129,7 @@ namespace ExpectedObjects.Specs
             _actual = new TypeWithIEnumerable { Objects = new List<string> { "test1", "test2" } };
         };
 
-        Because of = () => _result = _expected.ToExpectedObject(ctx => ctx.UseOrdinalComparision()).Equals(_actual);
+        Because of = () => _result = _expected.ToExpectedObject(ctx => ctx.UseOrdinalComparison()).Equals(_actual);
 
         It should_be_equal = () => _result.ShouldBeFalse();
     }

@@ -12,8 +12,8 @@ namespace ExpectedObjects
         readonly IConfiguration _configurationContext;
         readonly Stack<string> _elementStack = new Stack<string>();
 
-        readonly StackDictionary<object, IComparisionResult> _visited =
-            new StackDictionary<object, IComparisionResult>();
+        readonly StackDictionary<object, IComparisonResult> _visited =
+            new StackDictionary<object, IComparisonResult>();
 
         bool _ignoreTypeInformation;
 

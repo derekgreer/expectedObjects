@@ -13,18 +13,18 @@ namespace ExpectedObjects.Specs
 		static bool _called;
 
 		static bool _result;
-		static Mock<IComparison> _comparisionSpy;
+		static Mock<IComparison> _comparisonSpy;
 
 		Establish context = () =>
 			{
-				_comparisionSpy = new Mock<IComparison>();
-				_comparisionSpy.Setup(x => x.AreEqual(Moq.It.IsAny<object>()))
+				_comparisonSpy = new Mock<IComparison>();
+				_comparisonSpy.Setup(x => x.AreEqual(Moq.It.IsAny<object>()))
 				               .Callback<object>(x => _called = true);
 
 
 				_expected = new
 					{
-						StringProperty = _comparisionSpy.Object
+						StringProperty = _comparisonSpy.Object
 					}.ToExpectedObject();
 
 				_actual = new ComplexType

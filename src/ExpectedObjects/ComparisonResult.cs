@@ -1,6 +1,6 @@
 namespace ExpectedObjects
 {
-	public class ComparisonResult : IComparisionResult
+	public class ComparisonResult : IComparisonResult
 	{
 		readonly object _actual;
 
