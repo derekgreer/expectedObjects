@@ -2,7 +2,7 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 
-ExpectedObjects is a testing library implementing the [Expected Object pattern](http://xunitpatterns.com/State%20Verification.html#Expected%20Object).  Use of the Expected Object pattern eliminates the need to encumber system objects with test-specific equality behavior, helps to reduce test code duplication, and can aid in expressing the logical intent of automated tests.
+ExpectedObjects is a testing library implementing the [Expected Object pattern](http://xunitpatterns.com/State%20Verification.html#Expected%20Object).  Use of the Expected Object pattern eliminates the need to encumber system objects with test-specific equality behavior, helps to reduce test code duplication, and aids in expressing the logical intent of automated tests.
 
 ## Quickstart
 ### Installation
