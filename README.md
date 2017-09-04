@@ -13,34 +13,37 @@ $> nuget install ExpectedObjects
 ### Example Usage
 
 ```C#
-public class when_retrieving_a_customer
+using Xunit;
+
+namespace MyProject.Specs
 {
-  static Customer _actual;
-  static ExpectedObject _expected;
-  static ICustomerService _customerService;
-
-  Establish context = () =>
+  public class CustomerSpecs
+  {        
+    [Fact]
+    public void WhenRetrievingACustomer_ShouldReturnTheExpectedCustomer()
     {
-      _expected = new Customer
-                    {
-                      Name = "Jane Doe",
-                      PhoneNumber = "5128651000",
-                      Address = new Address
-                                  {
-                                    AddressLineOne = "123 Street",
-                                    AddressLineTwo = string.Empty,
-                                    City = "Austin",
-                                    State = "TX",
-                                    Zipcode = "78717"
-                                  }
-                    }.ToExpectedObject();
+      // Arrange
+      var expectedCustomer = new Customer
+      {
+        FirstName = "Silence",
+        LastName = "Dogood",
+        Address = new Address
+        {
+          AddressLineOne = "The New-England Courant",
+          AddressLineTwo = "3 Queen Street",
+          City = "Boston",
+          State = "MA",
+          PostalCode = "02114"
+        }                                            
+      }.ToExpectedObject();
 
-      _customerService = new CustomerService();
-    };
+      // Act
+      var actualCustomer = new CustomerService().GetCustomerByName("Silence", "Dogood");
 
-  Because of = () => _actual = _customerService.GetCustomerByName("Jane Doe");
-
-  It should_return_the_expected_customer = () => _expected.ShouldEqual(_actual);
+      // Assert
+      expectedCustomer.ShouldEqual(actualCustomer);
+    }
+  }
 }
 ```
 
