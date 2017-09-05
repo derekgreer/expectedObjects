@@ -10,10 +10,9 @@ namespace ExpectedObjects
             return expected.ToExpectedObject(ctx => { ctx.UseAllStrategies(); });
         }
 
-        public static ExpectedObject ToExpectedObject(this object expected,
-            Action<IConfigurationContext> configurationAction)
+        public static ExpectedObject ToExpectedObject<T>(this T expected, Action<IConfigurationContext<T>> configurationAction)
         {
-            var configurationContext = new ConfigurationContext();
+            var configurationContext = new ConfigurationContext<T>(expected);
             configurationContext.UseAllStrategies();
             configurationAction(configurationContext);
             return new ExpectedObject(expected, configurationContext);

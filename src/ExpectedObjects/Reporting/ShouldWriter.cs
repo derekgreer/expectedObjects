@@ -44,7 +44,7 @@ namespace ExpectedObjects.Reporting
                 .ToList()
                 .ForEach(x =>
                 {
-                    var member = !string.IsNullOrEmpty(x.Member) ? x.Member : ((string) null).ToUsefulString();
+                    var member = !string.IsNullOrEmpty(x.Member) ? x.Member : "Missing instance";
                     sb.Append($"{count++}) {member}:");
                     sb.Append(Environment.NewLine);
                     sb.Append(Environment.NewLine);

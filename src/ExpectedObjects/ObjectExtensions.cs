@@ -21,7 +21,7 @@ namespace ExpectedObjects
             var description = obj as Description;
             if (description != null)
                 if (description.Value != null)
-                    return $"{description.Label} {ToUsefulString(description.Value)}";
+                    return $"{description.Label} {ToUsefulString(description.Value, verbose)}";
                 else
                     return $"{description.Label}";
 
@@ -41,7 +41,7 @@ namespace ExpectedObjects
             {
                 var enumerable = ((IEnumerable) obj).Cast<object>();
 
-                return obj.GetType() + ":\n" + enumerable.EachToUsefulString();
+                return $"{obj.GetType().ToUsefulTypeName()}:{System.Environment.NewLine}{enumerable.EachToUsefulString(verbose)}";
             }
 
             str = verbose ? obj.ToObjectString() : obj.ToString();
@@ -52,28 +52,28 @@ namespace ExpectedObjects
             if (!verbose)
             {
                 if (str.Contains(Environment.NewLine))
-                    return $@"{obj.GetType().Name}:[{str.Tab()}]";
+                    return $@"{obj.GetType().ToUsefulTypeName()}:[{str.Tab()}]";
 
                 if (obj.GetType().ToString() == str)
-                    return obj.GetType().Name;
+                    return obj.GetType().ToUsefulTypeName();
 
-                str = $"{obj.GetType().Name}:[{str}]";
+                str = $"{obj.GetType().ToUsefulTypeName()}:[{str}]";
             }
 
             return str;
         }
 
-        static string EachToUsefulString<T>(this IEnumerable<T> enumerable)
+        static string EachToUsefulString<T>(this IEnumerable<T> enumerable, bool verbose = false)
         {
             var sb = new StringBuilder();
             sb.AppendLine("{");
             sb.Append(string.Join($",{Environment.NewLine}",
-                enumerable.Select(x => ToUsefulString(x).Tab()).Take(10).ToArray()));
+                enumerable.Select(x => ToUsefulString(x, verbose).Tab()).Take(10).ToArray()));
             if (enumerable.Count() > 10)
                 if (enumerable.Count() > 11)
                     sb.AppendLine($",{Environment.NewLine}  ...({enumerable.Count() - 10} more elements)");
                 else
-                    sb.AppendLine($",{Environment.NewLine}" + enumerable.Last().ToUsefulString().Tab());
+                    sb.AppendLine($",{Environment.NewLine}" + enumerable.Last().ToUsefulString(verbose).Tab());
             else sb.AppendLine();
             sb.AppendLine("}");
 
@@ -112,6 +112,17 @@ namespace ExpectedObjects
             return o.CreateObject().ToString();
         }
 
+        public static string ToUsefulTypeName(this Type type)
+        {
+            if (type.GetTypeInfo().IsGenericType)
+            {
+                var arg = type.GetGenericArguments().First().ToUsefulTypeName();
+                return type.Name.Replace("`1", string.Format("<{0}>", arg));
+            }
+
+            return type.Name;
+        }
+
         static string Prefix()
         {
             return new string(' ', _indentLevel * 2);
@@ -121,7 +132,7 @@ namespace ExpectedObjects
         {
             var builder = new StringBuilder();
             if (_indentLevel > 0) builder.Append("new ");
-            builder.Append($"{o.GetClassName()}{Environment.NewLine}{Prefix()}{{ ");
+            builder.Append($"{o.ToUsefulClassName()}{Environment.NewLine}{Prefix()}{{ ");
             _indentLevel++;
 
             _indentLevel++;
@@ -145,17 +156,10 @@ namespace ExpectedObjects
             return builder;
         }
 
-        static string GetClassName(this object o)
+        static string ToUsefulClassName(this object o)
         {
             var type = o.GetType();
-
-            if (type.GetTypeInfo().IsGenericType)
-            {
-                var arg = type.GetGenericArguments().First().Name;
-                return type.Name.Replace("`1", string.Format("<{0}>", arg));
-            }
-
-            return type.Name;
+            return type.ToUsefulTypeName();
         }
 
         static string GetCSharpString(this object o)
@@ -170,7 +174,7 @@ namespace ExpectedObjects
             if (o is DateTime)
                 return $"DateTime.Parse(\"{o}\")";
             if (o is IEnumerable)
-                return $"new {o.GetClassName()} {{ {((IEnumerable) o).GetItems()}}}";
+                return $"new {o.ToUsefulClassName()} {{ {((IEnumerable) o).GetItems()}}}";
 
             return $"{o.CreateObject()}";
         }

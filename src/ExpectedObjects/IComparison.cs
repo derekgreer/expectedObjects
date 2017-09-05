@@ -2,7 +2,7 @@
 {
 	public interface IComparison
 	{
-		bool AreEqual(object o);
+		bool AreEqual(object actual);
 		object GetExpectedResult();
 	}
 }

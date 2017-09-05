@@ -24,7 +24,7 @@ namespace ExpectedObjects.Reporting
                 {
                     if (x.Actual is IMissingMember)
                     {
-                        sb.Append(string.Format("For {0}, expected {1} but member was missing.{2}",
+                        sb.Append(string.Format("ConfigureMember {0}, expected {1} but member was missing.{2}",
                             !string.IsNullOrEmpty(x.Member)
                                 ? x.Member
                                 : ((string) null).ToUsefulString(),
@@ -35,7 +35,7 @@ namespace ExpectedObjects.Reporting
                     {
                         var actual = x.Actual as IUnexpectedElement;
 
-                        sb.Append(string.Format("For {0}, expected nothing but found {1}.{2}",
+                        sb.Append(string.Format("ConfigureMember {0}, expected nothing but found {1}.{2}",
                             !string.IsNullOrEmpty(x.Member)
                                 ? x.Member
                                 : ((string) null).ToUsefulString(),
@@ -44,7 +44,7 @@ namespace ExpectedObjects.Reporting
                     }
                     else if (x.Actual is IMissingElement)
                     {
-                        sb.Append(string.Format("For {0}, expected {1} but element was missing.{2}",
+                        sb.Append(string.Format("ConfigureMember {0}, expected {1} but element was missing.{2}",
                             !string.IsNullOrEmpty(x.Member)
                                 ? x.Member
                                 : ((string) null).ToUsefulString(),
@@ -53,7 +53,7 @@ namespace ExpectedObjects.Reporting
                     }
                     else
                     {
-                        sb.Append(string.Format("For {0}, expected {1} but found {2}.{3}",
+                        sb.Append(string.Format("ConfigureMember {0}, expected {1} but found {2}.{3}",
                             !string.IsNullOrEmpty(x.Member)
                                 ? x.Member
                                 : ((string) null).ToUsefulString(),

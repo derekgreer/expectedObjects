@@ -1,9 +1,13 @@
-﻿using ExpectedObjects.Strategies;
+﻿using System;
+using System.Linq.Expressions;
+using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
 {
     public interface IConfigurationContext
     {
+        object Object { get; }
+
         /// <summary>
         /// Push a new strategy onto the top of the strategy chain.
         /// </summary>
@@ -35,5 +39,16 @@ namespace ExpectedObjects
         ///     Remove all strategies.
         /// </summary>
         void ClearStrategies();
+    }
+
+    public interface IConfigurationContext<T> : IConfigurationContext
+    {
+        /// <summary>
+        /// Used for configuring members.
+        /// </summary>
+        /// <typeparam name="TMember">member type</typeparam>
+        /// <param name="memberExpression">member expression</param>
+        /// <returns></returns>
+        IMemberContext Member<TMember>(Expression<Func<T, TMember>> memberExpression);
     }
 }

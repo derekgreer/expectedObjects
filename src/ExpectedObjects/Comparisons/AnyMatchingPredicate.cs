@@ -12,15 +12,15 @@ namespace ExpectedObjects.Comparisons
 			_predicate = predicate;
 		}
 
-		public bool AreEqual(object o)
+		public bool AreEqual(object actual)
 		{
 			var predicate = _predicate.Compile();
-			return (o is T) && predicate((T)o);
+			return (actual is T) && predicate((T)actual);
 		}
 
 		public object GetExpectedResult()
 		{
-			return string.Format("any instance of {0} where {1}", typeof(T).FullName, _predicate.Body.ToString());
+			return string.Format("any instance of {0} where {1}", typeof(T).ToUsefulTypeName(), _predicate.Body.ToString());
 		}
 	}
 }

@@ -13,8 +13,9 @@ namespace ExpectedObjects
 	{
 		static readonly NotNullComparison NotNullComparison = new NotNullComparison();
 		static readonly NullComparison NullComparison = new NullComparison();
+	    static readonly IgnoredComparison IgnoredComparison = new IgnoredComparison();
 
-		public static Any<T> Any<T>()
+        public static Any<T> Any<T>()
 		{
 			return new Any<T>();
 		}
@@ -33,5 +34,24 @@ namespace ExpectedObjects
 		{
 			return NullComparison;
 		}
+
+	    public static IComparison Ignored()
+	    {
+	        return IgnoredComparison;
+	    }
 	}
+
+    public class IgnoredComparison : IComparison
+    {
+        public bool AreEqual(object actual)
+        {
+            return true;
+        }
+
+        public object GetExpectedResult()
+        {
+            return null;
+        }
+    }
+
 }

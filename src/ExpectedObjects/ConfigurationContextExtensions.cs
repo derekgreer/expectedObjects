@@ -1,4 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Text;
 using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
@@ -21,14 +25,14 @@ namespace ExpectedObjects
         {
             configurationContext.ClearStrategies();
 
-            foreach(var strategy in strategies)
+            foreach (var strategy in strategies)
                 configurationContext.PushStrategy(strategy);
 
             return configurationContext;
         }
 
         /// <summary>
-        /// Requires the order of <see cref="IEnumerable"/> members to be in the expected order.
+        ///     Requires the order of <see cref="IEnumerable" /> members to be in the expected order.
         /// </summary>
         /// <param name="configurationContext"></param>
         /// <returns></returns>
@@ -37,5 +41,21 @@ namespace ExpectedObjects
             configurationContext.ReplaceStrategy<EnumerableComparisonStrategy, OrdinalEnumerableComparisonStrategy>();
             return configurationContext;
         }
+
+        /// <summary>
+        /// Ignores the specified member in comparisons.
+        /// </summary>
+        /// <typeparam name="T">expected object type</typeparam>
+        /// <typeparam name="TMember">member type</typeparam>
+        /// <param name="configurationContext"></param>
+        /// <param name="memberExpression">member expression</param>
+        /// <returns></returns>
+        public static IConfigurationContext Ignore<T, TMember>(this IConfigurationContext<T> configurationContext, Expression<Func<T, TMember>> memberExpression)
+        {
+            configurationContext.Member(memberExpression).UsesComparison(Expect.Ignored());
+            return configurationContext;
+        }
+
+
     }
 }

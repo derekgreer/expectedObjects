@@ -2,9 +2,9 @@
 {
 	public class NotNullComparison : IComparison
 	{
-		public bool AreEqual(object o)
+		public bool AreEqual(object actual)
 		{
-			return o != null;
+			return actual != null;
 		}
 
 		public object GetExpectedResult()

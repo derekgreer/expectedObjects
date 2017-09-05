@@ -59,8 +59,7 @@ namespace ExpectedObjects.Strategies
             return areEqual;
         }
 
-        static bool CompareIndexedProperty(PropertyInfo pi, object expected, object actual, ParameterInfo[] indexes,
-                                           IComparisonContext comparisonContext)
+        static bool CompareIndexedProperty(PropertyInfo pi, object expected, object actual, ParameterInfo[] indexes, IComparisonContext comparisonContext)
         {
             bool areEqual = true;
 
