@@ -5,18 +5,19 @@ namespace ExpectedObjects
 {
     public class ExpectedObject
     {
-        readonly object _expected;
         readonly IConfiguration _configuration;
+        readonly object _expected;
 
         public ExpectedObject(object instance, IConfiguration configuration)
         {
             _expected = instance;
             _configuration = configuration;
         }
-        
+
         public override bool Equals(object actual)
         {
-            return Equals(actual, new NullWriter());
+            var results = Equals(actual, new NullWriter());
+            return results;
         }
 
         public bool Equals(object actual, IWriter writer, bool ignoreTypeInformation = false)

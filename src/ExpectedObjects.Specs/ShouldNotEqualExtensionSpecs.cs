@@ -10,46 +10,46 @@ namespace ExpectedObjects.Specs
         static TypeWithIEnumerable _expected;
 
         Establish context = () =>
+        {
+            _expected = new TypeWithIEnumerable
             {
-                _expected = new TypeWithIEnumerable
-                                {
-                                    Objects = new List<ComplexType>
-                                                  {
-                                                      new ComplexType
-                                                          {
-                                                              StringProperty = "test1",
-                                                              DecimalProperty = 10.0m,
-                                                              TypeWithString = new TypeWithString { StringProperty = "value1"}
-                                                          },
-                                                      new ComplexType
-                                                          {
-                                                              StringProperty = "test1",
-                                                              DecimalProperty = 10.0m,
-                                                              TypeWithString = new TypeWithString { StringProperty = "value1"}
-                                                          }
-                                                  }
-                                };
-
-                _actual = new TypeWithIEnumerable
-                              {
-                                  Objects = new List<ComplexType>
-                                                {
-                                                    new ComplexType
-                                                        {
-                                                            StringProperty = "test2",
-                                                            DecimalProperty = 11.0m,
-                                                            TypeWithString = new TypeWithString { StringProperty = "value2"}
-                                                        },
-                                                    new ComplexType
-                                                        {
-                                                            StringProperty = "test2",
-                                                            DecimalProperty = 11.0m,
-                                                            TypeWithString = new TypeWithString { StringProperty = "value2"}
-                                                        }
-                                                }
-                              };
+                Objects = new List<ComplexType>
+                {
+                    new ComplexType
+                    {
+                        StringProperty = "test1",
+                        DecimalProperty = 10.0m,
+                        TypeWithString = new TypeWithString {StringProperty = "value1"}
+                    },
+                    new ComplexType
+                    {
+                        StringProperty = "test1",
+                        DecimalProperty = 10.0m,
+                        TypeWithString = new TypeWithString {StringProperty = "value1"}
+                    }
+                }
             };
-        
+
+            _actual = new TypeWithIEnumerable
+            {
+                Objects = new List<ComplexType>
+                {
+                    new ComplexType
+                    {
+                        StringProperty = "test2",
+                        DecimalProperty = 11.0m,
+                        TypeWithString = new TypeWithString {StringProperty = "value2"}
+                    },
+                    new ComplexType
+                    {
+                        StringProperty = "test2",
+                        DecimalProperty = 11.0m,
+                        TypeWithString = new TypeWithString {StringProperty = "value2"}
+                    }
+                }
+            };
+        };
+
         It should_not_be_equal = () => _expected.ToExpectedObject().ShouldNotEqual(_actual);
     }
 }

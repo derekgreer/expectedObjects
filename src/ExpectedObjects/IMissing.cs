@@ -1,4 +1,6 @@
 ﻿namespace ExpectedObjects
 {
-	public interface IMissing {}
+    public interface IMissing
+    {
+    }
 }

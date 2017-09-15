@@ -10,10 +10,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _expected = new StructureType {IntegerValue = 0};
-                _actual = new StructureType {IntegerValue = 1};
-            };
+        {
+            _expected = new StructureType {IntegerValue = 0};
+            _actual = new StructureType {IntegerValue = 1};
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
@@ -27,10 +27,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _expected = new StructureType { IntegerValue = 2 };
-                _actual = new StructureType { IntegerValue = 2 };
-            };
+        {
+            _expected = new StructureType {IntegerValue = 2};
+            _actual = new StructureType {IntegerValue = 2};
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 

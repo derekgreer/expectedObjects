@@ -10,11 +10,11 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _expected = new TypeWithDecimal {DecimalProperty = 10.0m};
+        {
+            _expected = new TypeWithDecimal {DecimalProperty = 10.0m};
 
-                _actual = new TypeWithString {StringProperty = "this is a test"};
-            };
+            _actual = new TypeWithString {StringProperty = "this is a test"};
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
@@ -28,17 +28,17 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
+        {
+            _expected = new TypeWithString
             {
-                _expected = new TypeWithString()
-                                {
-                                    StringProperty = "this is a test"
-                                };
-
-                _actual = new TypeWithString2
-                              {
-                                  StringProperty = "this is a test"
-                              };
+                StringProperty = "this is a test"
             };
+
+            _actual = new TypeWithString2
+            {
+                StringProperty = "this is a test"
+            };
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Matches(_actual);
 

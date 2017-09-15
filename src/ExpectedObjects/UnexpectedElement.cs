@@ -2,11 +2,11 @@
 {
     public class UnexpectedElement : IUnexpectedElement
     {
-        public object Element { get; set; }
-
         public UnexpectedElement(object element)
         {
             Element = element;
         }
+
+        public object Element { get; set; }
     }
 }

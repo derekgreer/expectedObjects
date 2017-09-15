@@ -35,13 +35,13 @@ namespace ExpectedObjects
                 return "\"" + str.Replace("\n", "\\n") + "\"";
             }
 
-            if (obj.GetType().GetTypeInfo().IsValueType) return "[" + obj + "]";
+            if (obj.GetType().GetTypeInfo().IsValueType) return obj.ToObjectString();
 
             if (obj is IEnumerable)
             {
                 var enumerable = ((IEnumerable) obj).Cast<object>();
 
-                return $"{obj.GetType().ToUsefulTypeName()}:{System.Environment.NewLine}{enumerable.EachToUsefulString(verbose)}";
+                return $"{obj.GetType().ToUsefulTypeName()}:{Environment.NewLine}{enumerable.EachToUsefulString(verbose)}";
             }
 
             str = verbose ? obj.ToObjectString() : obj.ToString();
@@ -109,11 +109,16 @@ namespace ExpectedObjects
             if (s != null)
                 return $"\"{s}\"";
 
-            return o.CreateObject().ToString();
+            return GetCSharpString(o);
         }
 
         public static string ToUsefulTypeName(this Type type)
         {
+            if (type.IsAnonymousType())
+            {
+                return "<Anonymous>";
+            }
+
             if (type.GetTypeInfo().IsGenericType)
             {
                 var arg = type.GetGenericArguments().First().ToUsefulTypeName();
@@ -131,6 +136,7 @@ namespace ExpectedObjects
         static StringBuilder CreateObject(this object o)
         {
             var builder = new StringBuilder();
+
             if (_indentLevel > 0) builder.Append("new ");
             builder.Append($"{o.ToUsefulClassName()}{Environment.NewLine}{Prefix()}{{ ");
             _indentLevel++;

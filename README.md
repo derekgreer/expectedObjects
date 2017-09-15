@@ -17,10 +17,10 @@ using Xunit;
 
 namespace MyProject.Specs
 {
-  public class CustomerSpecs
+  public class CustomerServiceSpecs
   {        
     [Fact]
-    public void WhenRetrievingACustomer_ShouldReturnTheExpectedCustomer()
+    public void RetrievingACustomer_ShouldReturnTheExpectedCustomer()
     {
       // Arrange
       var expectedCustomer = new Customer
@@ -37,8 +37,10 @@ namespace MyProject.Specs
         }                                            
       }.ToExpectedObject();
 
+
       // Act
       var actualCustomer = new CustomerService().GetCustomerByName("Silence", "Dogood");
+
 
       // Assert
       expectedCustomer.ShouldEqual(actualCustomer);

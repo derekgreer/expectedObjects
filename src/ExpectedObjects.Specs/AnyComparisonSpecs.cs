@@ -75,9 +75,9 @@ namespace ExpectedObjects.Specs
 
             _actual = new TypeWithIEnumerable<ComplexType>
             {
-                Objects = new List<ComplexType>(new []
+                Objects = new List<ComplexType>(new[]
                 {
-                    new ComplexType() { IntegerProperty = 3}
+                    new ComplexType {IntegerProperty = 3}
                 })
             };
         };

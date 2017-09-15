@@ -10,11 +10,11 @@ namespace ExpectedObjects.Specs
         static IWriter _writer;
 
         Establish context = () =>
-            {
-                _writer = new ShouldWriter();
-                _writer.Write(new EqualityResult(false, "ContainingObject.StringProperty", 1, 2));
-                _writer.Write(new EqualityResult(false, "ContainingObject", 1, 2));
-            };
+        {
+            _writer = new ShouldWriter();
+            _writer.Write(new EqualityResult(false, "ContainingObject.StringProperty", 1, 2));
+            _writer.Write(new EqualityResult(false, "ContainingObject", 1, 2));
+        };
 
         Because of = () => _results = _writer.GetFormattedResults();
 
@@ -28,10 +28,10 @@ namespace ExpectedObjects.Specs
         static IWriter _writer;
 
         Establish context = () =>
-            {
-                _writer = new ShouldWriter();
-                _result = new EqualityResult(true, "StringProperty", 1, 2);
-            };
+        {
+            _writer = new ShouldWriter();
+            _result = new EqualityResult(true, "StringProperty", 1, 2);
+        };
 
         Because of = () => _writer.Write(_result);
 

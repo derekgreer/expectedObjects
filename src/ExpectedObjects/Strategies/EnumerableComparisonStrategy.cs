@@ -35,9 +35,7 @@ namespace ExpectedObjects.Strategies
                     removeDelegate = () => actualDictionary.Remove(actualEntry.Key);
                     return true;
                 }))
-                {
                     areEqual = comparisonContext.ReportEquality(expectedEntry.Value, new MissingElement(), $"[{expectedEntry.Key}]") && areEqual;
-                }
 
                 removeDelegate();
             }
@@ -53,9 +51,7 @@ namespace ExpectedObjects.Strategies
                     var equal = comparisonContext.AreEqual(expectedEntry.Value, actualList[actualIndex], $"[{expectedEntry.Key}]");
 
                     if (equal)
-                    {
                         removeDelegate = () => expectedDictionary.Remove(expectedEntry.Key);
-                    }
 
                     return equal;
                 }))
@@ -67,7 +63,8 @@ namespace ExpectedObjects.Strategies
             if (unexpectedValues.Any())
             {
                 var unexpectedElements = string.Join($",{Environment.NewLine}{Environment.NewLine}", unexpectedValues.Select(s => $"{s}"));
-                comparisonContext.Report(false, $"The following elements were unexpected:{Environment.NewLine}{Environment.NewLine}{unexpectedElements}", null, null);
+                comparisonContext.Report(false, $"The following elements were unexpected:{Environment.NewLine}{Environment.NewLine}{unexpectedElements}", null,
+                    null);
                 areEqual = false;
             }
             return areEqual;

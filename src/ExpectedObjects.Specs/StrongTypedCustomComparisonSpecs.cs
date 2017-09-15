@@ -18,7 +18,6 @@ namespace ExpectedObjects.Specs
                 _expected = new ComplexType
                 {
                     IntegerProperty = 42
-
                 }.ToExpectedObject(ctx => ctx.Member(x => x.IntegerProperty).UsesComparison(Expect.Any<int>()));
 
 

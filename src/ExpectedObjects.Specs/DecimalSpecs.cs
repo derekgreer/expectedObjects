@@ -9,10 +9,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _expected = 10.222333m;
-                _actual = 10.222333m;
-            };
+        {
+            _expected = 10.222333m;
+            _actual = 10.222333m;
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 

@@ -3,7 +3,6 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-
     [Subject("UsesComparison Not Equal")]
     public class when_asserting_inequlity_for_non_equal_doubles_with_actual_as_subject
     {

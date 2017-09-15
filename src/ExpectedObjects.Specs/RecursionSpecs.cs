@@ -1,5 +1,4 @@
-﻿using System;
-using ExpectedObjects.Specs.TestTypes;
+﻿using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
 namespace ExpectedObjects.Specs

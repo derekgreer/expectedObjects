@@ -10,10 +10,10 @@ namespace ExpectedObjects.Specs
         static double _expected;
 
         Establish context = () =>
-            {
-                _expected = 111.397720540215d;
-                _actual = 111.397720540215d;
-            };
+        {
+            _expected = 111.397720540215d;
+            _actual = 111.397720540215d;
+        };
 
         Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldEqual(_actual));
 

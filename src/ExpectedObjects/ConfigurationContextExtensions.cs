@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
@@ -43,19 +41,18 @@ namespace ExpectedObjects
         }
 
         /// <summary>
-        /// Ignores the specified member in comparisons.
+        ///     Ignores the specified member in comparisons.
         /// </summary>
         /// <typeparam name="T">expected object type</typeparam>
         /// <typeparam name="TMember">member type</typeparam>
         /// <param name="configurationContext"></param>
         /// <param name="memberExpression">member expression</param>
         /// <returns></returns>
-        public static IConfigurationContext Ignore<T, TMember>(this IConfigurationContext<T> configurationContext, Expression<Func<T, TMember>> memberExpression)
+        public static IConfigurationContext Ignore<T, TMember>(this IConfigurationContext<T> configurationContext,
+            Expression<Func<T, TMember>> memberExpression)
         {
             configurationContext.Member(memberExpression).UsesComparison(Expect.Ignored());
             return configurationContext;
         }
-
-
     }
 }

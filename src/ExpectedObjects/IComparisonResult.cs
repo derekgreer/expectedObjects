@@ -1,7 +1,7 @@
 namespace ExpectedObjects
 {
-	interface IComparisonResult
-	{
-		bool Result { get; set; }
-	}
+    interface IComparisonResult
+    {
+        bool Result { get; set; }
+    }
 }

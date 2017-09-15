@@ -23,7 +23,7 @@ namespace ExpectedObjects.Specs
                 _actual = new ComplexType
                 {
                     StringProperty = "level 1",
-                    TypeWithString = new TypeWithString {  StringProperty = "different"}
+                    TypeWithString = new TypeWithString {StringProperty = "different"}
                 };
             };
 
@@ -44,13 +44,13 @@ namespace ExpectedObjects.Specs
                 _expected = new
                 {
                     StringProperty = "level 1",
-                    TypeWithString = new TypeWithString { StringProperty = "test" }
+                    TypeWithString = new TypeWithString {StringProperty = "test"}
                 }.ToExpectedObject(ctx => ctx.Ignore(x => x.TypeWithString.StringProperty));
 
                 _actual = new ComplexType
                 {
                     StringProperty = "level 1",
-                    TypeWithString = new TypeWithString { StringProperty = "different" }
+                    TypeWithString = new TypeWithString {StringProperty = "different"}
                 };
             };
 
@@ -71,13 +71,13 @@ namespace ExpectedObjects.Specs
                 _expected = new ComplexType
                 {
                     StringProperty = "level 1",
-                    TypeWithString = new TypeWithString { StringProperty = "test" }
+                    TypeWithString = new TypeWithString {StringProperty = "test"}
                 }.ToExpectedObject(ctx => ctx.Ignore(x => x));
 
                 _actual = new ComplexType
                 {
                     StringProperty = "level 2",
-                    TypeWithString = new TypeWithString { StringProperty = "different" }
+                    TypeWithString = new TypeWithString {StringProperty = "different"}
                 };
             };
 

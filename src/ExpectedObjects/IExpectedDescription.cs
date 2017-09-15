@@ -1,7 +1,7 @@
 ﻿namespace ExpectedObjects
 {
-	public interface IExpectedDescription
-	{
-		string ToString();
-	}
+    public interface IExpectedDescription
+    {
+        string ToString();
+    }
 }

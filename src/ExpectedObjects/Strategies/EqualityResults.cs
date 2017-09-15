@@ -7,19 +7,13 @@ namespace ExpectedObjects.Strategies
     {
         readonly List<EqualityResult> _results = new List<EqualityResult>();
 
-        public bool Status
-        {
-            get { return AllEqual(_results); }
-        }
+        public bool Status => AllEqual(_results);
 
-        public IEnumerable<EqualityResult> Results
-        {
-            get { return _results; }
-        }
+        public IEnumerable<EqualityResult> Results => _results;
 
         bool AllEqual(List<EqualityResult> results)
         {
-           return (results.Where(r => r.Status == false)).Count() == 0;
+            return results.Where(r => r.Status == false).Count() == 0;
         }
 
         public void AddResult(EqualityResult result)

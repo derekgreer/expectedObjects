@@ -12,10 +12,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _actual = new IndexType<int>(new List<int> {1, 2, 3, 4, 5});
-                _expected = new IndexType<int>(new List<int> { 1, 2, 3, 4, 6 });
-            };
+        {
+            _actual = new IndexType<int>(new List<int> {1, 2, 3, 4, 5});
+            _expected = new IndexType<int>(new List<int> {1, 2, 3, 4, 6});
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
@@ -30,19 +30,19 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
+        {
+            _actual = new MultiIndexType
             {
-                _actual = new MultiIndexType
-                              {
-                                  IndexType1 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 5 }),
-                                  IndexType2 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 6 })
-                              };
-
-                _expected = new MultiIndexType
-                                {
-                                    IndexType1 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 6 }),
-                                    IndexType2 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 7 })
-                                };
+                IndexType1 = new IndexType<int>(new List<int> {1, 2, 3, 4, 5}),
+                IndexType2 = new IndexType<int>(new List<int> {1, 2, 3, 4, 6})
             };
+
+            _expected = new MultiIndexType
+            {
+                IndexType1 = new IndexType<int>(new List<int> {1, 2, 3, 4, 6}),
+                IndexType2 = new IndexType<int>(new List<int> {1, 2, 3, 4, 7})
+            };
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
@@ -57,10 +57,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _expected = new IndexType<int>(new List<int> {1, 2, 3, 4, 5});
-                _actual = new IndexType<int>(new List<int> {1, 2, 3, 4, 5});
-            };
+        {
+            _expected = new IndexType<int>(new List<int> {1, 2, 3, 4, 5});
+            _actual = new IndexType<int>(new List<int> {1, 2, 3, 4, 5});
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
@@ -75,20 +75,19 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
+        {
+            _actual = new MultiIndexType
             {
-                _actual = new MultiIndexType
-                              {
-                                  IndexType1 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 5 }),
-                                  IndexType2 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 6 })
-
-                              };
-
-                _expected = new MultiIndexType
-                                {
-                                    IndexType1 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 5 }),
-                                    IndexType2 = new IndexType<int>(new List<int> { 1, 2, 3, 4, 6 })
-                                };
+                IndexType1 = new IndexType<int>(new List<int> {1, 2, 3, 4, 5}),
+                IndexType2 = new IndexType<int>(new List<int> {1, 2, 3, 4, 6})
             };
+
+            _expected = new MultiIndexType
+            {
+                IndexType1 = new IndexType<int>(new List<int> {1, 2, 3, 4, 5}),
+                IndexType2 = new IndexType<int>(new List<int> {1, 2, 3, 4, 6})
+            };
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 

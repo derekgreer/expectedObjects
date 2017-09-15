@@ -11,10 +11,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _actual = new ComparableType(true);
-                _expected = new ComparableType(true);
-            };
+        {
+            _actual = new ComparableType(true);
+            _expected = new ComparableType(true);
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
@@ -29,10 +29,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _actual = new ComparableType(true);
-                _expected = new ComparableType(false);
-            };
+        {
+            _actual = new ComparableType(true);
+            _expected = new ComparableType(false);
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 

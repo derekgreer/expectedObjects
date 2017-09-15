@@ -2,8 +2,8 @@
 
 namespace ExpectedObjects
 {
-	public class MissingMember<T> : IMissingMember
+    public class MissingMember<T> : IMissingMember
     {
-        public Type MemberType { get { return typeof (T); } }
+        public Type MemberType => typeof(T);
     }
 }

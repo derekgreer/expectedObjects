@@ -11,10 +11,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _actual = EnumType.Undefined;
-                _expected = EnumType.Value1;
-            };
+        {
+            _actual = EnumType.Undefined;
+            _expected = EnumType.Value1;
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
@@ -29,10 +29,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _actual = EnumType.Undefined;
-                _expected = EnumType.Undefined;
-            };
+        {
+            _actual = EnumType.Undefined;
+            _expected = EnumType.Undefined;
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 

@@ -11,10 +11,10 @@ namespace ExpectedObjects.Specs
         static bool _result;
 
         Establish context = () =>
-            {
-                _actual = new EqualsOverrideType(true);
-                _expected = new EqualsOverrideType(true);
-            };
+        {
+            _actual = new EqualsOverrideType(true);
+            _expected = new EqualsOverrideType(true);
+        };
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 

@@ -11,14 +11,8 @@ namespace ExpectedObjects.Specs.TestTypes
             _ints = ints;
         }
 
-        public T this[int index]
-        {
-            get { return _ints[index]; }
-        }
+        public T this[int index] => _ints[index];
 
-        public int Count
-        {
-            get { return _ints.Count; }
-        }
+        public int Count => _ints.Count;
     }
 }

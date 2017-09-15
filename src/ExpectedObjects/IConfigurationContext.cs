@@ -9,19 +9,19 @@ namespace ExpectedObjects
         object Object { get; }
 
         /// <summary>
-        /// Push a new strategy onto the top of the strategy chain.
+        ///     Push a new strategy onto the top of the strategy chain.
         /// </summary>
         /// <typeparam name="TStrategy">strategy to add</typeparam>
         void PushStrategy<TStrategy>() where TStrategy : IComparisonStrategy, new();
 
         /// <summary>
-        /// Push a new strategy onto the top of the strategy chain.
+        ///     Push a new strategy onto the top of the strategy chain.
         /// </summary>
         /// <param name="comparisonStrategy">strategy to add</param>
         void PushStrategy(IComparisonStrategy comparisonStrategy);
 
         /// <summary>
-        /// Specify which member types should be used in comparisons.
+        ///     Specify which member types should be used in comparisons.
         /// </summary>
         /// <param name="memberType">member type flags</param>
         void IncludeMemberTypes(MemberType memberType);
@@ -44,7 +44,7 @@ namespace ExpectedObjects
     public interface IConfigurationContext<T> : IConfigurationContext
     {
         /// <summary>
-        /// Used for configuring members.
+        ///     Used for configuring members.
         /// </summary>
         /// <typeparam name="TMember">member type</typeparam>
         /// <param name="memberExpression">member expression</param>
