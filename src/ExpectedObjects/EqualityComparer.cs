@@ -16,6 +16,7 @@ namespace ExpectedObjects
             new StackDictionary<object, IComparisonResult>();
 
         bool _ignoreTypeInformation;
+        IWriter _writer;
 
         public EqualityComparer(IConfiguration configurationContext)
         {
@@ -24,20 +25,26 @@ namespace ExpectedObjects
 
         public bool AreEqual(object expected, object actual, string member)
         {
-            using (new WriterContext(new NullWriter()))
+            var existingWriter = _writer;
+            try
             {
+                _writer = new NullWriter();
                 if (actual != null && _visited.ContainsKey(actual))
                     return _visited[actual].Result;
 
                 if (actual != null)
                     _visited.Push(actual, new ComparisonResult(actual, true));
 
-                var result = Compare(expected, actual, member, WriterContext.Current);
+                var result = Compare(expected, actual, member, _writer);
 
                 if (actual != null)
                     _visited.Pop(actual);
 
                 return result;
+            }
+            finally
+            {
+                _writer = existingWriter;
             }
         }
 
@@ -49,7 +56,7 @@ namespace ExpectedObjects
             if (actual != null)
                 _visited.Push(actual, new ComparisonResult(actual, true));
 
-            var result = Compare(expected, actual, member, WriterContext.Current);
+            var result = Compare(expected, actual, member, _writer);
 
             if (actual != null)
                 _visited.Pop(actual);
@@ -89,7 +96,7 @@ namespace ExpectedObjects
 
         public void Report(bool status, string message, object expected, object actual)
         {
-            WriterContext.Current.Write(new EqualityResult(status, GetMemberPath(), expected, actual,
+            _writer.Write(new EqualityResult(status, GetMemberPath(), expected, actual,
                 EqualityResultType.Custom, message));
         }
 
@@ -109,12 +116,9 @@ namespace ExpectedObjects
 
         public bool AreEqual(object expected, object actual, IWriter writer, bool ignoreTypeInformation = false)
         {
+            _writer = writer;
             _ignoreTypeInformation = ignoreTypeInformation;
-
-            using (new WriterContext(writer))
-            {
-                return ReportEquality(expected, actual, actual?.GetType().ToUsefulTypeName() ?? string.Empty);
-            }
+            return ReportEquality(expected, actual, actual?.GetType().ToUsefulTypeName() ?? string.Empty);
         }
 
 
@@ -129,7 +133,7 @@ namespace ExpectedObjects
                 var memberComparison = GetMemberStrategy(GetMemberPath());
 
                 if (memberComparison != null)
-                    return EvalComparison(actual, WriterContext.Current, memberComparison, GetMemberPath());
+                    return EvalComparison(actual, writer, memberComparison, GetMemberPath());
 
                 if (ReferenceEquals(expected, actual))
                 {
