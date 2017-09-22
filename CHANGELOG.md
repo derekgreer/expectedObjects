@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/derekgreer/expectedObjects/compare/v2.2.0...v2.3.0) (2017-09-22)
+
+
+### Bug Fixes
+
+* Fix parallel test output ([a3ed69e](https://github.com/derekgreer/expectedObjects/commit/a3ed69e))
+
+
+### Features
+
+* Added Expect.Default<T>() and Expect.NotDefault<T>() custom comparisons. ([2a5b1bc](https://github.com/derekgreer/expectedObjects/commit/2a5b1bc))
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/derekgreer/expectedObjects/compare/v2.1.1...v2.2.0) (2017-09-13)
 
