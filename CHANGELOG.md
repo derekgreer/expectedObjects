@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.1"></a>
+## [2.3.1](https://github.com/derekgreer/expectedObjects/compare/v2.3.0...v2.3.1) (2017-09-24)
+
+
+### Bug Fixes
+
+* Correct reporting issue when null object is displayed. ([8178f7c](https://github.com/derekgreer/expectedObjects/commit/8178f7c))
+* Correct reporting issue with recursive instances. ([4702d50](https://github.com/derekgreer/expectedObjects/commit/4702d50))
+
+
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.com/derekgreer/expectedObjects/compare/v2.2.0...v2.3.0) (2017-09-22)
 
