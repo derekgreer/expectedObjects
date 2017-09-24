@@ -133,9 +133,22 @@ namespace ExpectedObjects
             return new string(' ', _indentLevel * 2);
         }
 
-        static StringBuilder CreateObject(this object o)
+        static StringBuilder CreateObject(this object o, Stack<object> visited = null)
         {
             var builder = new StringBuilder();
+
+            if (visited == null)
+                visited = new Stack<object>();
+
+            if (visited.Contains(o))
+            {
+                builder.Append("... ");
+                return builder;
+            }
+
+            visited.Push(o);
+
+            
 
             if (_indentLevel > 0) builder.Append("new ");
             builder.Append($"{o.ToUsefulClassName()}{Environment.NewLine}{Prefix()}{{ ");
@@ -148,7 +161,7 @@ namespace ExpectedObjects
             {
                 var value = property.GetValue(o, null);
                 if (value != null)
-                    l.Add($"{Prefix()}{property.Name} = {value.GetCSharpString()}");
+                    l.Add($"{Prefix()}{property.Name} = {value.GetCSharpString(visited)}");
             }
 
             if (l.Any())
@@ -159,6 +172,7 @@ namespace ExpectedObjects
             _indentLevel -= 2;
             builder.Append($"{Environment.NewLine}{Prefix()}}}");
 
+            visited.Pop();
             return builder;
         }
 
@@ -168,7 +182,7 @@ namespace ExpectedObjects
             return type.ToUsefulTypeName();
         }
 
-        static string GetCSharpString(this object o)
+        static string GetCSharpString(this object o, Stack<object> visited = null)
         {
             if (o == null) return "[null]";
 
@@ -182,14 +196,14 @@ namespace ExpectedObjects
             if (o is DateTime)
                 return $"DateTime.Parse(\"{o}\")";
             if (o is IEnumerable)
-                return $"new {o.ToUsefulClassName()} {{ {((IEnumerable) o).GetItems()}}}";
+                return $"new {o.ToUsefulClassName()} {{ {((IEnumerable) o).GetItems(visited)}}}";
 
-            return $"{o.CreateObject()}";
+            return $"{o.CreateObject(visited)}";
         }
 
-        static string GetItems(this IEnumerable items)
+        static string GetItems(this IEnumerable items, Stack<object> visited = null)
         {
-            var itemStrings = string.Join(",", items.Cast<object>().Select(i => i.GetCSharpString()));
+            var itemStrings = string.Join(",", items.Cast<object>().Select(i => i.GetCSharpString(visited)));
             return itemStrings;
         }
     }

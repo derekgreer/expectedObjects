@@ -1,4 +1,6 @@
-﻿using ExpectedObjects.Specs.TestTypes;
+﻿using System;
+using ExpectedObjects.Specs.Infrastructure;
+using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
@@ -118,5 +120,59 @@ namespace ExpectedObjects.Specs
         It should_not_compare_the_same_objects_more_than_once = () => _expected.Access.ShouldEqual(1);
 
         It should_not_be_equal = () => _result.ShouldBeFalse();
+    }
+
+    [Subject("Recursion")]
+    public class when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object
+    {
+        static object _actual;
+        static object _expected;
+        static Exception _exception;
+
+        Establish context = () =>
+        {
+            var expected = new {Array = new object[1]};
+            expected.Array[0] = new {Parent = expected, Id = 1};
+
+            _expected = expected;
+
+            var actual = new {Array = new object[1]};
+            actual.Array[0] = new {Parent = actual, Id = 2};
+
+            _actual = actual;
+        };
+
+        Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldMatch(_actual));
+
+        It should_throw_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+
+        It should_show_results = Create.Observation(() => () => _expected.ToExpectedObject().ShouldMatch(_actual));
+    }
+
+    [Subject("Recursion")]
+    public class when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object
+    {
+        static object _actual;
+        static ExpectedObject _expected;
+        static Exception _exception;
+
+        Establish context = () =>
+        {
+            var expected = new { Array = new object[1] };
+            expected.Array[0] = new { Parent = expected, Id = 1 };
+
+            _expected = expected.ToExpectedObject(ctx => ctx.UseOrdinalComparison());
+
+            var actual = new { Array = new object[1] };
+            actual.Array[0] = new { Parent = actual, Id = 2 };
+
+            _actual = actual;
+        };
+
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+        It should_throw_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+
+        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
     }
 }
