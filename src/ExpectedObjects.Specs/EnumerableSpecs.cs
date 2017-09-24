@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpectedObjects.Specs.Infrastructure;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
@@ -212,5 +213,23 @@ namespace ExpectedObjects.Specs
         It should_not_be_equal = () => _result.ShouldBeFalse();
 
         It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+    }
+
+    [Subject("Enumerables")]
+    public class when_comparing_objects_with_array_properties_that_have_null_items_and_do_not_match
+    {
+        static object _actual;
+        static object _expected;
+        static Exception _exception;
+
+        Establish context = () =>
+        {
+            _expected = new {Array = new[] {"1", null}};
+            _actual = new {Array = new string[] {null, null}};
+        };
+
+        Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldMatch(_actual));
+
+        It should_not_throw_an_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
     }
 }

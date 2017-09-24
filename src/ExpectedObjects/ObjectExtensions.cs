@@ -170,6 +170,8 @@ namespace ExpectedObjects
 
         static string GetCSharpString(this object o)
         {
+            if (o == null) return "[null]";
+
             if (o is string)
                 return $"\"{o}\"";
 

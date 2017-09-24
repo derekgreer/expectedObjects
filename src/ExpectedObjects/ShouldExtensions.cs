@@ -15,7 +15,7 @@ namespace ExpectedObjects
                 var results = writer.GetFormattedResults();
 
                 if (!string.IsNullOrEmpty(results))
-                    throw new Exception(results);
+                    throw new ComparisonException(results);
             }
         }
 
@@ -30,7 +30,7 @@ namespace ExpectedObjects
                 sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine);
                 sb.Append(writer.GetTrunkFormattedResults());
-                throw new Exception(sb.ToString());
+                throw new ComparisonException(sb.ToString());
             }
         }
 
@@ -41,7 +41,7 @@ namespace ExpectedObjects
             if (!expected.Equals(actual, writer, true))
             {
                 var results = writer.GetFormattedResults();
-                throw new Exception(results);
+                throw new ComparisonException(results);
             }
         }
 
@@ -56,7 +56,7 @@ namespace ExpectedObjects
                 sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine);
                 sb.Append(writer.GetTrunkFormattedResults());
-                throw new Exception(sb.ToString());
+                throw new ComparisonException(sb.ToString());
             }
         }
     }

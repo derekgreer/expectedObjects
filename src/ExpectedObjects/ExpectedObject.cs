@@ -27,7 +27,7 @@ namespace ExpectedObjects
 
         public bool Equals(ExpectedObject other)
         {
-            throw new Exception($"Objects of type {nameof(ExpectedObject)} can not be compared to another instance of {nameof(ExpectedObject)}.");
+            throw new ComparisonException($"Objects of type {nameof(ExpectedObject)} can not be compared to another instance of {nameof(ExpectedObject)}.");
         }
 
         public override int GetHashCode()
