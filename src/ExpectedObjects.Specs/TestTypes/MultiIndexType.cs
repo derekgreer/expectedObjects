@@ -3,6 +3,6 @@
     public class MultiIndexType
     {
         public IndexType<int> IndexType1 { get; set; }
-        public IndexType<int> IndexType2 { get; set; }
+        public IndexType<string> IndexType2 { get; set; }
     }
 }

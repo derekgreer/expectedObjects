@@ -4,15 +4,15 @@ namespace ExpectedObjects.Specs.TestTypes
 {
     public class IndexType<T>
     {
-        readonly IList<T> _ints;
+        readonly IList<T> _values;
 
-        public IndexType(IList<T> ints)
+        public IndexType(IList<T> values)
         {
-            _ints = ints;
+            _values = values;
         }
 
-        public T this[int index] => _ints[index];
+        public T this[int index] => _values[index];
 
-        public int Count => _ints.Count;
+        public int Count => _values.Count;
     }
 }

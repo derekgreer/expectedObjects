@@ -67,14 +67,15 @@ namespace ExpectedObjects
         public bool CompareProperties(object expected, object actual, Func<PropertyInfo, PropertyInfo, bool> propertyComparison)
         {
             const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-            var expectedPropertyInfos = expected.GetType().GetProperties(flags)
-                .ExcludeHiddenProperties(expected.GetType());
-            var actualPropertyInfos = actual.GetType().GetProperties(flags).ExcludeHiddenProperties(expected.GetType());
+            var expectedPropertyInfos = expected.GetType().GetVisibleProperties(flags);
+            var actualPropertyInfos = actual.GetType().GetVisibleProperties(flags);
             var areEqual = true;
 
             expectedPropertyInfos.ToList().ForEach(propertyInfo =>
             {
-                areEqual = propertyComparison(propertyInfo, actualPropertyInfos.SingleOrDefault(p => p.Name.Equals(propertyInfo.Name))) && areEqual;
+                areEqual = propertyComparison(propertyInfo,
+                               actualPropertyInfos.SingleOrDefault(p => p.Name.Equals(propertyInfo.Name) &&
+                                                                        p.HasSameIndexParameters(propertyInfo))) && areEqual;
             });
 
             return areEqual;
@@ -229,8 +230,9 @@ namespace ExpectedObjects
         {
             const BindingFlags propertyFlags = BindingFlags.Public | BindingFlags.Instance;
             var expectedPropertyInfos = expected.GetType()
-                .GetProperties(propertyFlags)
-                .ExcludeHiddenProperties(expected.GetType());
+                .GetVisibleProperties(propertyFlags);
+                //.GetProperties(propertyFlags)
+                //.ExcludeHiddenProperties(expected.GetType());
 
             var fieldFlags = _configurationContext.GetFieldBindingFlags();
             var expectedFieldInfos = expected.GetType().GetFields(propertyFlags);

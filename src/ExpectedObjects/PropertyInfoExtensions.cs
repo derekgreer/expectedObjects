@@ -5,39 +5,67 @@ using System.Reflection;
 
 namespace ExpectedObjects
 {
+    //public static class PropertyInfoExtensions
+    //{
+    //    public static IEnumerable<PropertyInfo> ExcludeHiddenProperties(this IEnumerable<PropertyInfo> infos, Type originType)
+    //    {
+    //        const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
+    //        var hiddenTypes = originType.GetProperties(flags).GroupBy(p => p.Name).Where(g => g.Count() > 1)
+    //            .SelectMany(g => g.Where(t => t.DeclaringType != originType));
+    //        return infos.Except(hiddenTypes);
+    //    }
+    //}
+
     public static class PropertyInfoExtensions
     {
-        public static IEnumerable<PropertyInfo> ExcludeHiddenProperties(this IEnumerable<PropertyInfo> infos, Type originType)
+        public static IEnumerable<PropertyInfo> GetVisibleProperties(this Type type, BindingFlags bindingFlags)
         {
-            const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-            var newProperties =
-                originType.GetProperties(flags).GroupBy(p => p.Name).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+            var properties = new List<PropertyInfo>();
 
-            if (!newProperties.Any())
-                return infos;
+            var declaredProperties = type.GetProperties(bindingFlags).Where(t => t.DeclaringType == type).ToList();
 
-            var properties = infos.Where(p => !newProperties.Contains(p.Name)).ToList();
+            properties.AddRange(declaredProperties);
 
-            foreach (var newProperty in newProperties)
+            var baseType = type.GetTypeInfo().BaseType;
+            if (baseType != null)
             {
-                var declaringType = originType;
-                PropertyInfo closestPropertyDeclaration = null;
-
-                while (closestPropertyDeclaration == null)
-                {
-                    var pi = declaringType.GetProperties(flags)
-                        .Where(p => p.Name == newProperty).SingleOrDefault(p => p.DeclaringType == declaringType);
-
-                    if (pi != null)
-                        closestPropertyDeclaration = pi;
-                    else
-                        declaringType = declaringType.GetTypeInfo().BaseType;
-                }
-
-                properties.Add(closestPropertyDeclaration);
+                properties.AddRange(GetVisibleProperties(baseType, bindingFlags, declaredProperties));
             }
 
             return properties;
+        }
+
+        static IEnumerable<PropertyInfo> GetVisibleProperties(Type type, BindingFlags bindingFlags, IList<PropertyInfo> filterProperties)
+        {
+            var properties = new List<PropertyInfo>();
+
+            var declaredVisibleProperties = type.GetProperties(bindingFlags).Where(t => t.DeclaringType == type &&
+                                                        !filterProperties.Any(f => f.Name == t.Name && t.HasSameIndexParameters(f))).ToList();
+
+            properties.AddRange(declaredVisibleProperties);
+
+            var baseType = type.GetTypeInfo().BaseType;
+            if (baseType != null)
+            {
+                properties.AddRange(GetVisibleProperties(baseType, bindingFlags, declaredVisibleProperties));
+            }
+
+            return properties;
+        }
+
+        public static bool HasSameIndexParameters(this PropertyInfo propertyInfo1, PropertyInfo propertyInfo2)
+        {
+            var param1 = propertyInfo1.GetIndexParameters().ToList();
+            var param2 = propertyInfo2.GetIndexParameters().ToList();
+
+            if (param1.Count != param2.Count)
+                return false;
+
+            for (var i = 0; i < param1.Count; i++)
+                if (param1[i] != param2[i])
+                    return false;
+
+            return true;
         }
     }
 }
