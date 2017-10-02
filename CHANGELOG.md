@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.2"></a>
+## [2.3.2](https://github.com/derekgreer/expectedObjects/compare/v2.3.1...v2.3.2) (2017-10-02)
+
+
+### Bug Fixes
+
+* Correct exception when comparing types with overloaded indexes ([422bdf1](https://github.com/derekgreer/expectedObjects/commit/422bdf1))
+
+
+
 <a name="2.3.1"></a>
 ## [2.3.1](https://github.com/derekgreer/expectedObjects/compare/v2.3.0...v2.3.1) (2017-09-24)
 
