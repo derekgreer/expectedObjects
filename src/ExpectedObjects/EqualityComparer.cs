@@ -213,7 +213,7 @@ namespace ExpectedObjects
                 writer.Write(new EqualityResult(false, memberPath,
                     new ExpectedDescription(comparison.GetExpectedResult()),
                     actual));
-                return true;
+                return false;
             }
 
             var areEqual = comparison.AreEqual(actual);

@@ -17,15 +17,12 @@
     <DefineConstants>TRACE;DEBUG;NETCOREAPP1_1;NETCOREAPP1_1;</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp1.1'">
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.*" />
-    <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-  </ItemGroup>
-
   <ItemGroup>
+    <PackageReference Include="Machine.Specifications" Version="0.12.0" />                              
     <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-    <PackageReference Include="Moq" Version="4.7.99" />
+    <PackageReference Include="Moq" Version="4.7.142" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
+    <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.5.1" />
   </ItemGroup>
 
   <ItemGroup>

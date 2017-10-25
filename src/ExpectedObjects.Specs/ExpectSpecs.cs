@@ -69,6 +69,22 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Expect Not Default")]
+        public class when_comparing_any_int_with_missing_property
+        {
+            static ExpectedObject _expected;
+            static bool _results;
+
+            Establish context = () =>
+            {
+                _expected = new { IntegerProperty = Expect.Any<int>() }.ToExpectedObject();
+            };
+
+            Because of = () => _results = _expected.Matches(new { Something = "Nothing"});
+
+            It should_not_match = () => _results.ShouldBeFalse();
+        }
+
+        [Subject("Expect Not Default")]
         public class when_comparing_default_int_with_not_default
         {
             static ExpectedObject _expected;
