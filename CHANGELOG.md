@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.3"></a>
+## [2.3.3](https://github.com/derekgreer/expectedObjects/compare/v2.3.2...v2.3.3) (2017-10-25)
+
+
+### Bug Fixes
+
+* Correct issue with custom comparisons and missing elements where comparison was always true. ([9a59a39](https://github.com/derekgreer/expectedObjects/commit/9a59a39))
+
+
+
 <a name="2.3.2"></a>
 ## [2.3.2](https://github.com/derekgreer/expectedObjects/compare/v2.3.1...v2.3.2) (2017-10-02)
 
