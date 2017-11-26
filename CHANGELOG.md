@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.4"></a>
+## [2.3.4](https://github.com/derekgreer/expectedObjects/compare/v2.3.3...v2.3.4) (2017-11-26)
+
+
+
 <a name="2.3.3"></a>
 ## [2.3.3](https://github.com/derekgreer/expectedObjects/compare/v2.3.2...v2.3.3) (2017-10-25)
 
