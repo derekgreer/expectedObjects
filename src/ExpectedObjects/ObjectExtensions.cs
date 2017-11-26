@@ -188,11 +188,12 @@ namespace ExpectedObjects
 
             if (o is string)
                 return $"\"{o}\"";
-
-            if (o is int)
-                return $"{o}";
             if (o is decimal)
                 return $"{o}m";
+            if (IsNumericType(o))
+                return $"{o}";
+            if (o is Boolean)
+                return $"{o}";
             if (o is DateTime)
                 return $"DateTime.Parse(\"{o}\")";
             if (o is IEnumerable)
@@ -205,6 +206,27 @@ namespace ExpectedObjects
         {
             var itemStrings = string.Join(",", items.Cast<object>().Select(i => i.GetCSharpString(visited)));
             return itemStrings;
+        }
+
+        static bool IsNumericType(this object o)
+        {
+            switch (Convert.GetTypeCode(o))
+            {
+                case TypeCode.Byte:
+                case TypeCode.SByte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Single:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }
