@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Dynamic;
 using ExpectedObjects.Specs.Infrastructure;
 using Machine.Specifications;
 

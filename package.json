@@ -15,7 +15,7 @@
     "build:pre-release": "npm-run-all build:pre-release:* tests package:pre-release",
     "build:pre-release:restore": "cross-env-shell globstar -- ${npm_package_dotnetPath} restore \"**/*.sln\" /p:Version=${PreReleaseVersion}",
     "build:pre-release:compile": "cross-env-shell globstar -- ${npm_package_dotnetPath} build \"**/*.sln\" --configuration ${npm_package_configuration} /p:Version=${PreReleaseVersion}",
-    "tests": "cross-env-shell globstar -- ${npm_package_dotnetPath} test -f netcoreapp1.1 \"src/${npm_package_name}.Specs/*.csproj",
+    "tests": "cross-env-shell globstar -- ${npm_package_dotnetPath} test -f netcoreapp3.1 \"src/${npm_package_name}.Specs/*.csproj",
     "package": "npm-run-all package:release:*",
     "package:release:main": "cross-env-shell globstar -- ${npm_package_dotnetPath} pack \"./src/**/${npm_package_name}.csproj\" -c ${npm_package_configuration} --no-build -o ../../dist --include-symbols /p:Version=${npm_package_version}",
     "package:pre-release": "npm-run-all package:pre-release:*",
