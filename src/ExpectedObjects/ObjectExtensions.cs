@@ -196,6 +196,8 @@ namespace ExpectedObjects
                 return $"{o}";
             if (o is DateTime)
                 return $"DateTime.Parse(\"{o}\")";
+            if (o is DateTimeOffset)
+                return $"DateTimeOffset.Parse(\"{o}\")";
             if (o is IEnumerable)
                 return $"new {o.ToUsefulClassName()} {{ {((IEnumerable) o).GetItems(visited)}}}";
 
