@@ -1,6 +1,14 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.3.5](https://github.com/derekgreer/expectedObjects/compare/v2.3.3...v2.3.5) (2020-09-02)
+
+
+### Bug Fixes
+
+* Correct formatting issue for booleans and certain numeric types ([23d9e73](https://github.com/derekgreer/expectedObjects/commit/23d9e739ed47fdfbb630893961c5fdbcdc3206e6))
+* Correct issue where DateTimeOffset type causes StackOverflowException ([94594f9](https://github.com/derekgreer/expectedObjects/commit/94594f9899ad4f90db110d8ea1470101326840ef))
 
 <a name="2.3.4"></a>
 ## [2.3.4](https://github.com/derekgreer/expectedObjects/compare/v2.3.3...v2.3.4) (2017-11-26)
