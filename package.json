@@ -33,7 +33,7 @@
     "cross-env": "^5.0.5",
     "cross-run": "^1.0.1",
     "download-cli": "^1.0.1",
-    "extend": "^3.0.0",
+    "extend": "^3.0.2",
     "globstar": "^1.0.0",
     "minimist": "^1.2.3",
     "mkdirp": "^0.5.1",
