@@ -8,14 +8,14 @@
   "scripts": {
     "prebuild": "npm run clean",
     "clean": "rimraf dist build",
-    "build": "npm-run-all build:release:* tests package",
+    "build": "npm-run-all build:release:* test package",
     "build:release:restore": "cross-env-shell globstar -- ${npm_package_dotnetPath} restore \"**/*.sln\" /p:Version=${npm_package_version}",
     "build:release:compile": "cross-env-shell globstar -- ${npm_package_dotnetPath} build \"**/*.sln\" --configuration ${npm_package_configuration} /p:Version=${npm_package_version}",
     "prebuild:pre-release": "npm run clean",
-    "build:pre-release": "npm-run-all build:pre-release:* tests package:pre-release",
+    "build:pre-release": "npm-run-all build:pre-release:* test package:pre-release",
     "build:pre-release:restore": "cross-env-shell globstar -- ${npm_package_dotnetPath} restore \"**/*.sln\" /p:Version=${PreReleaseVersion}",
     "build:pre-release:compile": "cross-env-shell globstar -- ${npm_package_dotnetPath} build \"**/*.sln\" --configuration ${npm_package_configuration} /p:Version=${PreReleaseVersion}",
-    "tests": "cross-env-shell globstar -- ${npm_package_dotnetPath} test -f netcoreapp3.1 \"src/${npm_package_name}.Specs/*.csproj",
+    "test": "cross-env-shell globstar -- ${npm_package_dotnetPath} test -f netcoreapp3.1 \"src/${npm_package_name}.Specs/*.csproj",
     "package": "npm-run-all package:release:*",
     "package:release:main": "cross-env-shell globstar -- ${npm_package_dotnetPath} pack \"./src/**/${npm_package_name}.csproj\" -c ${npm_package_configuration} --no-build -o dist --include-symbols /p:Version=${npm_package_version}",
     "package:pre-release": "npm-run-all package:pre-release:*",
@@ -31,17 +31,8 @@
   "devDependencies": {
     "cpx": "^1.5.0",
     "cross-env": "^7.0.2",
-    "cross-run": "^1.0.1",
-    "download-cli": "^1.1.1",
-    "extend": "^3.0.2",
     "globstar": "^1.0.0",
-    "minimist": "^1.2.5",
-    "mkdirp": "^1.0.4",
     "npm-run-all": "^4.1.5",
-    "path": "^0.12.7",
-    "request": "^2.81.0",
-    "rimraf": "^3.0.2",
-    "tmp": "^0.2.1",
-    "which": "^2.0.2"
+    "rimraf": "^3.0.2"
   }
 }
