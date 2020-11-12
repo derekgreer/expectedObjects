@@ -43,6 +43,7 @@ namespace ExpectedObjects.Specs
             () => _mockWriter.Verify(x => x.Write(Moq.It.IsAny<EqualityResult>()), Times.AtLeastOnce());
     }
 
+    [Subject("Strings")]
     public class when_comparing_equal_objects_with_string
     {
         static TypeWithString _actual;
@@ -61,7 +62,7 @@ namespace ExpectedObjects.Specs
         It should_be_equal = () => _result.ShouldBeTrue();
     }
 
-    [Subject("Public Fields")]
+    [Subject("Strings")]
     public class when_comparing_unequal_objects_with_string_field_configured_for_fields
     {
         static TypeWithStringField _actual;
@@ -80,6 +81,7 @@ namespace ExpectedObjects.Specs
         It should_not_be_equal = () => _result.ShouldBeFalse();
     }
 
+    [Subject("Strings")]
     public class when_comparing_unequal_objects_with_string_field_not_configured_for_fields
     {
         static TypeWithStringField _actual;
@@ -97,6 +99,7 @@ namespace ExpectedObjects.Specs
         It should_not_be_equal = () => _result.ShouldBeFalse();
     }
 
+    [Subject("Strings")]
     public class when_comparing_unequal_objects_with_string
     {
         static TypeWithString _actual;
