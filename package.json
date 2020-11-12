@@ -1,6 +1,6 @@
 {
   "name": "ExpectedObjects",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "configuration": "Release",
   "description": "A testing library for creating Expected Objects",
   "dotnetPath": "\"c:/Program Files/dotnet/dotnet.exe\"",

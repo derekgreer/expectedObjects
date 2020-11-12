@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.3.6](https://github.com/derekgreer/expectedObjects/compare/v2.3.5...v2.3.6) (2020-11-12)
+
+
+### Bug Fixes
+
+* Correct errors for overridden/hidden properties ([0190dc8](https://github.com/derekgreer/expectedObjects/commit/0190dc8b309636835230a4ae716390037ec34373))
+
 ### [2.3.5](https://github.com/derekgreer/expectedObjects/compare/v2.3.3...v2.3.5) (2020-09-02)
 
 
