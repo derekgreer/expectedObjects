@@ -8,9 +8,9 @@ using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
 {
-    public static class ObjectExtensions
+    static class ObjectExtensions
     {
-        public static string ToUsefulString(this object obj, bool verbose = false)
+        internal static string ToUsefulString(this object obj, bool verbose = false)
         {
             if (obj is IExpectedDescription)
                 return obj.ToString();
@@ -98,7 +98,7 @@ namespace ExpectedObjects
         }
     }
 
-    public static class ObjectStringExtensions
+    static class ObjectStringExtensions
     {
         static int _indentLevel;
 

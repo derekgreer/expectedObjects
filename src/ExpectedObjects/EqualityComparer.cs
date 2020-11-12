@@ -73,9 +73,18 @@ namespace ExpectedObjects
 
             expectedPropertyInfos.ToList().ForEach(propertyInfo =>
             {
-                areEqual = propertyComparison(propertyInfo,
-                               actualPropertyInfos.SingleOrDefault(p => p.Name.Equals(propertyInfo.Name) &&
-                                                                        p.HasSameIndexParameters(propertyInfo))) && areEqual;
+                try
+                {
+                    areEqual = propertyComparison(propertyInfo,
+                        actualPropertyInfos.SingleOrDefault(p => p.Name.Equals(propertyInfo.Name) &&
+                                                                 p.HasSameIndexParameters(propertyInfo))) && areEqual;
+                }
+                catch (Exception e)
+                {
+                    var res = actualPropertyInfos.Where(p => p.Name.Equals(propertyInfo.Name) && p.HasSameIndexParameters(propertyInfo));
+                    Console.WriteLine(e);
+                    throw;
+                }
             });
 
             return areEqual;

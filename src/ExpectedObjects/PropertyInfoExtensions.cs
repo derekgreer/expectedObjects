@@ -5,17 +5,6 @@ using System.Reflection;
 
 namespace ExpectedObjects
 {
-    //public static class PropertyInfoExtensions
-    //{
-    //    public static IEnumerable<PropertyInfo> ExcludeHiddenProperties(this IEnumerable<PropertyInfo> infos, Type originType)
-    //    {
-    //        const BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
-    //        var hiddenTypes = originType.GetProperties(flags).GroupBy(p => p.Name).Where(g => g.Count() > 1)
-    //            .SelectMany(g => g.Where(t => t.DeclaringType != originType));
-    //        return infos.Except(hiddenTypes);
-    //    }
-    //}
-
     public static class PropertyInfoExtensions
     {
         public static IEnumerable<PropertyInfo> GetVisibleProperties(this Type type, BindingFlags bindingFlags)
@@ -29,7 +18,15 @@ namespace ExpectedObjects
             var baseType = type.GetTypeInfo().BaseType;
             if (baseType != null)
             {
-                properties.AddRange(GetVisibleProperties(baseType, bindingFlags, declaredProperties));
+                var baseProperties = GetVisibleProperties(baseType, bindingFlags, declaredProperties);
+
+                foreach (var baseProperty in baseProperties)
+                {
+                    if (properties.All(p => p.Name != baseProperty.Name))
+                    {
+                        properties.Add(baseProperty);
+                    }
+                }
             }
 
             return properties;
