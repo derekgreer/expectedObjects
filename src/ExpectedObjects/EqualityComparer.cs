@@ -194,7 +194,7 @@ namespace ExpectedObjects
 
 
                 foreach (var strategy in _configurationContext.Strategies)
-                    if (strategy.CanCompare(expected.GetType()))
+                    if (strategy.CanCompare(expected, actual))
                     {
                         areEqual = strategy.AreEqual(expected, actual, this);
 

@@ -20,7 +20,7 @@ namespace ExpectedObjects.Specs
         Establish context = () =>
         {
             _comparisonStrategyMock = new Mock<IComparisonStrategy>();
-            _comparisonStrategyMock.Setup(x => x.CanCompare(Moq.It.IsAny<Type>())).Returns(true);
+            _comparisonStrategyMock.Setup(x => x.CanCompare(Moq.It.IsAny<object>(), Moq.It.IsAny<object>())).Returns(true);
             _comparisonStrategyMock.Setup(
                     x => x.AreEqual(Moq.It.IsAny<object>(), Moq.It.IsAny<object>(), Moq.It.IsAny<IComparisonContext>()))
                 .Returns(false);

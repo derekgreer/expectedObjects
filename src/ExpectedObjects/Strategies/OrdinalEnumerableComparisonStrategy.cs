@@ -1,14 +1,12 @@
-using System;
 using System.Collections;
-using System.Reflection;
 
 namespace ExpectedObjects.Strategies
 {
     public class OrdinalEnumerableComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
-            return typeof(IEnumerable).IsAssignableFrom(type);
+            return expected is IEnumerable && actual is IEnumerable;
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)
@@ -26,17 +24,19 @@ namespace ExpectedObjects.Strategies
             while (expectedHasValue && actualHasValue)
             {
                 areEqual = comparisonContext.ReportEquality(expectedEnumerator.Current, actualEnumerator.Current,
-                               $"[{yield++}]") && areEqual;
+                    $"[{yield++}]") && areEqual;
 
                 expectedHasValue = expectedEnumerator.MoveNext();
                 actualHasValue = actualEnumerator.MoveNext();
             }
 
             if (!expectedHasValue && actualHasValue)
-                areEqual = comparisonContext.ReportEquality(null, new UnexpectedElement(actualEnumerator.Current), $"[{yield}]") && areEqual;
+                areEqual = comparisonContext.ReportEquality(null, new UnexpectedElement(actualEnumerator.Current),
+                    $"[{yield}]") && areEqual;
 
             else if (expectedHasValue)
-                areEqual = comparisonContext.ReportEquality(expectedEnumerator.Current, new MissingElement(), $"[{yield}]") && areEqual;
+                areEqual = comparisonContext.ReportEquality(expectedEnumerator.Current, new MissingElement(),
+                    $"[{yield}]") && areEqual;
 
             return areEqual;
         }

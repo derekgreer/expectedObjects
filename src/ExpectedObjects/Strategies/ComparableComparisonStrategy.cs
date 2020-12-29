@@ -1,18 +1,24 @@
 ﻿using System;
-using System.Reflection;
 
 namespace ExpectedObjects.Strategies
 {
     public class ComparableComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
-            return typeof(IComparable).IsAssignableFrom(type);
+            return expected is IComparable && actual is IComparable;
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)
         {
-            return ((IComparable) expected).CompareTo(actual) == 0;
+            try
+            {
+                return ((IComparable) expected).CompareTo(actual) == 0;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

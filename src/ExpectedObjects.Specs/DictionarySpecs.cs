@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
@@ -164,7 +165,8 @@ namespace ExpectedObjects.Specs
         It should_be_equal = () => _result.ShouldBeTrue();
     }
 
-    public class when_comparing_unequal_key_value_pairs_with_equal_string_keys_and_unequal_reference_type_with_no_overload_values
+    public class
+        when_comparing_unequal_key_value_pairs_with_equal_string_keys_and_unequal_reference_type_with_no_overload_values
     {
         static KeyValuePair<string, SimpleType> _actual;
         static KeyValuePair<string, SimpleType> _expected;
@@ -182,5 +184,114 @@ namespace ExpectedObjects.Specs
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
         It should_not_be_equal = () => _result.ShouldBeFalse();
+    }
+
+    public class when_comparing_unequal_nested_dictionaries_of_object_object_with_equal_numbers_of_entries
+    {
+        static IDictionary<object, object> _actual;
+        static IDictionary<object, object> _expected;
+
+        static bool _result;
+
+        Establish context = () =>
+        {
+            _expected = new Dictionary<object, object>
+            {
+                {"1", "val"},
+                {
+                    "2", new Dictionary<object, object>
+                    {
+                        {"sub-1", "val"}
+                    }
+                }
+            };
+
+            _actual = new Dictionary<object, object>
+            {
+                {"2", "val"},
+                {
+                    "1", new Dictionary<object, object>
+                    {
+                        {"sub-1", "val"}
+                    }
+                }
+            };
+        };
+
+        Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+
+        It should_not_be_equal = () => _result.ShouldBeFalse();
+    }
+
+    public class when_asserting_ordinal_equality_for_dictionaries_with_differing_and_non_matching_data_types
+    {
+        static IDictionary<object, object> _actual;
+        static IDictionary<object, object> _expected;
+        static Exception _exception;
+
+        Establish context = () =>
+        {
+            _expected = new Dictionary<object, object>
+            {
+                {"1", "val"},
+                {
+                    "2", new Dictionary<object, object>
+                    {
+                        {"sub-1", "val"}
+                    }
+                }
+            };
+
+            _actual = new Dictionary<object, object>
+            {
+                {"2", "val"},
+                {
+                    "1", new Dictionary<object, object>
+                    {
+                        {"sub-1", "val"}
+                    }
+                }
+            };
+        };
+
+        Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject(x => x.UseOrdinalComparison()).ShouldMatch(_actual));
+
+        It should_throw_a_comparision_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+    }
+
+    public class when_asserting_inordinal_equality_for_dictionaries_with_differing_and_non_matching_data_types
+    {
+        static IDictionary<object, object> _actual;
+        static IDictionary<object, object> _expected;
+        static Exception _exception;
+
+        Establish context = () =>
+        {
+            _expected = new Dictionary<object, object>
+            {
+                {"1", "val"},
+                {
+                    "2", new Dictionary<object, object>
+                    {
+                        {"sub-1", "val"}
+                    }
+                }
+            };
+
+            _actual = new Dictionary<object, object>
+            {
+                {"2", "val"},
+                {
+                    "1", new Dictionary<object, object>
+                    {
+                        {"sub-1", "val"}
+                    }
+                }
+            };
+        };
+
+        Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldMatch(_actual));
+
+        It should_throw_a_comparision_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
     }
 }

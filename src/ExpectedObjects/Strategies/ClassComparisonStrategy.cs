@@ -5,9 +5,12 @@ namespace ExpectedObjects.Strategies
 {
     public class ClassComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
-            return type.GetTypeInfo().IsClass && !type.IsArray;
+            var expectedTypeInfo = expected.GetType().GetTypeInfo();
+            var actualTypeInfo = actual.GetType().GetTypeInfo();
+            return expectedTypeInfo.IsClass && !expectedTypeInfo.IsArray &&
+                   actualTypeInfo.IsClass && !actualTypeInfo.IsArray;
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)

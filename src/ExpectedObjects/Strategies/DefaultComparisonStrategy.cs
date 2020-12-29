@@ -4,7 +4,7 @@ namespace ExpectedObjects.Strategies
 {
     public class DefaultComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
             return true;
         }

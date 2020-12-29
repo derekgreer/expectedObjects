@@ -5,12 +5,12 @@ namespace ExpectedObjects.Strategies
 {
     public class PrimitiveComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
 #if NET40
-            return type.IsPrimitive;
+            return expected.GetType().IsPrimitive;
 #else
-            return type.GetTypeInfo().IsPrimitive;
+            return expected.GetType().GetTypeInfo().IsPrimitive;
 #endif
         }
 

@@ -7,9 +7,7 @@
     <Description>A testing library for creating Expected Objects</Description>
     <PackageTags>bdd tdd testing</PackageTags>
     <PackageProjectUrl>https://github.com/derekgreer/expectedObjects/</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/derekgreer/expectedObjects/raw/master/images/ico.png</PackageIconUrl>
-    <PackageLicenseUrl>https://github.com/derekgreer/expectedObjects/raw/master/license.txt</PackageLicenseUrl>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/derekgreer/expectedObjects/</RepositoryUrl>
   </PropertyGroup>

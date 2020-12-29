@@ -6,10 +6,13 @@ namespace ExpectedObjects.Strategies
 {
     public class KeyValuePairComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
-            if (type.GetTypeInfo().IsGenericType)
-                if (type.GetGenericTypeDefinition().Equals(typeof(KeyValuePair<,>)))
+            var expectedTypeInfo = expected.GetType().GetTypeInfo();
+            var actualTypeInfo = actual.GetType().GetTypeInfo();
+
+            if (expectedTypeInfo.IsGenericType && actualTypeInfo.IsGenericType)
+                if (expectedTypeInfo.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
                     return true;
 
             return false;
@@ -17,14 +20,13 @@ namespace ExpectedObjects.Strategies
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)
         {
-            var areEqual = false;
             var genericTypes = expected.GetType().GetGenericArguments();
 
             var getKey = GetMethodInfo("GetKey", genericTypes);
             var key1 = getKey.Invoke(this, new[] {expected});
             var key2 = getKey.Invoke(this, new[] {actual});
 
-            areEqual = comparisonContext.ReportEquality(key1, key2, "Key");
+            var areEqual = comparisonContext.ReportEquality(key1, key2, "Key");
 
 
             var getValue = GetMethodInfo("GetValue", genericTypes);

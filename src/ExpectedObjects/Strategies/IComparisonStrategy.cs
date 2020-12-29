@@ -4,7 +4,7 @@ namespace ExpectedObjects.Strategies
 {
     public interface IComparisonStrategy
     {
-        bool CanCompare(Type type);
+        bool CanCompare(object expected, object actual);
         bool AreEqual(object expected, object actual, IComparisonContext comparisonContext);
     }
 }

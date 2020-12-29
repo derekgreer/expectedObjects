@@ -1,22 +1,29 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 
 namespace ExpectedObjects.Strategies
 {
     public class EqualsOverrideComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
-            if (type.IsAnonymousType())
+            var expectedType = expected.GetType();
+            var actualType = actual.GetType();
+
+            if (expectedType.IsAnonymousType() || actualType.IsAnonymousType())
                 return false;
 
-            var overriddenEquals = type
+            var expectedOverriddenEquals = expectedType
                 .GetTypeInfo()
                 .GetDeclaredMethods("Equals")
                 .FirstOrDefault(m => m.IsVirtual && (m.Attributes & MethodAttributes.VtableLayoutMask) == MethodAttributes.ReuseSlot);
 
-            return overriddenEquals != null;
+            var actualOverriddenEquals = actualType
+                .GetTypeInfo()
+                .GetDeclaredMethods("Equals")
+                .FirstOrDefault(m => m.IsVirtual && (m.Attributes & MethodAttributes.VtableLayoutMask) == MethodAttributes.ReuseSlot);
+
+            return expectedOverriddenEquals != null || actualOverriddenEquals != null;
         }
 
 

@@ -2,15 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace ExpectedObjects.Strategies
 {
     public class EnumerableComparisonStrategy : IComparisonStrategy
     {
-        public bool CanCompare(Type type)
+        public bool CanCompare(object expected, object actual)
         {
-            return typeof(IEnumerable).IsAssignableFrom(type);
+            return expected is IEnumerable && actual is IEnumerable;
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)
