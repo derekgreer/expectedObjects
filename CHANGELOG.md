@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/derekgreer/expectedObjects/compare/v2.3.5...v3.0.0) (2020-12-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* This feature modifies the IComparisonStrategy to pass
+in the expected and actual objects. This allows the strategy to evaluate
+both objects qualify for the comparision operation.
+
+### Features
+
+* Correct issue with comparision of unlike types ([e49f01c](https://github.com/derekgreer/expectedObjects/commit/e49f01ca53a9776c94cd5a418cae3c6bac27a2d1))
+
+
+### Bug Fixes
+
+* Correct errors for overridden/hidden properties ([289c1a8](https://github.com/derekgreer/expectedObjects/commit/289c1a850446d0c6e77546a9f1eeb18d50f78868))
+
 ### [2.3.6](https://github.com/derekgreer/expectedObjects/compare/v2.3.5...v2.3.6) (2020-11-12)
 
 
