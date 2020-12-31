@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/derekgreer/expectedObjects/compare/v3.0.0...v3.1.0) (2020-12-31)
+
+
+### Features
+
+* Allow chaining of ignored members ([d7f21d0](https://github.com/derekgreer/expectedObjects/commit/d7f21d03bad081f75308e450f0628467bc5324b3))
+
 ## [3.0.0](https://github.com/derekgreer/expectedObjects/compare/v2.3.5...v3.0.0) (2020-12-29)
 
 
