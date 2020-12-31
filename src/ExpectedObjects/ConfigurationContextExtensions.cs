@@ -48,7 +48,7 @@ namespace ExpectedObjects
         /// <param name="configurationContext"></param>
         /// <param name="memberExpression">member expression</param>
         /// <returns></returns>
-        public static IConfigurationContext Ignore<T, TMember>(this IConfigurationContext<T> configurationContext,
+        public static IConfigurationContext<T> Ignore<T, TMember>(this IConfigurationContext<T> configurationContext,
             Expression<Func<T, TMember>> memberExpression)
         {
             configurationContext.Member(memberExpression).UsesComparison(Expect.Ignored());
