@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/derekgreer/expectedObjects/compare/v3.1.0...v3.2.0) (2021-01-01)
+
+
+### Features
+
+* Add ability to ignore by path ([#35](https://github.com/derekgreer/expectedObjects/issues/35)) ([e1d7312](https://github.com/derekgreer/expectedObjects/commit/e1d73120111d8d258ad29d3fff03b7be14a996c6)), closes [#24](https://github.com/derekgreer/expectedObjects/issues/24)
+
 ## [3.1.0](https://github.com/derekgreer/expectedObjects/compare/v3.0.0...v3.1.0) (2020-12-31)
 
 
