@@ -256,7 +256,7 @@ namespace ExpectedObjects.Specs
 
         Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject(x => x.UseOrdinalComparison()).ShouldMatch(_actual));
 
-        It should_throw_a_comparision_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
     }
 
     public class when_asserting_inordinal_equality_for_dictionaries_with_differing_and_non_matching_data_types
@@ -292,6 +292,6 @@ namespace ExpectedObjects.Specs
 
         Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldMatch(_actual));
 
-        It should_throw_a_comparision_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
     }
 }

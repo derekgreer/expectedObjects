@@ -7,7 +7,7 @@ namespace ExpectedObjects
     public interface IConfiguration
     {
         IEnumerable<IComparisonStrategy> Strategies { get; }
-        IDictionary<string, IComparison> MemberStrategies { get; }
+        IEnumerable<IMemberStrategy> MemberStrategies { get; }
         BindingFlags GetFieldBindingFlags();
     }
 }

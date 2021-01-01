@@ -12,17 +12,16 @@ namespace ExpectedObjects
     {
         MemberType _memberType;
         Stack<IComparisonStrategy> _strategies = new Stack<IComparisonStrategy>();
+        readonly IList<IMemberStrategy> _memberStrategies = new List<IMemberStrategy>();
 
         public ConfigurationContext(TExpected @object)
         {
             Object = @object;
         }
 
-        public ICollection<string> IgnoredPaths { get; } = new List<string>();
-
         public IEnumerable<IComparisonStrategy> Strategies => _strategies;
 
-        public IDictionary<string, IComparison> MemberStrategies { get; } = new Dictionary<string, IComparison>();
+        public IEnumerable<IMemberStrategy> MemberStrategies => _memberStrategies;
 
         public BindingFlags GetFieldBindingFlags()
         {
@@ -76,73 +75,12 @@ namespace ExpectedObjects
 
         public IMemberContext Member<TMember>(Expression<Func<TExpected, TMember>> memberExpression)
         {
-            var underlyingType = Object.GetType();
-
-            var propertyPath = (string) GetType()
-                .GetMethod(nameof(GetMemberPath), BindingFlags.NonPublic | BindingFlags.Instance)
-                .MakeGenericMethod(underlyingType, typeof(TMember))
-                .Invoke(this, new object[] {memberExpression});
-
-            var sb = new StringBuilder();
-            sb.Append(underlyingType.Name);
-
-
-            if (!string.IsNullOrWhiteSpace(propertyPath))
-                sb.Append($".{propertyPath}");
-
-            return new MemberContext(this, sb.ToString());
+            return new MemberContext<TExpected, TMember>(this, Object.GetType(),  memberExpression);
         }
 
-        void IMemberConfigurationContext.ConfigureMember(string memberPath, IComparison comparison)
+        void IMemberConfigurationContext.ConfigureMember(IMemberStrategy memberStrategy)
         {
-            MemberStrategies.Add(memberPath, comparison);
-        }
-
-        string GetMemberPath<TSource, TMember>(Expression<Func<TSource, TMember>> expr)
-        {
-            var members = new Stack<string>();
-            var sb = new StringBuilder();
-            MemberExpression memberExpression;
-
-            switch (expr.Body.NodeType)
-            {
-                case ExpressionType.Convert:
-                case ExpressionType.ConvertChecked:
-                    var ue = expr.Body as UnaryExpression;
-                    memberExpression = (ue != null ? ue.Operand : null) as MemberExpression;
-                    break;
-                default:
-                    memberExpression = expr.Body as MemberExpression;
-                    break;
-            }
-
-            while (memberExpression != null)
-            {
-                if (memberExpression.Expression.NodeType == ExpressionType.Call)
-                {
-                    var propertyName = memberExpression.Member.Name;
-
-                    var methodCallExpression = memberExpression.Expression as MethodCallExpression;
-                    if (methodCallExpression.Method.Name == "get_Item")
-                    {
-                        members.Push($"{((MemberExpression)methodCallExpression.Object).Member.Name}[{methodCallExpression.Arguments[0]}].{propertyName}");
-                    }
-
-                    memberExpression = memberExpression.Expression as MemberExpression; 
-                }
-                else
-                {
-                    var propertyName = memberExpression.Member.Name;
-                    members.Push(propertyName);
-                    memberExpression = memberExpression.Expression as MemberExpression;    
-                }
-
-                
-
-                
-            }
-
-            return string.Join(".", members.ToArray());
+            _memberStrategies.Add(memberStrategy);
         }
     }
 }

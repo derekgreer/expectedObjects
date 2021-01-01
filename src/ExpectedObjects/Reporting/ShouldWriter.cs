@@ -42,17 +42,21 @@ namespace ExpectedObjects.Reporting
                 .Where(x => x.Status.Equals(false))
                 .Where(x => IsLeaf(x) || x.ResultType == EqualityResultType.Custom)
                 .ToList()
-                .ForEach(x =>
+                .ForEach((x, index, collection) =>
                 {
+                    var isLastMember = index == collection.Count() - 1;
                     var member = !string.IsNullOrEmpty(x.Member) ? x.Member : "Missing instance";
                     sb.Append($"{count++}) {member}:");
                     sb.Append(Environment.NewLine);
                     sb.Append(Environment.NewLine);
                     sb.Append(GetFormattedObjects(x, _expandObjects));
 
-                    sb.Append(Environment.NewLine);
-                    sb.Append(Environment.NewLine);
-                    sb.Append(Environment.NewLine);
+                    if (!isLastMember)
+                    {
+                        sb.Append(Environment.NewLine);
+                        sb.Append(Environment.NewLine);
+                        sb.Append(Environment.NewLine);
+                    }
                 });
             return sb.ToString();
         }
@@ -70,40 +74,49 @@ namespace ExpectedObjects.Reporting
             if (result.Actual is IMissingMember)
             {
                 sb.Heading($"Expected");
-                sb.Indent($"{result.Expected.ToUsefulString(expandObjects)}{Environment.NewLine}", 2);
+                sb.Indent($"{result.Expected.ToUsefulString(expandObjects)}", 2);
+                sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine);
                 sb.Heading($"Actual");
-                sb.Indent($"member was missing{Environment.NewLine}", 2);
+                sb.Indent($"member was missing", 2);
+                sb.Append(Environment.NewLine);
             }
             else if (result.Actual is IUnexpectedElement)
             {
                 var actual = result.Actual as IUnexpectedElement;
 
                 sb.Heading($"Expected");
-                sb.Indent($"nothing{Environment.NewLine}", 2);
+                sb.Indent($"nothing", 2);
+                sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine);
                 sb.Heading($"Actual");
-                sb.Indent($"{actual.Element.ToUsefulString(expandObjects)}{Environment.NewLine}", 2);
+                sb.Indent($"{actual.Element.ToUsefulString(expandObjects)}", 2);
+                sb.Append(Environment.NewLine);
             }
             else if (result.Actual is IMissingElement)
             {
                 sb.Heading($"Expected");
-                sb.Indent($"{result.Expected.ToUsefulString(expandObjects)}{Environment.NewLine}", 2);
+                sb.Indent($"{result.Expected.ToUsefulString(expandObjects)}", 2);
+                sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine);
                 sb.Heading($"Actual");
-                sb.Indent($"element was missing{Environment.NewLine}", 2);
+                sb.Indent($"element was missing", 2);
+                sb.Append(Environment.NewLine);
             }
             else if (result.ResultType == EqualityResultType.Custom)
             {
-                sb.Indent($"{result.Message}{Environment.NewLine}");
+                sb.Indent($"{result.Message}");
+                sb.Append(Environment.NewLine);
             }
             else
             {
                 sb.Heading($"Expected");
-                sb.Indent($"{result.Expected.ToUsefulString(expandObjects)}{Environment.NewLine}", 2);
+                sb.Indent($"{result.Expected.ToUsefulString(expandObjects)}", 2);
+                sb.Append(Environment.NewLine);
                 sb.Append(Environment.NewLine);
                 sb.Heading($"Actual");
-                sb.Indent($"{result.Actual.ToUsefulString(expandObjects)}{Environment.NewLine}", 2);
+                sb.Indent($"{result.Actual.ToUsefulString(expandObjects)}", 2);
+                sb.Append(Environment.NewLine);
             }
             return sb.ToString();
         }

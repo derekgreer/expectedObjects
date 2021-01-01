@@ -110,24 +110,12 @@ namespace ExpectedObjects
                 EqualityResultType.Custom, message));
         }
 
-        IComparison GetMemberStrategy(string path)
+        IComparison GetMemberComparison(string path)
         {
-            var pathTokens = path.Split('.');
+            var strategy = _configurationContext.MemberStrategies.LastOrDefault(s => s.ShouldApply(path));
 
-            if (_ignoreTypeInformation && pathTokens.Length > 1)
-            {
-                var subPath = string.Join(".", path.Split('.').Skip(1));
-                
-                return _configurationContext.MemberStrategies
-                    .Where(s => subPath.EndsWith(s.Key.Substring(s.Key.IndexOf('.') + 1)))
-                    .Select(s => s.Value).FirstOrDefault();
-            }
-
-            IComparison comparison;
-            _configurationContext.MemberStrategies.TryGetValue(path, out comparison);
-            return comparison;
+            return strategy?.Comparison;
         }
-
 
         public bool AreEqual(object expected, object actual, IWriter writer, bool ignoreTypeInformation = false)
         {
@@ -144,8 +132,7 @@ namespace ExpectedObjects
                 var areEqual = true;
                 _elementStack.Push(member);
 
-
-                var memberComparison = GetMemberStrategy(GetMemberPath());
+                var memberComparison = GetMemberComparison(GetMemberPath());
 
                 if (memberComparison != null)
                     return EvalComparison(actual, writer, memberComparison, GetMemberPath());
@@ -158,7 +145,22 @@ namespace ExpectedObjects
                     return true;
                 }
 
-                if (expected == null && actual != null)
+                if (expected == null)
+                {
+                    writer.Write(new EqualityResult(false, GetMemberPath(), null, actual));
+                    return false;
+                }
+
+                if (expected is IComparison comparison)
+                    return EvalComparison(actual, writer, comparison, GetMemberPath());
+
+                if (actual is IMissing)
+                {
+                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
+                    return false;
+                }
+
+                if (!_ignoreTypeInformation && !expected.GetType().IsInstanceOfType(actual))
                 {
                     writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
                     return false;
@@ -166,25 +168,7 @@ namespace ExpectedObjects
 
                 if (_ignoreTypeInformation)
                 {
-                    var comparison = expected as IComparison;
-
-                    if (comparison != null)
-                        return EvalComparison(actual, writer, comparison, GetMemberPath());
-
-                    if (actual is IMissing)
-                    {
-                        writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-                        return false;
-                    }
-                    else if (IsLeaf(expected) && !expected.GetType().IsInstanceOfType(actual))
-                    {
-                        writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-                        return false;
-                    }
-                }
-                else
-                {
-                    if (expected != null && !expected.GetType().IsInstanceOfType(actual))
+                    if (IsLeaf(expected) && !expected.GetType().IsInstanceOfType(actual))
                     {
                         writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
                         return false;
@@ -193,10 +177,9 @@ namespace ExpectedObjects
 
                 if (actual == null)
                 {
-                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
+                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, null));
                     return false;
                 }
-
 
                 foreach (var strategy in _configurationContext.Strategies)
                     if (strategy.CanCompare(expected, actual))
@@ -245,10 +228,7 @@ namespace ExpectedObjects
             const BindingFlags propertyFlags = BindingFlags.Public | BindingFlags.Instance;
             var expectedPropertyInfos = expected.GetType()
                 .GetVisibleProperties(propertyFlags);
-                //.GetProperties(propertyFlags)
-                //.ExcludeHiddenProperties(expected.GetType());
 
-            var fieldFlags = _configurationContext.GetFieldBindingFlags();
             var expectedFieldInfos = expected.GetType().GetFields(propertyFlags);
 
             return !expectedPropertyInfos.Any() && !expectedFieldInfos.Any();

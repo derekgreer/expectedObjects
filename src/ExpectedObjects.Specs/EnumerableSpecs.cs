@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ExpectedObjects.Specs.Infrastructure;
+using ExpectedObjects.Specs.Properties;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
@@ -119,7 +119,7 @@ namespace ExpectedObjects.Specs
 
         It should_be_equal = () => _result.ShouldBeTrue();
 
-        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+        It should_show_results = () => _expected.ShouldMatch(_actual);
     }
 
     [Subject("Enumerables")]
@@ -129,6 +129,8 @@ namespace ExpectedObjects.Specs
         static TypeWithIEnumerable _actual;
         static bool _result;
 
+        static Exception _exception;
+
         Establish context = () =>
         {
             _expected = new TypeWithIEnumerable {Objects = new List<string> {"test2", "test1"}}
@@ -137,11 +139,12 @@ namespace ExpectedObjects.Specs
             _actual = new TypeWithIEnumerable {Objects = new List<string> {"test1", "test2"}};
         };
 
-        Because of = () => _result = _expected.Equals(_actual);
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
 
-        It should_be_equal = () => _result.ShouldBeFalse();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
-        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration_should_have_the_expected_exception_message);
     }
 
     [Subject("Enumerables")]
@@ -150,6 +153,8 @@ namespace ExpectedObjects.Specs
         static ExpectedObject _expected;
         static TypeWithIEnumerable _actual;
         static bool _result;
+
+        static Exception _exception;
 
         Establish context = () =>
         {
@@ -179,11 +184,12 @@ namespace ExpectedObjects.Specs
             };
         };
 
-        Because of = () => _result = _expected.Equals(_actual);
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
-        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message);
     }
 
     [Subject("Enumerables")]
@@ -192,6 +198,8 @@ namespace ExpectedObjects.Specs
         static List<TypeWithDecimal> _actual;
         static ExpectedObject _expected;
         static bool _result;
+
+        static Exception _exception;
 
         Establish context = () =>
         {
@@ -208,11 +216,12 @@ namespace ExpectedObjects.Specs
             };
         };
 
-        Because of = () => _result = _expected.Equals(_actual);
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
-        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message);
     }
 
     [Subject("Enumerables")]

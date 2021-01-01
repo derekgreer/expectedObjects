@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="when_comparing_unequal_response_types_with_writer_context" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) Response.IsInStock:
+
+  Expected:
+    False
+
+  Actual:
+    True
+
+
+
+2) Response.Quantity:
+
+  Expected:
+    4
+
+  Actual:
+    [null]
+</value>
+  </data>
+  <data name="when_comparing_unequal_complex_types_with_writer_should_have_the_expected_exception_message" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) &lt;Anonymous&gt;.Level1.Level2.Level3:
+
+  Expected:
+    "test1"
+
+  Actual:
+    "test2"
+
+
+
+2) &lt;Anonymous&gt;.StringProperty:
+
+  Expected:
+    "test1"
+
+  Actual:
+    "test2"
+</value>
+  </data>
+  <data name="when_comparing_anonymous_to_unequal_type_should_have_the_expected_exception_message" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) ComplexType.IndexType.Item[4]:
+
+  Expected:
+    5
+
+  Actual:
+    6
+</value>
+  </data>
+  <data name="when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) &lt;Anonymous&gt;.Array[0]:
+
+  Expected:
+    &lt;Anonymous&gt;
+    { 
+        Parent = new &lt;Anonymous&gt;
+        { 
+            Array = new Object[] { ... }
+        },
+        Id = 1
+    }
+
+  Actual:
+    element was missing
+
+
+
+2) &lt;Anonymous&gt;.Array:
+
+  The following elements were unexpected:
+  
+  &lt;Anonymous&gt;
+  { 
+      Parent = new &lt;Anonymous&gt;
+      { 
+          Array = new Object[] { ... }
+      },
+      Id = 2
+  }
+</value>
+  </data>
+  <data name="when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) &lt;Anonymous&gt;.Array[0].Id:
+
+  Expected:
+    1
+
+  Actual:
+    2
+</value>
+  </data>
+  <data name="when_comparing_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) List&lt;TypeWithDecimal&gt;[0]:
+
+  Expected:
+    TypeWithDecimal
+    { 
+        DecimalProperty = 1.1m
+    }
+
+  Actual:
+    element was missing
+
+
+
+2) List&lt;TypeWithDecimal&gt;[1]:
+
+  Expected:
+    TypeWithDecimal
+    { 
+        DecimalProperty = 1.2m
+    }
+
+  Actual:
+    element was missing
+
+
+
+3) List&lt;TypeWithDecimal&gt;:
+
+  The following elements were unexpected:
+  
+  TypeWithDecimal
+  { 
+      DecimalProperty = 1.3m
+  },
+  
+  TypeWithDecimal
+  { 
+      DecimalProperty = 1.4m
+  }
+</value>
+  </data>
+  <data name="when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) TypeWithIEnumerable.Objects[0]:
+
+  Expected:
+    ComplexType
+    { 
+        IntegerProperty = 0,
+        DecimalProperty = 1.1m
+    }
+
+  Actual:
+    element was missing
+
+
+
+2) TypeWithIEnumerable.Objects[1]:
+
+  Expected:
+    ComplexType
+    { 
+        IntegerProperty = 0,
+        DecimalProperty = 1.2m
+    }
+
+  Actual:
+    element was missing
+
+
+
+3) TypeWithIEnumerable.Objects:
+
+  The following elements were unexpected:
+  
+  ComplexType
+  { 
+      IntegerProperty = 0,
+      DecimalProperty = 1.3m
+  },
+  
+  ComplexType
+  { 
+      IntegerProperty = 0,
+      DecimalProperty = 1.4m,
+      TypeWithIEnumerable = new TypeWithIEnumerable
+      { 
+          Objects = new List&lt;String&gt; { "test","test"}
+      }
+  }
+</value>
+  </data>
+  <data name="when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration_should_have_the_expected_exception_message" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) TypeWithIEnumerable.Objects[0]:
+
+  Expected:
+    "test2"
+
+  Actual:
+    "test1"
+
+
+
+2) TypeWithIEnumerable.Objects[1]:
+
+  Expected:
+    "test1"
+
+  Actual:
+    "test2"
+</value>
+  </data>
+</root>

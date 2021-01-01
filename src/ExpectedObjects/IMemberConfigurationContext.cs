@@ -2,6 +2,6 @@
 {
     public interface IMemberConfigurationContext
     {
-        void ConfigureMember(string memberPath, IComparison comparison);
+        void ConfigureMember(IMemberStrategy memberStrategy);
     }
 }

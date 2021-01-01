@@ -8,7 +8,7 @@ namespace ExpectedObjects.Specs
     public class ExclusionSpecs
     {
         [Subject("Ignore")]
-        public class when_excluding_a_property
+        public class when_evaluating_equality_with_ignored_member_expression
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -35,7 +35,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore")]
-        public class when_excluding_a_property_by_string_path
+        public class when_evaluating_equality_with_ignored_member_path
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -62,7 +62,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore")]
-        public class when_excluding_a_list_property
+        public class when_evaluating_match_with_ignored_enumerable_member_expression
         {
             static ExpectedObject _expected;
             static TypeWithElementList _actual;
@@ -102,7 +102,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore")]
-        public class when_excluding_all_properties_matching_path
+        public class when_evaluating_match_with_ignored_member_relative_path
         {
             static ExpectedObject _expected;
             static TypeWithElementList _actual;
@@ -144,7 +144,49 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore")]
-        public class when_excluding_a_property_with_anonymous_expected_objects
+        public class when_evaluating_equality_with_ignored_member_relative_path
+        {
+            static ExpectedObject _expected;
+            static TypeWithElementList _actual;
+            static bool _results;
+            static Exception _exception;
+
+            Establish context = () =>
+            {
+                _expected = new TypeWithElementList
+                {
+                    Id = 1,
+                    Elements = new List<Element>
+                    {
+                        new Element
+                        {
+                            Id = 1,
+                            Data = "value"
+                        }
+                    }
+                }.ToExpectedObject(ctx => ctx.Ignore("Id"));
+
+                _actual = new TypeWithElementList
+                {
+                    Id = 2,
+                    Elements = new List<Element>
+                    {
+                        new Element
+                        {
+                            Id = 2,
+                            Data = "value"
+                        }
+                    }
+                };
+            };
+
+            Because of = () => _exception = Catch.Exception(() => _expected.ShouldEqual(_actual));
+
+            It should_ignore_matching_properties = () => _exception.ShouldBeNull();
+        }
+
+        [Subject("Ignore")]
+        public class when_evaluating_match_with_anonymous_type_ignored_member_expression
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -171,7 +213,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore")]
-        public class when_excluding_a_base_type
+        public class when_evaluating_equality_with_ignored_root_type
         {
             static ExpectedObject _expected;
             static ComplexType _actual;

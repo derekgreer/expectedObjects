@@ -62,7 +62,7 @@ namespace ExpectedObjects
         /// <returns></returns>
         public static IConfigurationContext Ignore(this IConfigurationContext configurationContext, string memberPath)
         {
-            ((IMemberConfigurationContext)configurationContext).ConfigureMember(memberPath, Expect.Ignored());
+            ((IMemberConfigurationContext)configurationContext).ConfigureMember(new RelativeMemberStrategy(Expect.Ignored(), memberPath));
             return configurationContext;
         }
     }

@@ -1,5 +1,5 @@
 ﻿using System;
-using ExpectedObjects.Specs.Infrastructure;
+using ExpectedObjects.Specs.Properties;
 using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
@@ -9,6 +9,7 @@ namespace ExpectedObjects.Specs
     {
         static ExpectedObject _expected;
         static object _actual;
+        static Exception _exception;
 
         Establish context = () =>
         {
@@ -20,7 +21,8 @@ namespace ExpectedObjects.Specs
                     {
                         Level3 = "test1"
                     }
-                }
+                },
+                StringProperty = "test1"
             }.ToExpectedObject();
 
             _actual = new
@@ -31,11 +33,17 @@ namespace ExpectedObjects.Specs
                     {
                         Level3 = "test2"
                     }
-                }
+                },
+                StringProperty = "test2"
             };
         };
 
-       It should_show_results = Create.Observation(() => () =>_expected.ShouldMatch(_actual));
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_unequal_complex_types_with_writer_should_have_the_expected_exception_message);
     }
 
     [Subject("Complex Type")]
@@ -43,6 +51,7 @@ namespace ExpectedObjects.Specs
     {
         static ExpectedObject _expected;
         static Response _actual;
+        static Exception _exception;
 
         Establish context = () =>
         {
@@ -59,13 +68,19 @@ namespace ExpectedObjects.Specs
             {
                 Id = 1,
                 Description = "Desc",
-                IsInStock = true,  //expected: false
-                Quantity = null,  //expected: 4
+                IsInStock = true,
+                Quantity = null,
                 CreatedDate = DateTime.Now
             };
         };
 
-        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources
+                .when_comparing_unequal_response_types_with_writer_context);
     }
 
     public class Response

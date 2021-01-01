@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using ExpectedObjects.Specs.Infrastructure;
+﻿using System;
+using System.Collections.Generic;
+using ExpectedObjects.Specs.Properties;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
@@ -38,6 +39,8 @@ namespace ExpectedObjects.Specs
 
         static bool _result;
 
+        static Exception _exception;
+
         Establish context = () =>
         {
             _expected = new
@@ -55,11 +58,12 @@ namespace ExpectedObjects.Specs
             };
         };
 
-        Because of = () => _result = _expected.Equals(_actual);
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
-        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_anonymous_to_unequal_type_should_have_the_expected_exception_message);
     }
 
     [Subject("Anonymous Partial Comparisons")]

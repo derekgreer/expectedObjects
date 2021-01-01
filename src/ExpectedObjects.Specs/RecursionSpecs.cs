@@ -1,5 +1,5 @@
 ﻿using System;
-using ExpectedObjects.Specs.Infrastructure;
+using ExpectedObjects.Specs.Properties;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
@@ -126,7 +126,7 @@ namespace ExpectedObjects.Specs
     public class when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object
     {
         static object _actual;
-        static object _expected;
+        static ExpectedObject _expected;
         static Exception _exception;
 
         Establish context = () =>
@@ -134,7 +134,7 @@ namespace ExpectedObjects.Specs
             var expected = new {Array = new object[1]};
             expected.Array[0] = new {Parent = expected, Id = 1};
 
-            _expected = expected;
+            _expected = expected.ToExpectedObject();
 
             var actual = new {Array = new object[1]};
             actual.Array[0] = new {Parent = actual, Id = 2};
@@ -142,11 +142,12 @@ namespace ExpectedObjects.Specs
             _actual = actual;
         };
 
-        Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldMatch(_actual));
+        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
 
-        It should_throw_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
-        It should_show_results = Create.Observation(() => () => _expected.ToExpectedObject().ShouldMatch(_actual));
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message);
     }
 
     [Subject("Recursion")]
@@ -171,8 +172,9 @@ namespace ExpectedObjects.Specs
 
         Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
 
-        It should_throw_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+        It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
-        It should_show_results = Create.Observation(() => () => _expected.ShouldMatch(_actual));
+        It should_have_the_expected_exception_message =
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message);
     }
 }
