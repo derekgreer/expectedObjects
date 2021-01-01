@@ -54,5 +54,16 @@ namespace ExpectedObjects
             configurationContext.Member(memberExpression).UsesComparison(Expect.Ignored());
             return configurationContext;
         }
+
+        /// <summary>
+        ///     Ignores the specified member in comparisons.
+        /// </summary>
+        /// <param name="memberPath">The path to the ignored member</param>
+        /// <returns></returns>
+        public static IConfigurationContext Ignore(this IConfigurationContext configurationContext, string memberPath)
+        {
+            ((IMemberConfigurationContext)configurationContext).ConfigureMember(memberPath, Expect.Ignored());
+            return configurationContext;
+        }
     }
 }

@@ -112,10 +112,15 @@ namespace ExpectedObjects
 
         IComparison GetMemberStrategy(string path)
         {
-            if (_ignoreTypeInformation)
+            var pathTokens = path.Split('.');
+
+            if (_ignoreTypeInformation && pathTokens.Length > 1)
             {
                 var subPath = string.Join(".", path.Split('.').Skip(1));
-                return _configurationContext.MemberStrategies.Where(s => s.Key.EndsWith(subPath)).Select(s => s.Value).FirstOrDefault();
+                
+                return _configurationContext.MemberStrategies
+                    .Where(s => subPath.EndsWith(s.Key.Substring(s.Key.IndexOf('.') + 1)))
+                    .Select(s => s.Value).FirstOrDefault();
             }
 
             IComparison comparison;

@@ -118,9 +118,28 @@ namespace ExpectedObjects
 
             while (memberExpression != null)
             {
-                var propertyName = memberExpression.Member.Name;
-                members.Push(propertyName);
-                memberExpression = memberExpression.Expression as MemberExpression;
+                if (memberExpression.Expression.NodeType == ExpressionType.Call)
+                {
+                    var propertyName = memberExpression.Member.Name;
+
+                    var methodCallExpression = memberExpression.Expression as MethodCallExpression;
+                    if (methodCallExpression.Method.Name == "get_Item")
+                    {
+                        members.Push($"{((MemberExpression)methodCallExpression.Object).Member.Name}[{methodCallExpression.Arguments[0]}].{propertyName}");
+                    }
+
+                    memberExpression = memberExpression.Expression as MemberExpression; 
+                }
+                else
+                {
+                    var propertyName = memberExpression.Member.Name;
+                    members.Push(propertyName);
+                    memberExpression = memberExpression.Expression as MemberExpression;    
+                }
+
+                
+
+                
             }
 
             return string.Join(".", members.ToArray());
