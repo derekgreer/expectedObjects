@@ -144,7 +144,7 @@ namespace ExpectedObjects.Specs
         It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
         It should_have_the_expected_exception_message =
-            () => _exception.Message.ShouldEqual(Resources.when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration_should_have_the_expected_exception_message);
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration);
     }
 
     [Subject("Enumerables")]
@@ -189,7 +189,7 @@ namespace ExpectedObjects.Specs
         It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
         It should_have_the_expected_exception_message =
-            () => _exception.Message.ShouldEqual(Resources.when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message);
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration);
     }
 
     [Subject("Enumerables")]
@@ -221,7 +221,7 @@ namespace ExpectedObjects.Specs
         It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
         It should_have_the_expected_exception_message =
-            () => _exception.Message.ShouldEqual(Resources.when_comparing_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message);
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_unequal_enumerables_with_different_order_elements_with_default_configuration);
     }
 
     [Subject("Enumerables")]

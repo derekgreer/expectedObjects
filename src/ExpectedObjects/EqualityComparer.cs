@@ -17,6 +17,7 @@ namespace ExpectedObjects
 
         bool _ignoreTypeInformation;
         IWriter _writer;
+        object _expected;
 
         public EqualityComparer(IConfiguration configurationContext)
         {
@@ -112,6 +113,10 @@ namespace ExpectedObjects
 
         IComparison GetMemberComparison(string path)
         {
+            var expectedRootType = _expected.GetType();
+            
+            if(_ignoreTypeInformation)
+                path =  string.Join(".", new [] { expectedRootType.Name, string.Join(".", path.Split('.').Skip(1))}.Where(x => !string.IsNullOrEmpty(x)));
             var strategy = _configurationContext.MemberStrategies.LastOrDefault(s => s.ShouldApply(path));
 
             return strategy?.Comparison;
@@ -119,11 +124,11 @@ namespace ExpectedObjects
 
         public bool AreEqual(object expected, object actual, IWriter writer, bool ignoreTypeInformation = false)
         {
+            _expected = expected;
             _writer = writer;
             _ignoreTypeInformation = ignoreTypeInformation;
             return ReportEquality(expected, actual, actual?.GetType().ToUsefulTypeName() ?? string.Empty);
         }
-
 
         bool Compare(object expected, object actual, string member, IWriter writer)
         {
@@ -132,10 +137,14 @@ namespace ExpectedObjects
                 var areEqual = true;
                 _elementStack.Push(member);
 
-                var memberComparison = GetMemberComparison(GetMemberPath());
 
-                if (memberComparison != null)
-                    return EvalComparison(actual, writer, memberComparison, GetMemberPath());
+                if (expected != null)
+                {
+                    var memberComparison = GetMemberComparison(GetMemberPath());
+
+                    if (memberComparison != null)
+                        return EvalComparison(actual, writer, memberComparison, GetMemberPath());
+                }
 
                 if (ReferenceEquals(expected, actual))
                 {
@@ -166,13 +175,10 @@ namespace ExpectedObjects
                     return false;
                 }
 
-                if (_ignoreTypeInformation)
+                if (_ignoreTypeInformation && IsLeaf(expected) && !expected.GetType().IsInstanceOfType(actual))
                 {
-                    if (IsLeaf(expected) && !expected.GetType().IsInstanceOfType(actual))
-                    {
-                        writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-                        return false;
-                    }
+                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
+                    return false;
                 }
 
                 if (actual == null)

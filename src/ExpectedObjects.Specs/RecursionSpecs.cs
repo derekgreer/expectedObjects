@@ -147,7 +147,7 @@ namespace ExpectedObjects.Specs
         It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
         It should_have_the_expected_exception_message =
-            () => _exception.Message.ShouldEqual(Resources.when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message);
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object);
     }
 
     [Subject("Recursion")]
@@ -175,6 +175,6 @@ namespace ExpectedObjects.Specs
         It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
         It should_have_the_expected_exception_message =
-            () => _exception.Message.ShouldEqual(Resources.when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message);
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object);
     }
 }

@@ -50,5 +50,19 @@ namespace ExpectedObjects
         /// <param name="memberExpression">member expression</param>
         /// <returns></returns>
         IMemberContext Member<TMember>(Expression<Func<T, TMember>> memberExpression);
+
+        /// <summary>
+        ///     Used for configuring members.
+        /// </summary>
+        /// <param name="memberPath">path to the member</param>
+        /// <returns></returns>
+        IMemberContext Member(string memberPath);
+
+        /// <summary>
+        ///     Used for configuring relative members.
+        /// </summary>
+        /// <param name="memberPath">relative path to member</param>
+        /// <returns></returns>
+        IMemberContext RelativeMember(string memberPath);
     }
 }

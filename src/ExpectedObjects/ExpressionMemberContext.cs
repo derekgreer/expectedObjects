@@ -5,13 +5,13 @@ using System.Linq.Expressions;
 
 namespace ExpectedObjects
 {
-    public class MemberContext<TExpected, TMember> : IMemberContext
+    class ExpressionMemberContext<TExpected, TMember> : IMemberContext
     {
         readonly IMemberConfigurationContext _memberConfigurationContext;
         readonly Type _rootType;
         readonly Expression<Func<TExpected, TMember>> _memberExpression;
 
-        public MemberContext(IMemberConfigurationContext memberConfigurationContext, Type rootType,  Expression<Func<TExpected, TMember>> memberExpression)
+        public ExpressionMemberContext(IMemberConfigurationContext memberConfigurationContext, Type rootType, Expression<Func<TExpected, TMember>> memberExpression)
         {
             _memberConfigurationContext = memberConfigurationContext;
             _rootType = rootType;
@@ -21,16 +21,8 @@ namespace ExpectedObjects
         public void UsesComparison(IComparison comparison)
         {
             var memberPath = GetMemberPath(_memberExpression);
-
-            if (_rootType.IsAnonymousType())
-            {
-                _memberConfigurationContext.ConfigureMember(new RelativeMemberStrategy(comparison, memberPath));
-            }
-            else
-            {
-                memberPath = String.Join(".", new [] {_rootType.Name, memberPath}.Where(x => !string.IsNullOrEmpty(x)));
-                _memberConfigurationContext.ConfigureMember(new AbsoluteMemberStrategy(comparison, memberPath));
-            }
+            memberPath = String.Join(".", new [] {_rootType.Name, memberPath}.Where(x => !string.IsNullOrEmpty(x)));
+            _memberConfigurationContext.ConfigureMember(new AbsolutePathMemberStrategy(comparison, _rootType, memberPath));
         }
 
         string GetMemberPath<TSource, TMember>(Expression<Func<TSource, TMember>> expr)

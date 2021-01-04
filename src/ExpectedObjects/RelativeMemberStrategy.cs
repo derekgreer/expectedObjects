@@ -1,19 +1,20 @@
 ﻿namespace ExpectedObjects
 {
-    public class RelativeMemberStrategy: IMemberStrategy
+    class RelativeMemberStrategy : IMemberStrategy
     {
-        readonly string _relativeMemberPath;
-        public IComparison Comparison { get; }
+        readonly string _memberPath;
 
-        public RelativeMemberStrategy(IComparison comparison, string relativeMemberPath)
+        public RelativeMemberStrategy(IComparison comparison, string memberPath)
         {
-            _relativeMemberPath = relativeMemberPath;
+            _memberPath = memberPath;
             Comparison = comparison;
         }
 
-        public bool ShouldApply(string absoluteMemberPath)
+        public IComparison Comparison { get; }
+
+        public bool ShouldApply(string memberPath)
         {
-            return absoluteMemberPath.EndsWith(_relativeMemberPath);
+            return memberPath.EndsWith(_memberPath);
         }
     }
 }

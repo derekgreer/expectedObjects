@@ -74,10 +74,9 @@ namespace ExpectedObjects.Specs.Properties {
         ///    6
         ///.
         /// </summary>
-        internal static string when_comparing_anonymous_to_unequal_type_should_have_the_expected_exception_message {
+        internal static string when_comparing_anonymous_to_unequal_type {
             get {
-                return ResourceManager.GetString("when_comparing_anonymous_to_unequal_type_should_have_the_expected_exception_messa" +
-                        "ge", resourceCulture);
+                return ResourceManager.GetString("when_comparing_anonymous_to_unequal_type", resourceCulture);
             }
         }
         
@@ -115,10 +114,10 @@ namespace ExpectedObjects.Specs.Properties {
         ///      },
         ///   [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message {
+        internal static string when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object {
             get {
                 return ResourceManager.GetString("when_comparing_different_objects_with_array_properties_with_items_that_have_back_" +
-                        "reference_to_parent_object_should_have_the_expected_exception_message", resourceCulture);
+                        "reference_to_parent_object", resourceCulture);
             }
         }
         
@@ -146,10 +145,10 @@ namespace ExpectedObjects.Specs.Properties {
         ///    &quot;test2&quot;
         ///.
         /// </summary>
-        internal static string when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration_should_have_the_expected_exception_message {
+        internal static string when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration {
             get {
                 return ResourceManager.GetString("when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_confi" +
-                        "guration_should_have_the_expected_exception_message", resourceCulture);
+                        "guration", resourceCulture);
             }
         }
         
@@ -167,10 +166,10 @@ namespace ExpectedObjects.Specs.Properties {
         ///    2
         ///.
         /// </summary>
-        internal static string when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object_should_have_the_expected_exception_message {
+        internal static string when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object {
             get {
                 return ResourceManager.GetString("when_comparing_ordinal_different_objects_with_array_properties_with_items_that_ha" +
-                        "ve_back_reference_to_parent_object_should_have_the_expected_exception_message", resourceCulture);
+                        "ve_back_reference_to_parent_object", resourceCulture);
             }
         }
         
@@ -211,10 +210,10 @@ namespace ExpectedObjects.Specs.Properties {
         ///
         ///  The f [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message {
+        internal static string when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration {
             get {
                 return ResourceManager.GetString("when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_" +
-                        "default_configuration_should_have_the_expected_exception_message", resourceCulture);
+                        "default_configuration", resourceCulture);
             }
         }
         
@@ -242,10 +241,9 @@ namespace ExpectedObjects.Specs.Properties {
         ///    &quot;test2&quot;
         ///.
         /// </summary>
-        internal static string when_comparing_unequal_complex_types_with_writer_should_have_the_expected_exception_message {
+        internal static string when_comparing_unequal_complex_types_with_writer {
             get {
-                return ResourceManager.GetString("when_comparing_unequal_complex_types_with_writer_should_have_the_expected_excepti" +
-                        "on_message", resourceCulture);
+                return ResourceManager.GetString("when_comparing_unequal_complex_types_with_writer", resourceCulture);
             }
         }
         
@@ -288,10 +286,10 @@ namespace ExpectedObjects.Specs.Properties {
         ///  { 
         ///      [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string when_comparing_unequal_enumerables_with_different_order_elements_with_default_configuration_should_have_the_expected_exception_message {
+        internal static string when_comparing_unequal_enumerables_with_different_order_elements_with_default_configuration {
             get {
                 return ResourceManager.GetString("when_comparing_unequal_enumerables_with_different_order_elements_with_default_con" +
-                        "figuration_should_have_the_expected_exception_message", resourceCulture);
+                        "figuration", resourceCulture);
             }
         }
         
@@ -322,6 +320,42 @@ namespace ExpectedObjects.Specs.Properties {
         internal static string when_comparing_unequal_response_types_with_writer_context {
             get {
                 return ResourceManager.GetString("when_comparing_unequal_response_types_with_writer_context", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The expected object did not match the actual object.
+        ///
+        ///The following issues were found:
+        ///
+        ///1) TypeWithElementList.Elements[0]:
+        ///
+        ///  Expected:
+        ///    Element
+        ///    { 
+        ///        Id = 1,
+        ///        Data = &quot;value&quot;
+        ///    }
+        ///
+        ///  Actual:
+        ///    element was missing
+        ///
+        ///
+        ///
+        ///2) TypeWithElementList.Elements:
+        ///
+        ///  The following elements were unexpected:
+        ///  
+        ///  Element
+        ///  { 
+        ///      Id = 2,
+        ///      Data = &quot;value&quot;
+        ///  }
+        ///.
+        /// </summary>
+        internal static string when_evaluating_match_with_ignored_member_absolute_path {
+            get {
+                return ResourceManager.GetString("when_evaluating_match_with_ignored_member_absolute_path", resourceCulture);
             }
         }
     }

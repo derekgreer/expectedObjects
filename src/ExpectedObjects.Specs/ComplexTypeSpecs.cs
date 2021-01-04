@@ -43,7 +43,7 @@ namespace ExpectedObjects.Specs
         It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
         It should_have_the_expected_exception_message =
-            () => _exception.Message.ShouldEqual(Resources.when_comparing_unequal_complex_types_with_writer_should_have_the_expected_exception_message);
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_unequal_complex_types_with_writer);
     }
 
     [Subject("Complex Type")]

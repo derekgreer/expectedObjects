@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
@@ -75,7 +74,17 @@ namespace ExpectedObjects
 
         public IMemberContext Member<TMember>(Expression<Func<TExpected, TMember>> memberExpression)
         {
-            return new MemberContext<TExpected, TMember>(this, Object.GetType(),  memberExpression);
+            return new ExpressionMemberContext<TExpected, TMember>(this, Object.GetType(), memberExpression);
+        }
+
+        public IMemberContext Member(string memberPath)
+        {
+            return new AbsolutePathMemberContext(this, Object.GetType(), memberPath);
+        }
+
+        public IMemberContext RelativeMember(string memberPath)
+        {
+            return new RelativePathMemberContext(this, memberPath);
         }
 
         void IMemberConfigurationContext.ConfigureMember(IMemberStrategy memberStrategy)

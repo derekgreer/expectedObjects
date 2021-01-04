@@ -63,7 +63,7 @@ namespace ExpectedObjects.Specs
         It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
         It should_have_the_expected_exception_message =
-            () => _exception.Message.ShouldEqual(Resources.when_comparing_anonymous_to_unequal_type_should_have_the_expected_exception_message);
+            () => _exception.Message.ShouldEqual(Resources.when_comparing_anonymous_to_unequal_type);
     }
 
     [Subject("Anonymous Partial Comparisons")]

@@ -7,6 +7,11 @@ namespace ExpectedObjects
 {
     public static class ConfigurationContextExtensions
     {
+        /// <summary>
+        /// Uses the default strategies for comparisons.
+        /// </summary>
+        /// <param name="configurationContext"></param>
+        /// <returns></returns>
         internal static IConfigurationContext UseAllStrategies(this IConfigurationContext configurationContext)
         {
             configurationContext.PushStrategy<DefaultComparisonStrategy>();
@@ -19,6 +24,12 @@ namespace ExpectedObjects
             return configurationContext;
         }
 
+        /// <summary>
+        /// Allows for the use of custom strategies for performing comparisons.
+        /// </summary>
+        /// <param name="configurationContext"></param>
+        /// <param name="strategies">strategies to use</param>
+        /// <returns></returns>
         public static IConfigurationContext UseStrategies(this IConfigurationContext configurationContext, IEnumerable<IComparisonStrategy> strategies)
         {
             configurationContext.ClearStrategies();
@@ -30,7 +41,7 @@ namespace ExpectedObjects
         }
 
         /// <summary>
-        ///     Requires the order of <see cref="IEnumerable" /> members to be in the expected order.
+        ///     Requires the order of any <see cref="IEnumerable" /> members to be in the expected order.
         /// </summary>
         /// <param name="configurationContext"></param>
         /// <returns></returns>
@@ -56,13 +67,28 @@ namespace ExpectedObjects
         }
 
         /// <summary>
-        ///     Ignores the specified member in comparisons.
+        ///     Ignores the specified absolute member in comparisons.
         /// </summary>
-        /// <param name="memberPath">The path to the ignored member</param>
+        /// <typeparam name="T">expected object type</typeparam>
+        /// <param name="configurationContext"></param>
+        /// <param name="memberPath">path to the ignored member</param>
         /// <returns></returns>
-        public static IConfigurationContext Ignore(this IConfigurationContext configurationContext, string memberPath)
+        public static IConfigurationContext<T> IgnoreAbsolutePath<T>(this IConfigurationContext<T> configurationContext, string memberPath)
         {
-            ((IMemberConfigurationContext)configurationContext).ConfigureMember(new RelativeMemberStrategy(Expect.Ignored(), memberPath));
+            configurationContext.Member(memberPath).UsesComparison(Expect.Ignored());
+            return configurationContext;
+        }
+
+        /// <summary>
+        ///     Ignores the specified relative member where path matches occur in comparisons.
+        /// </summary>
+        /// <typeparam name="T">expected object type</typeparam>
+        /// <param name="configurationContext"></param>
+        /// <param name="memberPath">relative path to ignored members</param>
+        /// <returns></returns>
+        public static IConfigurationContext<T> IgnoreRelativePath<T>(this IConfigurationContext<T> configurationContext, string memberPath)
+        {
+            configurationContext.RelativeMember(memberPath).UsesComparison(Expect.Ignored());
             return configurationContext;
         }
     }
