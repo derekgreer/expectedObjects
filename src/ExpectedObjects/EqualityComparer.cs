@@ -211,14 +211,6 @@ namespace ExpectedObjects
 
         bool EvalComparison(object actual, IWriter writer, IComparison comparison, string memberPath)
         {
-            if (actual != null && actual is IMissing)
-            {
-                writer.Write(new EqualityResult(false, memberPath,
-                    new ExpectedDescription(comparison.GetExpectedResult()),
-                    actual));
-                return false;
-            }
-
             var areEqual = comparison.AreEqual(actual);
 
             if (!areEqual)

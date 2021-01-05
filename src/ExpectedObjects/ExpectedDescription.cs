@@ -11,7 +11,7 @@
 
         public override string ToString()
         {
-            return _expectedResult.ToString();
+            return _expectedResult?.ToString();
         }
     }
 }
