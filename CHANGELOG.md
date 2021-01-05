@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/derekgreer/expectedObjects/compare/v3.2.1...v3.3.0) (2021-01-05)
+
+
+### Features
+
+* Add explicit relative member path support ([88bb5c2](https://github.com/derekgreer/expectedObjects/commit/88bb5c288d5596e478934fa84e334e6992912257))
+
 ### [3.2.1](https://github.com/derekgreer/expectedObjects/compare/v3.2.0...v3.2.1) (2021-01-02)
 
 
