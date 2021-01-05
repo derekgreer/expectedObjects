@@ -7,7 +7,7 @@ namespace ExpectedObjects.Specs
     public class DifferentTypesSpecs
     {
         [Subject("Different Types")]
-        public class when_comparing_different_types_with_equal_members_for_match_after_ignored
+        public class when_comparing_different_types_with_equal_members_for_match_after_ignored_expression
         {
             static MessageV2 _actual;
             static Exception _exception;
@@ -16,6 +16,42 @@ namespace ExpectedObjects.Specs
             Establish context = () =>
             {
                 _expected = new MessageV1 {OrderId = 42, DeprecatedInfo = "ignore"}.ToExpectedObject(ctx => ctx.Ignore(x => x.DeprecatedInfo));
+                _actual = new MessageV2 { OrderId = 42, AdditionalOrderInformation = "not compared"};
+            };
+
+            Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+            It should_not_throw_exception = () => _exception.ShouldBeNull();
+        }
+
+        [Subject("Different Types")]
+        public class when_comparing_different_types_with_equal_members_for_match_after_ignored_absolute_path
+        {
+            static MessageV2 _actual;
+            static Exception _exception;
+            static ExpectedObject _expected;
+
+            Establish context = () =>
+            {
+                _expected = new MessageV1 {OrderId = 42, DeprecatedInfo = "ignore"}.ToExpectedObject(ctx => ctx.IgnoreAbsolutePath("MessageV1.DeprecatedInfo"));
+                _actual = new MessageV2 { OrderId = 42, AdditionalOrderInformation = "not compared"};
+            };
+
+            Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+            It should_not_throw_exception = () => _exception.ShouldBeNull();
+        }
+
+        [Subject("Different Types")]
+        public class when_comparing_different_types_with_equal_members_for_match_after_ignored_relative_path
+        {
+            static MessageV2 _actual;
+            static Exception _exception;
+            static ExpectedObject _expected;
+
+            Establish context = () =>
+            {
+                _expected = new MessageV1 {OrderId = 42, DeprecatedInfo = "ignore"}.ToExpectedObject(ctx => ctx.IgnoreRelativePath("DeprecatedInfo"));
                 _actual = new MessageV2 { OrderId = 42, AdditionalOrderInformation = "not compared"};
             };
 
