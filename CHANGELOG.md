@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.1](https://github.com/derekgreer/expectedObjects/compare/v3.3.0...v3.3.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* Correct ignore for different types ([4d4274b](https://github.com/derekgreer/expectedObjects/commit/4d4274bf24c77b9682c54a601e5ae5f611c238b0))
+
 ## [3.3.0](https://github.com/derekgreer/expectedObjects/compare/v3.2.1...v3.3.0) (2021-01-05)
 
 
