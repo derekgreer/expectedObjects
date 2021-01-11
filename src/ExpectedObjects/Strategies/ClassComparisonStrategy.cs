@@ -3,14 +3,28 @@ using System.Reflection;
 
 namespace ExpectedObjects.Strategies
 {
+    /// <summary>
+    /// Compares configured members of a class.
+    /// </summary>
+    /// <remarks>
+    /// This strategy applies to class types which are not arrays and where either the expected or actual types contain members.
+    /// </remarks>
     public class ClassComparisonStrategy : IComparisonStrategy
     {
         public bool CanCompare(object expected, object actual)
         {
+            var expectedHasMembers = expected.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Length != 0 ||
+                                     expected.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Length != 0;
+
+            var actualHasMembers = expected.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Length != 0 ||
+                                   expected.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Length != 0;
+
             var expectedTypeInfo = expected.GetType().GetTypeInfo();
             var actualTypeInfo = actual.GetType().GetTypeInfo();
-            return expectedTypeInfo.IsClass && !expectedTypeInfo.IsArray &&
-                   actualTypeInfo.IsClass && !actualTypeInfo.IsArray;
+            
+            return (expectedHasMembers || actualHasMembers) &&
+                expectedTypeInfo.IsClass && !expectedTypeInfo.IsArray &&
+                actualTypeInfo.IsClass && !actualTypeInfo.IsArray;
         }
 
         public bool AreEqual(object expected, object actual, IComparisonContext comparisonContext)
@@ -23,14 +37,12 @@ namespace ExpectedObjects.Strategies
 
             areEqual = comparisonContext.CompareFields(expected, actual,
                            (fi, actualFieldInfo) =>
-                               CompareField(fi, actualFieldInfo, expected, actual,
-                                   comparisonContext, equal)) && areEqual;
+                               CompareField(fi, actualFieldInfo, expected, actual, comparisonContext)) && areEqual;
 
             return areEqual;
         }
 
-        static bool CompareField(FieldInfo expectedFieldInfo, FieldInfo actualFieldInfo, object expected, object actual, IComparisonContext comparisonContext,
-            bool equal)
+        static bool CompareField(FieldInfo expectedFieldInfo, FieldInfo actualFieldInfo, object expected, object actual, IComparisonContext comparisonContext)
         {
             var value1 = expectedFieldInfo.GetValue(expected);
 

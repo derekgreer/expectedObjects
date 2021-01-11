@@ -74,7 +74,7 @@ namespace ExpectedObjects.Specs
 
         Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
-        It should_be_equal = () => _result.ShouldBeTrue();
+        It should_not_be_equal = () => _result.ShouldBeFalse();
     }
 
     public class when_comparing_dictionaries_with_equal_key_of_int_and_value_of_same_object
