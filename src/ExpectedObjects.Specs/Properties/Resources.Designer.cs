@@ -403,5 +403,42 @@ namespace ExpectedObjects.Specs.Properties {
                 return ResourceManager.GetString("ExceptionMessage_011", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The expected object did not match the actual object.
+        ///
+        ///The following issues were found:
+        ///
+        ///1) Person:
+        ///
+        ///  Expected:
+        ///    Person
+        ///    { 
+        ///        FirstName = &quot;firstName1&quot;,
+        ///        LastName = &quot;lastName&quot;
+        ///    }
+        ///
+        ///  Actual:
+        ///    Person
+        ///    { 
+        ///        FirstName = &quot;firstName2&quot;,
+        ///        LastName = &quot;lastName&quot;
+        ///    }
+        ///.
+        /// </summary>
+        internal static string ExceptionMessage_012 {
+            get {
+                return ResourceManager.GetString("ExceptionMessage_012", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string ExceptionMessage_013 {
+            get {
+                return ResourceManager.GetString("ExceptionMessage_013", resourceCulture);
+            }
+        }
     }
 }
