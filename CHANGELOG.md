@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/derekgreer/expectedObjects/compare/v3.3.1...v3.4.0) (2021-01-11)
+
+
+### Features
+
+* Add ability to ignore use of Equals() override ([35c4c62](https://github.com/derekgreer/expectedObjects/commit/35c4c624c54cb279ae88157055b1dbe5fff792d8))
+
+
+### Bug Fixes
+
+* Correct configuration to include public fields ([8de6649](https://github.com/derekgreer/expectedObjects/commit/8de6649f2318c7098aa990c0a7bb92e9bd77e2e4))
+* Modify strategy for classes to require members ([f1c4e7c](https://github.com/derekgreer/expectedObjects/commit/f1c4e7c5697a5773388a6045d507d0b76c052072))
+
 ### [3.3.1](https://github.com/derekgreer/expectedObjects/compare/v3.3.0...v3.3.1) (2021-01-05)
 
 
