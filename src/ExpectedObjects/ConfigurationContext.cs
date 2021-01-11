@@ -9,7 +9,7 @@ namespace ExpectedObjects
 {
     public class ConfigurationContext<TExpected> : IConfigurationContext<TExpected>, IConfiguration, IMemberConfigurationContext
     {
-        MemberType _memberType;
+        MemberType _memberType = MemberType.PublicFields;
         Stack<IComparisonStrategy> _strategies = new Stack<IComparisonStrategy>();
         readonly IList<IMemberStrategy> _memberStrategies = new List<IMemberStrategy>();
 
@@ -26,7 +26,7 @@ namespace ExpectedObjects
         {
             BindingFlags flags = 0;
 
-            if ((_memberType & MemberType.PublicFields) == MemberType.PublicFields)
+            if (_memberType.HasFlag(MemberType.PublicFields))
                 flags |= BindingFlags.Public | BindingFlags.Instance;
 
             return flags;

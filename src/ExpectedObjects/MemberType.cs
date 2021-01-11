@@ -5,6 +5,7 @@ namespace ExpectedObjects
     [Flags]
     public enum MemberType
     {
-        PublicFields
+        None = 0,
+        PublicFields = 1
     }
 }

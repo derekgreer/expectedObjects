@@ -4,52 +4,56 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class when_comparing_enumerables_of_complex_types_with_different_values_for_inequality
+    class ShouldNotEqualExtensionSpecs
     {
-        static TypeWithIEnumerable _actual;
-        static TypeWithIEnumerable _expected;
-
-        Establish context = () =>
+        [Subject("ShouldNotEqual Extensions")]
+        class when_comparing_enumerables_of_complex_types_with_different_values_for_inequality
         {
-            _expected = new TypeWithIEnumerable
+            static TypeWithIEnumerable _actual;
+            static TypeWithIEnumerable _expected;
+
+            Establish context = () =>
             {
-                Objects = new List<ComplexType>
+                _expected = new TypeWithIEnumerable
                 {
-                    new ComplexType
+                    Objects = new List<ComplexType>
                     {
-                        StringProperty = "test1",
-                        DecimalProperty = 10.0m,
-                        TypeWithString = new TypeWithString {StringProperty = "value1"}
-                    },
-                    new ComplexType
-                    {
-                        StringProperty = "test1",
-                        DecimalProperty = 10.0m,
-                        TypeWithString = new TypeWithString {StringProperty = "value1"}
+                        new()
+                        {
+                            StringProperty = "test1",
+                            DecimalProperty = 10.0m,
+                            TypeWithString = new TypeWithString {StringProperty = "value1"}
+                        },
+                        new()
+                        {
+                            StringProperty = "test1",
+                            DecimalProperty = 10.0m,
+                            TypeWithString = new TypeWithString {StringProperty = "value1"}
+                        }
                     }
-                }
+                };
+
+                _actual = new TypeWithIEnumerable
+                {
+                    Objects = new List<ComplexType>
+                    {
+                        new()
+                        {
+                            StringProperty = "test2",
+                            DecimalProperty = 11.0m,
+                            TypeWithString = new TypeWithString {StringProperty = "value2"}
+                        },
+                        new()
+                        {
+                            StringProperty = "test2",
+                            DecimalProperty = 11.0m,
+                            TypeWithString = new TypeWithString {StringProperty = "value2"}
+                        }
+                    }
+                };
             };
 
-            _actual = new TypeWithIEnumerable
-            {
-                Objects = new List<ComplexType>
-                {
-                    new ComplexType
-                    {
-                        StringProperty = "test2",
-                        DecimalProperty = 11.0m,
-                        TypeWithString = new TypeWithString {StringProperty = "value2"}
-                    },
-                    new ComplexType
-                    {
-                        StringProperty = "test2",
-                        DecimalProperty = 11.0m,
-                        TypeWithString = new TypeWithString {StringProperty = "value2"}
-                    }
-                }
-            };
-        };
-
-        It should_not_be_equal = () => _expected.ToExpectedObject().ShouldNotEqual(_actual);
+            It should_not_be_equal = () => _expected.ToExpectedObject().ShouldNotEqual(_actual);
+        }
     }
 }

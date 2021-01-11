@@ -5,10 +5,10 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class IndexSpecs
+    class IndexSpecs
     {
         [Subject("Indexes")]
-        public class when_comparing_unequal_objects_with_an_index
+        class when_comparing_unequal_objects_with_an_index
         {
             static IndexType<int> _actual;
             static IndexType<int> _expected;
@@ -27,7 +27,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Indexes")]
-        public class when_comparing_unequal_objects_with_two_indexes
+        class when_comparing_unequal_objects_with_two_indexes
         {
             static MultiIndexType _actual;
             static MultiIndexType _expected;
@@ -55,7 +55,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Indexes")]
-        public class when_comparing_equal_objects_with_an_index
+        class when_comparing_equal_objects_with_an_index
         {
             static IndexType<int> _actual;
             static IndexType<int> _expected;
@@ -74,7 +74,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Indexes")]
-        public class when_comparing_equal_objects_with_two_indexes
+        class when_comparing_equal_objects_with_two_indexes
         {
             static MultiIndexType _actual;
             static MultiIndexType _expected;
@@ -102,7 +102,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Indexes")]
-        public class when_comparing_equal_objects_with_two_indexes_with_the_same_name
+        class when_comparing_equal_objects_with_two_indexes_with_the_same_name
         {
             static TypeWithOverloadedIndexes<int> _actual;
             static TypeWithOverloadedIndexes<int> _expected;
@@ -121,7 +121,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Indexes")]
-        public class when_comparing_unequal_objects_with_two_indexes_with_the_same_name
+        class when_comparing_unequal_objects_with_two_indexes_with_the_same_name
         {
             static TypeWithOverloadedIndexes<int> _actual;
             static TypeWithOverloadedIndexes<int> _expected;
@@ -140,7 +140,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Indexes")]
-        public class when_comparing_unequal_types_which_override_indexes
+        class when_comparing_unequal_types_which_override_indexes
         {
             static ExpectedObject _expected;
             static TypeWithOverloadedIndexes<int> _actual;

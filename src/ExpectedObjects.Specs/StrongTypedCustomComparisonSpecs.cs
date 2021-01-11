@@ -3,10 +3,10 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class StrongTypedCustomComparisonSpecs
+    class StrongTypedCustomComparisonSpecs
     {
         [Subject("Any Comparison")]
-        public class when_comparing_any_with_valid_matching_comparison
+        class when_comparing_any_with_valid_matching_comparison
         {
             static ComplexType _actual;
             static ExpectedObject _expected;
@@ -33,7 +33,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Any Comparison")]
-        public class when_comparing_any_where_other_properties_do_not_match
+        class when_comparing_any_where_other_properties_do_not_match
         {
             static ComplexType _actual;
             static ExpectedObject _expected;
@@ -60,7 +60,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Any Comparison")]
-        public class when_comparing_any_with_an_invalid_comparison
+        class when_comparing_any_with_an_invalid_comparison
         {
             static ComplexType _actual;
             static ExpectedObject _expected;

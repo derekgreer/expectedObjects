@@ -3,36 +3,41 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class when_comparing_nulls
+    class NullSpecs
     {
-        static bool _result;
-
-        Because of = () => _result = ((object) null).ToExpectedObject().Equals((object) null);
-
-        It should_be_equal = () => _result.ShouldBeTrue();
-    }
-
-    public class when_compariong_object_with_null_property
-    {
-        static ExpectedObject _expected;
-        static ComplexType _actual;
-        static bool _result;
-
-        Establish context = () =>
+        [Subject("Nulls")]
+        class when_comparing_nulls
         {
-            _expected = new
-            {
-                TypeWithString = new {StringProperty = "test"}
-            }.ToExpectedObject();
+            static bool _result;
 
-            _actual = new ComplexType
+            Because of = () => _result = ((object) null).ToExpectedObject().Equals((object) null);
+
+            It should_be_equal = () => _result.ShouldBeTrue();
+        }
+
+        [Subject("Nulls")]
+        class when_compariong_object_with_null_property
+        {
+            static ExpectedObject _expected;
+            static ComplexType _actual;
+            static bool _result;
+
+            Establish context = () =>
             {
-                TypeWithString = null
+                _expected = new
+                {
+                    TypeWithString = new {StringProperty = "test"}
+                }.ToExpectedObject();
+
+                _actual = new ComplexType
+                {
+                    TypeWithString = null
+                };
             };
-        };
 
-        Because of = () => _result = _expected.Matches(_actual);
+            Because of = () => _result = _expected.Matches(_actual);
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
+            It should_not_be_equal = () => _result.ShouldBeFalse();
+        }
     }
 }

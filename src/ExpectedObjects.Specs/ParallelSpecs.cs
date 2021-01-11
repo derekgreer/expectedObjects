@@ -4,10 +4,10 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class ParallelSpecs
+    class ParallelSpecs
     {
         [Subject("Parallel Tests")]
-        public class when_tests_are_run_in_parallel
+        class when_tests_are_run_in_parallel
         {
             static ExpectedObject _expectedObject1;
             static ExpectedObject _expectedObject2;

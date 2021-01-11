@@ -3,37 +3,42 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class when_comparing_unequal_structures
+    class StructureSpecs
     {
-        static StructureType _actual;
-        static StructureType _expected;
-        static bool _result;
-
-        Establish context = () =>
+        [Subject("Structures")]
+        class when_comparing_unequal_structures
         {
-            _expected = new StructureType {IntegerValue = 0};
-            _actual = new StructureType {IntegerValue = 1};
-        };
+            static StructureType _actual;
+            static StructureType _expected;
+            static bool _result;
 
-        Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+            Establish context = () =>
+            {
+                _expected = new StructureType {IntegerValue = 0};
+                _actual = new StructureType {IntegerValue = 1};
+            };
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
-    }
+            Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
-    public class when_comparing_equal_structures
-    {
-        static StructureType _actual;
-        static StructureType _expected;
-        static bool _result;
+            It should_not_be_equal = () => _result.ShouldBeFalse();
+        }
 
-        Establish context = () =>
+        [Subject("Structures")]
+        class when_comparing_equal_structures
         {
-            _expected = new StructureType {IntegerValue = 2};
-            _actual = new StructureType {IntegerValue = 2};
-        };
+            static StructureType _actual;
+            static StructureType _expected;
+            static bool _result;
 
-        Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+            Establish context = () =>
+            {
+                _expected = new StructureType {IntegerValue = 2};
+                _actual = new StructureType {IntegerValue = 2};
+            };
 
-        It should_be_equal = () => _result.ShouldBeTrue();
+            Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+
+            It should_be_equal = () => _result.ShouldBeTrue();
+        }
     }
 }

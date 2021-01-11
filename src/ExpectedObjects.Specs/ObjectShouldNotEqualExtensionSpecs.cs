@@ -3,21 +3,24 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    [Subject("UsesComparison Not Equal")]
-    public class when_asserting_inequlity_for_non_equal_doubles_with_actual_as_subject
+    class ObjectShouldNotEqualExtensionSpecs
     {
-        static Exception _exception;
-        static ExpectedObject _expected;
-        static double _actual;
-
-        Establish context = () =>
+        [Subject("UsesComparison Not Equal")]
+        class when_asserting_inequlity_for_non_equal_doubles_with_actual_as_subject
         {
-            _expected = 111.397720540215d.ToExpectedObject();
-            _actual = 111.397720540216d;
-        };
+            static Exception _exception;
+            static ExpectedObject _expected;
+            static double _actual;
 
-        Because of = () => _exception = Catch.Exception(() => _expected.ShouldNotEqual(_actual));
+            Establish context = () =>
+            {
+                _expected = 111.397720540215d.ToExpectedObject();
+                _actual = 111.397720540216d;
+            };
 
-        It should_throw_an_exception_with_message = () => _exception.ShouldBeNull();
+            Because of = () => _exception = Catch.Exception(() => _expected.ShouldNotEqual(_actual));
+
+            It should_throw_an_exception_with_message = () => _exception.ShouldBeNull();
+        }
     }
 }

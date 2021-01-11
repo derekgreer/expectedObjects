@@ -3,39 +3,44 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class when_comparing_unequal_enums
+    class EnumSpecs
     {
-        static EnumType _actual;
-        static EnumType _expected;
-
-        static bool _result;
-
-        Establish context = () =>
+        [Subject("Enums")]
+        class when_comparing_unequal_enums
         {
-            _actual = EnumType.Undefined;
-            _expected = EnumType.Value1;
-        };
+            static EnumType _actual;
+            static EnumType _expected;
 
-        Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+            static bool _result;
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
-    }
+            Establish context = () =>
+            {
+                _actual = EnumType.Undefined;
+                _expected = EnumType.Value1;
+            };
 
-    public class when_comparing_equal_enums
-    {
-        static EnumType _actual;
-        static EnumType _expected;
+            Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
-        static bool _result;
+            It should_not_be_equal = () => _result.ShouldBeFalse();
+        }
 
-        Establish context = () =>
+        [Subject("Enums")]
+        class when_comparing_equal_enums
         {
-            _actual = EnumType.Undefined;
-            _expected = EnumType.Undefined;
-        };
+            static EnumType _actual;
+            static EnumType _expected;
 
-        Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+            static bool _result;
 
-        It should_be_equal = () => _result.ShouldBeTrue();
+            Establish context = () =>
+            {
+                _actual = EnumType.Undefined;
+                _expected = EnumType.Undefined;
+            };
+
+            Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+
+            It should_be_equal = () => _result.ShouldBeTrue();
+        }
     }
 }

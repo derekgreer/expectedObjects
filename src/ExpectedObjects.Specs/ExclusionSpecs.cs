@@ -6,10 +6,10 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class ExclusionSpecs
+    class ExclusionSpecs
     {
         [Subject("Ignore Expression")]
-        public class when_evaluating_equality_with_ignored_member_expression
+        class when_evaluating_equality_with_ignored_member_expression
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -36,7 +36,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Absolute")]
-        public class when_evaluating_equality_with_ignored_absolute_member_path
+        class when_evaluating_equality_with_ignored_absolute_member_path
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -63,7 +63,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Absolute")]
-        public class when_evaluating_equality_with_ignored_absolute_member_path2
+        class when_evaluating_equality_with_ignored_absolute_member_path2
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -90,7 +90,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Relative")]
-        public class when_evaluating_equality_with_ignored_relative_member_path
+        class when_evaluating_equality_with_ignored_relative_member_path
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -117,7 +117,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Relative")]
-        public class when_evaluating_equality_with_anonymous_ignored_relative_member_path
+        class when_evaluating_equality_with_anonymous_ignored_relative_member_path
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -144,7 +144,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Relative")]
-        public class when_evaluating_equality_with_anonymous_ignored_member_expression
+        class when_evaluating_equality_with_anonymous_ignored_member_expression
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -171,7 +171,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Relative")]
-        public class when_evaluating_equality_with_equal_anonymous_ignored_ambiguous_member_expression
+        class when_evaluating_equality_with_equal_anonymous_ignored_ambiguous_member_expression
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -198,7 +198,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Relative")]
-        public class when_evaluating_match_for_non_matching_types_with_ignored_member_matching_multiple_member_names
+        class when_evaluating_match_for_non_matching_types_with_ignored_member_matching_multiple_member_names
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -225,7 +225,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Expression")]
-        public class when_evaluating_match_with_ignored_enumerable_member_expression
+        class when_evaluating_match_with_ignored_enumerable_member_expression
         {
             static ExpectedObject _expected;
             static TypeWithElementList _actual;
@@ -265,7 +265,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Relative")]
-        public class when_evaluating_match_with_ignored_member_relative_path
+        class when_evaluating_match_with_ignored_member_relative_path
         {
             static ExpectedObject _expected;
             static TypeWithElementList _actual;
@@ -306,7 +306,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Absolute")]
-        public class when_evaluating_match_with_ignored_member_absolute_path
+        class when_evaluating_match_with_ignored_member_absolute_path
         {
             static ExpectedObject _expected;
             static TypeWithElementList _actual;
@@ -346,11 +346,11 @@ namespace ExpectedObjects.Specs
             It should_ignore_matching_properties = () => _exception.ShouldBeOfExactType<ComparisonException>();
 
             It should_have_the_expected_exception_message = () =>
-                _exception.Message.ShouldEqual(Resources.when_evaluating_match_with_ignored_member_absolute_path);
+                _exception.Message.ShouldEqual(Resources.ExceptionMessage_011);
         }
 
         [Subject("Ignore Relative")]
-        public class when_evaluating_equality_with_ignored_member_relative_path
+        class when_evaluating_equality_with_ignored_member_relative_path
         {
             static ExpectedObject _expected;
             static TypeWithElementList _actual;
@@ -391,7 +391,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Expression")]
-        public class when_evaluating_match_with_anonymous_type_ignored_member_expression
+        class when_evaluating_match_with_anonymous_type_ignored_member_expression
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -418,7 +418,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Expression")]
-        public class when_evaluating_equality_with_ignored_root_type
+        class when_evaluating_equality_with_ignored_root_type
         {
             static ExpectedObject _expected;
             static ComplexType _actual;
@@ -445,7 +445,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignore Absolute")]
-        public class when_evaluating_equality_with_ignored_absolute_path_to_root_type
+        class when_evaluating_equality_with_ignored_absolute_path_to_root_type
         {
             static ExpectedObject _expected;
             static ComplexType _actual;

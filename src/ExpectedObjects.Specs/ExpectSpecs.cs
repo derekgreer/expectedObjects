@@ -3,10 +3,10 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class ExpectSpecs
+    class ExpectSpecs
     {
         [Subject("Expect Not Null")]
-        public class when_comparing_type_with_not_null_expectation_to_matching_instance
+        class when_comparing_type_with_not_null_expectation_to_matching_instance
         {
             static ExpectedObject _expected;
             static TypeWithString _actual;
@@ -21,7 +21,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Expect Not Null")]
-        public class when_comparing_array_with_not_null_expectations_to_matching_instance
+        class when_comparing_array_with_not_null_expectations_to_matching_instance
         {
             static ExpectedObject _expected;
             static TypeWithString[] _actual;
@@ -36,7 +36,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Expect Default")]
-        public class when_comparing_int_with_default
+        class when_comparing_int_with_default
         {
             static ExpectedObject _expected;
             static TypeWithInteger _actual;
@@ -51,7 +51,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Expect Not Default")]
-        public class when_comparing_int_with_not_default
+        class when_comparing_int_with_not_default
         {
             static ExpectedObject _expected;
             static TypeWithInteger _actual;
@@ -69,7 +69,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Expect Not Default")]
-        public class when_comparing_any_int_with_missing_property
+        class when_comparing_any_int_with_missing_property
         {
             static ExpectedObject _expected;
             static bool _results;
@@ -85,7 +85,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Expect Not Default")]
-        public class when_comparing_default_int_with_not_default
+        class when_comparing_default_int_with_not_default
         {
             static ExpectedObject _expected;
             static TypeWithInteger _actual;
@@ -103,7 +103,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Expect Default")]
-        public class when_comparing_anonymous_type_with_expected_default_int_to_type_with_decimal
+        class when_comparing_anonymous_type_with_expected_default_int_to_type_with_decimal
         {
             static ExpectedObject _expected;
             static TypeWithDecimal _actual;

@@ -4,28 +4,31 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class when_comparing_mismatch_types
+    class TypeMismatchSpecs
     {
-        static ExpectedObject _expected;
-        static SimpleType _actual;
-        static Exception _exception;
-
-        Establish context = () =>
+        [Subject("Non-matching Types")]
+        class when_comparing_mismatch_types
         {
-            _expected = new
-            {
-                StringProperty = 1
-            }.ToExpectedObject();
+            static ExpectedObject _expected;
+            static SimpleType _actual;
+            static Exception _exception;
 
-            _actual = new SimpleType
+            Establish context = () =>
             {
-                StringProperty = "1"
+                _expected = new
+                {
+                    StringProperty = 1
+                }.ToExpectedObject();
+
+                _actual = new SimpleType
+                {
+                    StringProperty = "1"
+                };
             };
-        };
 
+            Because of = () => _exception = Catch.Exception(() => _expected.Matches(_actual));
 
-        Because of = () => _exception = Catch.Exception(() => _expected.Matches(_actual));
-
-        It should_not_throw_an_exception = () => _exception.ShouldBeNull();
+            It should_not_throw_an_exception = () => _exception.ShouldBeNull();
+        }
     }
 }

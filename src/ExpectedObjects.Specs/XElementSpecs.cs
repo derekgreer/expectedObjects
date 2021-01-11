@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Xml.Linq;
+using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class TypeWithXElement
-    {
-        public XElement XElementProperty { get; set; }
-    }
-
     class XElementSpecs
     {
+        [Subject("XElement Type")]
         class when_comparing_equal_types_with_an_xelement
         {
             static ExpectedObject _expected;

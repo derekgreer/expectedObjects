@@ -4,20 +4,24 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    public class when_comparing_different_types_with_equal_members_for_match_with_actual_as_subject
+    public class ObjectShouldMatchExtensionSpecs
     {
-        static TypeWithString2 _actual;
-        static Exception _exception;
-        static ExpectedObject _expected;
-
-        Establish context = () =>
+        [Subject("ShouldMatch Extensions")]
+        class when_comparing_different_types_with_equal_members_for_match_with_actual_as_subject
         {
-            _expected = new TypeWithString {StringProperty = "this is a test"}.ToExpectedObject();
-            _actual = new TypeWithString2 {StringProperty = "this is a test"};
-        };
+            static TypeWithString2 _actual;
+            static Exception _exception;
+            static ExpectedObject _expected;
 
-        Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+            Establish context = () =>
+            {
+                _expected = new TypeWithString {StringProperty = "this is a test"}.ToExpectedObject();
+                _actual = new TypeWithString2 {StringProperty = "this is a test"};
+            };
 
-        It should_not_throw_exception = () => _exception.ShouldBeNull();
+            Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+            It should_not_throw_exception = () => _exception.ShouldBeNull();
+        }
     }
 }

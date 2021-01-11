@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ExpectedObjects.Reporting;
+using ExpectedObjects.Specs.Extensions;
+using ExpectedObjects.Specs.Properties;
 using ExpectedObjects.Specs.TestTypes;
 using ExpectedObjects.Strategies;
 using Machine.Specifications;
@@ -9,112 +12,120 @@ using It = Machine.Specifications.It;
 
 namespace ExpectedObjects.Specs
 {
-    [Subject("Writer")]
-    public class when_comparing_unequal_object_with_string_configured_with_writer
+    class StringSpecs
     {
-        static TypeWithString _actual;
-        static ExpectedObject _expected;
-
-        static Mock<IWriter> _mockWriter;
-        static readonly List<EqualityResult> _results = new List<EqualityResult>();
-
-        Establish context = () =>
+        [Subject("Writer")]
+        class when_comparing_unequal_object_with_string_configured_with_writer
         {
-            _mockWriter = new Mock<IWriter>();
-            _mockWriter
-                .Setup(x => x.Write(Moq.It.IsAny<EqualityResult>()))
-                .Callback<EqualityResult>(result => _results.Add(result));
+            static TypeWithString _actual;
+            static ExpectedObject _expected;
 
-            _expected = new TypeWithString {StringProperty = "test"}.ToExpectedObject(ctx =>
+            static Mock<IWriter> _mockWriter;
+            static readonly List<EqualityResult> _results = new();
+
+            Establish context = () =>
             {
-                ctx.PushStrategy<ComparableComparisonStrategy>();
-                ctx.PushStrategy<ClassComparisonStrategy>();
-            });
+                _mockWriter = new Mock<IWriter>();
+                _mockWriter
+                    .Setup(x => x.Write(Moq.It.IsAny<EqualityResult>()))
+                    .Callback<EqualityResult>(result => _results.Add(result));
 
-            _actual = new TypeWithString {StringProperty = "error"};
-        };
+                _expected = new TypeWithString {StringProperty = "test"}.ToExpectedObject(ctx =>
+                {
+                    ctx.PushStrategy<ComparableComparisonStrategy>();
+                    ctx.PushStrategy<ClassComparisonStrategy>();
+                });
 
-        Because of = () => _expected.Equals(_actual, _mockWriter.Object);
+                _actual = new TypeWithString {StringProperty = "error"};
+            };
 
-        It _should_write_string_compare_result_to_the_writer =
-            () => _results.Select(x => x.Member.Equals("StringProperty")).ShouldNotBeNull();
+            Because of = () => _expected.Equals(_actual, _mockWriter.Object);
 
-        It should_write_errors_to_the_writer =
-            () => _mockWriter.Verify(x => x.Write(Moq.It.IsAny<EqualityResult>()), Times.AtLeastOnce());
-    }
+            It _should_write_string_compare_result_to_the_writer =
+                () => _results.Select(x => x.Member.Equals("StringProperty")).ShouldNotBeNull();
 
-    [Subject("Strings")]
-    public class when_comparing_equal_objects_with_string
-    {
-        static TypeWithString _actual;
-        static TypeWithString _expected;
+            It should_write_errors_to_the_writer =
+                () => _mockWriter.Verify(x => x.Write(Moq.It.IsAny<EqualityResult>()), Times.AtLeastOnce());
+        }
 
-        static bool _result;
-
-        Establish context = () =>
+        [Subject("Strings")]
+        class when_comparing_equal_objects_with_string
         {
-            _actual = new TypeWithString {StringProperty = "test"};
-            _expected = new TypeWithString {StringProperty = "test"};
-        };
+            static TypeWithString _actual;
+            static TypeWithString _expected;
 
-        Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+            static bool _result;
 
-        It should_be_equal = () => _result.ShouldBeTrue();
-    }
+            Establish context = () =>
+            {
+                _actual = new TypeWithString {StringProperty = "test"};
+                _expected = new TypeWithString {StringProperty = "test"};
+            };
 
-    [Subject("Strings")]
-    public class when_comparing_unequal_objects_with_string_field_configured_for_fields
-    {
-        static TypeWithStringField _actual;
-        static ExpectedObject _expected;
-        static bool _result;
+            Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
 
-        Establish context = () =>
+            It should_be_equal = () => _result.ShouldBeTrue();
+        }
+
+        [Subject("Strings")]
+        class when_comparing_objects_with_unequeal_fields_not_configured_for_fields
         {
-            _expected = new TypeWithStringField {StringField = "test"}.ToExpectedObject(ctx => ctx.IncludeMemberTypes(MemberType.PublicFields));
+            static TypeWithStringMembers _actual;
+            static ExpectedObject _expected;
+            static bool _result;
 
-            _actual = new TypeWithStringField {StringField = "test2"};
-        };
+            Establish context = () =>
+            {
+                _expected = new TypeWithStringMembers {StringProperty = "same", StringField = "test"}
+                    .ToExpectedObject();
+                _actual = new TypeWithStringMembers {StringProperty = "same", StringField = "test2"};
+            };
 
-        Because of = () => _result = _expected.Equals(_actual);
+            Because of = () => _result = _expected.Equals(_actual);
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
-    }
+            It should_not_be_equal = () => _result.ShouldBeFalse();
+        }
 
-    [Subject("Strings")]
-    public class when_comparing_unequal_objects_with_string_field_not_configured_for_fields
-    {
-        static TypeWithStringField _actual;
-        static ExpectedObject _expected;
-        static bool _result;
-
-        Establish context = () =>
+        [Subject("Strings")]
+        class when_comparing_objects_with_unequal_string_fields_and_properties_not_configured_for_fields
         {
-            _expected = new TypeWithStringField {StringField = "test"}.ToExpectedObject();
-            _actual = new TypeWithStringField {StringField = "test2"};
-        };
+            static TypeWithStringMembers _actual;
+            static TypeWithStringMembers _expected;
+            static Exception _exception;
 
-        Because of = () => _result = _expected.Equals(_actual);
+            Establish context = () =>
+            {
+                _expected = new TypeWithStringMembers {StringProperty = "same", StringField = "test"};
+                _actual = new TypeWithStringMembers {StringProperty = "different", StringField = "test2"};
+            };
 
-        It should_not_be_equal = () => _result.ShouldBeFalse();
-    }
+            Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldMatch(_actual));
 
-    [Subject("Strings")]
-    public class when_comparing_unequal_objects_with_string
-    {
-        static TypeWithString _actual;
-        static TypeWithString _expected;
+            It should_report_differences_for_fields_and_properties = () => _exception.Message.ShouldEqual(Resources.ExceptionMessage_004);
 
-        static bool _result;
+            It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+        }
 
-        Establish context = () =>
+        [Subject("Strings")]
+        class when_comparing_objects_with_unequal_string_properties
         {
-            _actual = new TypeWithString {StringProperty = "test"};
-            _expected = new TypeWithString {StringProperty = "test2"};
-        };
+            static TypeWithString _actual;
+            static TypeWithString _expected;
 
-        Because of = () => _result = _expected.ToExpectedObject().Equals(_actual);
+            static bool _result;
+            static Exception _exception;
 
-        It should_be_equal = () => _result.ShouldBeFalse();
+            Establish context = () =>
+            {
+                _actual = new TypeWithString {StringProperty = "test"};
+                _expected = new TypeWithString {StringProperty = "test2"};
+            };
+
+            Because of = () => _exception = Catch.Exception(() => _expected.ToExpectedObject().ShouldMatch(_actual));
+
+            It should_report_differences_for_properties = () => _exception.Message.ShouldEqual(Resources.ExceptionMessage_009);
+
+            It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+        }
     }
 }

@@ -3,39 +3,42 @@ using Machine.Specifications;
 
 namespace ExpectedObjects.Specs
 {
-    [Subject("Results Formatting")]
-    public class when_retrieving_formatted_result_from_composite_comparison
+    public class ShouldWriterSpecs
     {
-        static string _results;
-        static IWriter _writer;
-
-        Establish context = () =>
+        [Subject("Results Formatting")]
+        class when_retrieving_formatted_result_from_composite_comparison
         {
-            _writer = new ShouldWriter();
-            _writer.Write(new EqualityResult(false, "ContainingObject.StringProperty", 1, 2));
-            _writer.Write(new EqualityResult(false, "ContainingObject", 1, 2));
-        };
+            static string _results;
+            static IWriter _writer;
 
-        Because of = () => _results = _writer.GetFormattedResults();
+            Establish context = () =>
+            {
+                _writer = new ShouldWriter();
+                _writer.Write(new EqualityResult(false, "ContainingObject.StringProperty", 1, 2));
+                _writer.Write(new EqualityResult(false, "ContainingObject", 1, 2));
+            };
 
-        It should_not_contain_error_for_composing_object = () => _results.ShouldNotContain("ContainingObject:");
-    }
+            Because of = () => _results = _writer.GetFormattedResults();
 
-    [Subject("Results Formatting")]
-    public class when_retrieving_formatted_result_from_equal_comparison
-    {
-        static EqualityResult _result;
-        static IWriter _writer;
+            It should_not_contain_error_for_composing_object = () => _results.ShouldNotContain("ContainingObject:");
+        }
 
-        Establish context = () =>
+        [Subject("Results Formatting")]
+        class when_retrieving_formatted_result_from_equal_comparison
         {
-            _writer = new ShouldWriter();
-            _result = new EqualityResult(true, "StringProperty", 1, 2);
-        };
+            static EqualityResult _result;
+            static IWriter _writer;
 
-        Because of = () => _writer.Write(_result);
+            Establish context = () =>
+            {
+                _writer = new ShouldWriter();
+                _result = new EqualityResult(true, "StringProperty", 1, 2);
+            };
 
-        It should_not_return_results =
-            () => _writer.GetFormattedResults().ShouldBeEmpty();
+            Because of = () => _writer.Write(_result);
+
+            It should_not_return_results =
+                () => _writer.GetFormattedResults().ShouldBeEmpty();
+        }
     }
 }

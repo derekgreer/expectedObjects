@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="when_comparing_unequal_response_types_with_writer_context" xml:space="preserve">
+  <data name="ExceptionMessage_010" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -141,7 +141,7 @@ The following issues were found:
     [null]
 </value>
   </data>
-  <data name="when_comparing_unequal_complex_types_with_writer" xml:space="preserve">
+  <data name="ExceptionMessage_007" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -165,7 +165,7 @@ The following issues were found:
     "test2"
 </value>
   </data>
-  <data name="when_comparing_anonymous_to_unequal_type" xml:space="preserve">
+  <data name="ExceptionMessage_001" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -179,7 +179,7 @@ The following issues were found:
     6
 </value>
   </data>
-  <data name="when_comparing_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object" xml:space="preserve">
+  <data name="ExceptionMessage_002" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -215,7 +215,7 @@ The following issues were found:
   }
 </value>
   </data>
-  <data name="when_comparing_ordinal_different_objects_with_array_properties_with_items_that_have_back_reference_to_parent_object" xml:space="preserve">
+  <data name="ExceptionMessage_005" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -229,7 +229,7 @@ The following issues were found:
     2
 </value>
   </data>
-  <data name="when_comparing_unequal_enumerables_with_different_order_elements_with_default_configuration" xml:space="preserve">
+  <data name="ExceptionMessage_008" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -275,7 +275,7 @@ The following issues were found:
   }
 </value>
   </data>
-  <data name="when_comparing_types_with_unequal_enumerables_with_different_order_elements_with_default_configuration" xml:space="preserve">
+  <data name="ExceptionMessage_006" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -329,7 +329,7 @@ The following issues were found:
   }
 </value>
   </data>
-  <data name="when_comparing_equal_enumerables_with_different_order_elements_with_ordinal_configuration" xml:space="preserve">
+  <data name="ExceptionMessage_003" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -353,7 +353,7 @@ The following issues were found:
     "test2"
 </value>
   </data>
-  <data name="when_evaluating_match_with_ignored_member_absolute_path" xml:space="preserve">
+  <data name="ExceptionMessage_011" xml:space="preserve">
 	  <value>The expected object did not match the actual object.
 
 The following issues were found:
@@ -381,6 +381,44 @@ The following issues were found:
       Id = 2,
       Data = "value"
   }
+</value>
+  </data>
+  <data name="ExceptionMessage_004" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) TypeWithStringMembers.StringProperty:
+
+  Expected:
+    "same"
+
+  Actual:
+    "different"
+
+
+
+2) TypeWithStringMembers.StringField:
+
+  Expected:
+    "test"
+
+  Actual:
+    "test2"
+</value>
+  </data>
+  <data name="ExceptionMessage_009" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) TypeWithString.StringProperty:
+
+  Expected:
+    "test2"
+
+  Actual:
+    "test"
 </value>
   </data>
 </root>
