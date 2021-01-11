@@ -21,6 +21,12 @@ namespace ExpectedObjects
         void PushStrategy(IComparisonStrategy comparisonStrategy);
 
         /// <summary>
+        ///     Removes a strategy if configured within the strategy chain.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        void RemoveStrategy<T>() where T : IComparisonStrategy;
+
+        /// <summary>
         ///     Specify which member types should be used in comparisons.
         /// </summary>
         /// <param name="memberType">member type flags</param>

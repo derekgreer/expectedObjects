@@ -38,9 +38,6 @@ namespace ExpectedObjects.Specs
         {
             static ComplexType _actual;
             static ExpectedObject _expected;
-
-            static bool _result;
-
             static Exception _exception;
 
             Establish context = () =>

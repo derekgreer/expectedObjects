@@ -44,6 +44,19 @@ namespace ExpectedObjects
             _strategies.Push(comparisonStrategy);
         }
 
+        public void RemoveStrategy<T>() where T: IComparisonStrategy
+        {
+            var list = _strategies.ToList();
+            var existingIndex = list.FindIndex(s => typeof(T) == s.GetType());
+
+            if (existingIndex >= 0)
+            {
+                list.RemoveAt(existingIndex);
+                list.Reverse();
+                _strategies = new Stack<IComparisonStrategy>(list);
+            }
+        }
+
         public void IncludeMemberTypes(MemberType memberType)
         {
             _memberType |= memberType;

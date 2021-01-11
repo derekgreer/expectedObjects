@@ -91,5 +91,16 @@ namespace ExpectedObjects
             configurationContext.RelativeMember(memberPath).UsesComparison(Expect.Ignored());
             return configurationContext;
         }
+
+        /// <summary>
+        ///     Ignores any overriden Equals() definition of equality.
+        /// </summary>
+        /// <param name="configurationContext"></param>
+        /// <returns></returns>
+        public static IConfigurationContext IgnoreEqualsOverride(this IConfigurationContext configurationContext)
+        {
+            configurationContext.RemoveStrategy<EqualsOverrideComparisonStrategy>();
+            return configurationContext;
+        }
     }
 }

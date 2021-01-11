@@ -421,4 +421,40 @@ The following issues were found:
     "test"
 </value>
   </data>
+  <data name="ExceptionMessage_012" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) Person:
+
+  Expected:
+    Person
+    { 
+        FirstName = "firstName1",
+        LastName = "lastName"
+    }
+
+  Actual:
+    Person
+    { 
+        FirstName = "firstName2",
+        LastName = "lastName"
+    }
+</value>
+  </data>
+  <data name="ExceptionMessage_013" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) Person.FirstName:
+
+  Expected:
+    "firstName1"
+
+  Actual:
+    "firstName2"
+</value>
+  </data>
 </root>

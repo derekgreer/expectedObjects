@@ -129,7 +129,6 @@ namespace ExpectedObjects.Specs
         {
             static ExpectedObject _expected;
             static TypeWithIEnumerable _actual;
-            static bool _result;
 
             static Exception _exception;
 
@@ -154,8 +153,6 @@ namespace ExpectedObjects.Specs
         {
             static ExpectedObject _expected;
             static TypeWithIEnumerable _actual;
-            static bool _result;
-
             static Exception _exception;
 
             Establish context = () =>
@@ -199,8 +196,6 @@ namespace ExpectedObjects.Specs
         {
             static List<TypeWithDecimal> _actual;
             static ExpectedObject _expected;
-            static bool _result;
-
             static Exception _exception;
 
             Establish context = () =>

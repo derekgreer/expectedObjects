@@ -111,8 +111,6 @@ namespace ExpectedObjects.Specs
         {
             static TypeWithString _actual;
             static TypeWithString _expected;
-
-            static bool _result;
             static Exception _exception;
 
             Establish context = () =>

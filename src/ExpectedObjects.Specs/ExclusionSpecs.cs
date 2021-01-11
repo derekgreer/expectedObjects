@@ -229,7 +229,6 @@ namespace ExpectedObjects.Specs
         {
             static ExpectedObject _expected;
             static TypeWithElementList _actual;
-            static bool _results;
             static Exception _exception;
 
             Establish context = () =>

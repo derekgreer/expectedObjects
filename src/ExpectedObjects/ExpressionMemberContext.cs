@@ -25,7 +25,7 @@ namespace ExpectedObjects
             _memberConfigurationContext.ConfigureMember(new AbsolutePathMemberStrategy(comparison, _rootType, memberPath));
         }
 
-        string GetMemberPath<TSource, TMember>(Expression<Func<TSource, TMember>> expr)
+        string GetMemberPath(Expression<Func<TExpected, TMember>> expr)
         {
             var members = new Stack<string>();
             MemberExpression memberExpression;
