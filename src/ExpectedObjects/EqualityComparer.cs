@@ -137,8 +137,7 @@ namespace ExpectedObjects
                 var areEqual = true;
                 _elementStack.Push(member);
 
-
-                if (expected != null)
+                if (_expected != null)
                 {
                     var memberComparison = GetMemberComparison(GetMemberPath());
 

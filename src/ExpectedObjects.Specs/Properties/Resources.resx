@@ -457,4 +457,18 @@ The following issues were found:
     "firstName2"
 </value>
   </data>
+  <data name="ExceptionMessage_014" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) TypeWithNullableMember.TestNullDateTime:
+
+  Expected:
+    [null]
+
+  Actual:
+    DateTime.Parse("1/1/2000 12:00:00 AM")
+</value>
+  </data>
 </root>
