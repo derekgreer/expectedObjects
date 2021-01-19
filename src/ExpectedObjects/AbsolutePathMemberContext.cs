@@ -17,7 +17,7 @@ namespace ExpectedObjects
 
         public void UsesComparison(IComparison comparison)
         {
-            _memberConfigurationContext.ConfigureMember(new AbsolutePathMemberStrategy(comparison, _rootType, _memberPath));
+            _memberConfigurationContext.ConfigureMember(new AbsolutePathMemberComparison(comparison, _rootType, _memberPath));
         }
     }
 }

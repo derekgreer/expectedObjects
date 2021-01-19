@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using ExpectedObjects.Chain;
+using ExpectedObjects.Chain.Links;
 using ExpectedObjects.Reporting;
 
 namespace ExpectedObjects
@@ -11,17 +13,32 @@ namespace ExpectedObjects
     {
         readonly IConfiguration _configurationContext;
         readonly Stack<string> _elementStack = new Stack<string>();
-
-        readonly StackDictionary<object, IComparisonResult> _visited =
-            new StackDictionary<object, IComparisonResult>();
-
+        readonly StackDictionary<object, IComparisonResult> _visited = new StackDictionary<object, IComparisonResult>();
         bool _ignoreTypeInformation;
         IWriter _writer;
         object _expected;
+        StrategyChain _strategyChain;
 
         public EqualityComparer(IConfiguration configurationContext)
         {
             _configurationContext = configurationContext;
+            InitializeStrategyChain();
+        }
+
+        void InitializeStrategyChain()
+        {
+            _strategyChain = new StrategyChain();
+            _strategyChain.Link(new TypeStrategyComparisonLink());
+            _strategyChain.Link(new MemberComparisonLink());
+            _strategyChain.Link(new ReferenceEqualsComparisonLink());
+            _strategyChain.Link(new NullExpectedComparisonLink());
+            _strategyChain.Link(new ComparisonComparisonLink());
+            _strategyChain.Link(new MissingComparisonLink());
+            _strategyChain.Link(new InstanceOfTypeComparisonLink());
+            _strategyChain.Link(new LeafInstanceOfTypeComparisonLink());
+            _strategyChain.Link(new NullActualComparisonLink());
+            _strategyChain.Link(new StrategyComparisonLink());
+            _strategyChain.Link(new TrueLink());
         }
 
         public bool AreEqual(object expected, object actual, string member)
@@ -111,17 +128,6 @@ namespace ExpectedObjects
                 EqualityResultType.Custom, message));
         }
 
-        IComparison GetMemberComparison(string path)
-        {
-            var expectedRootType = _expected.GetType();
-            
-            if(_ignoreTypeInformation)
-                path =  string.Join(".", new [] { expectedRootType.Name, string.Join(".", path.Split('.').Skip(1))}.Where(x => !string.IsNullOrEmpty(x)));
-            var strategy = _configurationContext.MemberStrategies.LastOrDefault(s => s.ShouldApply(path));
-
-            return strategy?.Comparison;
-        }
-
         public bool AreEqual(object expected, object actual, IWriter writer, bool ignoreTypeInformation = false)
         {
             _expected = expected;
@@ -134,73 +140,23 @@ namespace ExpectedObjects
         {
             try
             {
-                var areEqual = true;
                 _elementStack.Push(member);
 
-
-                if (expected != null)
+                var linkContext = new LinkComparisonContext
                 {
-                    var memberComparison = GetMemberComparison(GetMemberPath());
+                    Expected = expected,
+                    Actual =  actual,
+                    ComparisonContext = this,
+                    MemberPath = GetExpectedMemberPath(),
+                    Configuration = _configurationContext,
+                    IgnoreTypeInformation = _ignoreTypeInformation
+                };
 
-                    if (memberComparison != null)
-                        return EvalComparison(actual, writer, memberComparison, GetMemberPath());
-                }
+                var result = _strategyChain.Process(linkContext);
 
-                if (ReferenceEquals(expected, actual))
-                {
-                    if (!string.IsNullOrEmpty(member))
-                        writer.Write(new EqualityResult(true, GetMemberPath(), expected, actual));
-
-                    return true;
-                }
-
-                if (expected == null)
-                {
-                    writer.Write(new EqualityResult(false, GetMemberPath(), null, actual));
-                    return false;
-                }
-
-                if (expected is IComparison comparison)
-                    return EvalComparison(actual, writer, comparison, GetMemberPath());
-
-                if (actual is IMissing)
-                {
-                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-                    return false;
-                }
-
-                if (!_ignoreTypeInformation && !expected.GetType().IsInstanceOfType(actual))
-                {
-                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-                    return false;
-                }
-
-                if (_ignoreTypeInformation && IsLeaf(expected) && !expected.GetType().IsInstanceOfType(actual))
-                {
-                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-                    return false;
-                }
-
-                if (actual == null)
-                {
-                    writer.Write(new EqualityResult(false, GetMemberPath(), expected, null));
-                    return false;
-                }
-
-                foreach (var strategy in _configurationContext.Strategies)
-                    if (strategy.CanCompare(expected, actual))
-                    {
-                        areEqual = strategy.AreEqual(expected, actual, this);
-
-                        if (!areEqual)
-                            if (_elementStack.Count > 0)
-                                writer.Write(new EqualityResult(false, GetMemberPath(), expected, actual));
-
-                        break;
-                    }
-
-                if (areEqual) writer.Write(new EqualityResult(areEqual, GetMemberPath(), expected, actual));
-                return areEqual;
+                if (_elementStack.Count > 0)
+                    writer.Write(new EqualityResult(result.Result, GetMemberPath(), result.ExpectedResult ?? expected, actual));
+                return result.Result;
             }
             finally
             {
@@ -209,27 +165,18 @@ namespace ExpectedObjects
             }
         }
 
-        bool EvalComparison(object actual, IWriter writer, IComparison comparison, string memberPath)
+        string GetExpectedMemberPath()
         {
-            var areEqual = comparison.AreEqual(actual);
+            var memberPath = GetMemberPath();
+            if (_expected != null)
+                memberPath = ReplaceRootName(memberPath, _expected.GetType().Name);
 
-            if (!areEqual)
-                writer.Write(new EqualityResult(false, memberPath,
-                    new ExpectedDescription(comparison.GetExpectedResult()),
-                    actual));
-
-            return areEqual;
+            return memberPath;
         }
 
-        bool IsLeaf(object expected)
+        static string ReplaceRootName(string path, string rootName)
         {
-            const BindingFlags propertyFlags = BindingFlags.Public | BindingFlags.Instance;
-            var expectedPropertyInfos = expected.GetType()
-                .GetVisibleProperties(propertyFlags);
-
-            var expectedFieldInfos = expected.GetType().GetFields(propertyFlags);
-
-            return !expectedPropertyInfos.Any() && !expectedFieldInfos.Any();
+            return string.Join(".", new [] { rootName, string.Join(".", path.Split('.').Skip(1))}.Where(x => !string.IsNullOrEmpty(x)));
         }
 
         string GetMemberPath()

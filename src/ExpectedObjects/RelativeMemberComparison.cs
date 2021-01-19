@@ -1,10 +1,10 @@
 ﻿namespace ExpectedObjects
 {
-    class RelativeMemberStrategy : IMemberStrategy
+    class RelativeMemberComparison : IMemberComparison
     {
         readonly string _memberPath;
 
-        public RelativeMemberStrategy(IComparison comparison, string memberPath)
+        public RelativeMemberComparison(IComparison comparison, string memberPath)
         {
             _memberPath = memberPath;
             Comparison = comparison;

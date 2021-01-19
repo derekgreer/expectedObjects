@@ -22,7 +22,7 @@ namespace ExpectedObjects
         {
             var memberPath = GetMemberPath(_memberExpression);
             memberPath = String.Join(".", new [] {_rootType.Name, memberPath}.Where(x => !string.IsNullOrEmpty(x)));
-            _memberConfigurationContext.ConfigureMember(new AbsolutePathMemberStrategy(comparison, _rootType, memberPath));
+            _memberConfigurationContext.ConfigureMember(new AbsolutePathMemberComparison(comparison, _rootType, memberPath));
         }
 
         string GetMemberPath(Expression<Func<TExpected, TMember>> expr)

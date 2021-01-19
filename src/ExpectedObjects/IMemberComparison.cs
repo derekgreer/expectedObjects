@@ -1,6 +1,6 @@
 ﻿namespace ExpectedObjects
 {
-    public interface IMemberStrategy
+    public interface IMemberComparison
     {
         bool ShouldApply(string memberPath);
 

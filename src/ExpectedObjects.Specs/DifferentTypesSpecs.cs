@@ -1,4 +1,6 @@
 using System;
+using ExpectedObjects.Specs.Extensions;
+using ExpectedObjects.Specs.Properties;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;
 
@@ -112,6 +114,8 @@ namespace ExpectedObjects.Specs
             Because of = () => _exception = Catch.Exception(() => _expected.ShouldEqual(_actual));
 
             It should_not_throw_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
+
+            It should_report_the_expected_exception = () => _exception.Message.ShouldEqual(Resources.ExceptionMessage_014);
         }
 
         [Subject("Different Types")]

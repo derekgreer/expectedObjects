@@ -457,4 +457,28 @@ The following issues were found:
     "firstName2"
 </value>
   </data>
+  <data name="ExceptionMessage_014" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) ComplexType2:
+
+  Expected:
+    ComplexType
+    { 
+        IntegerProperty = 0,
+        StringProperty = "this is a test",
+        DecimalProperty = 0m
+    }
+
+  Actual:
+    ComplexType2
+    { 
+        IntegerProperty = 42,
+        StringProperty = "this is a test",
+        DecimalProperty = 0m
+    }
+</value>
+  </data>
 </root>

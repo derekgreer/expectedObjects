@@ -93,13 +93,25 @@ namespace ExpectedObjects
         }
 
         /// <summary>
-        ///     Ignores any overriden Equals() definition of equality.
+        ///     Ignores any overridden Equals() definition of equality.
         /// </summary>
         /// <param name="configurationContext"></param>
         /// <returns></returns>
         public static IConfigurationContext IgnoreEqualsOverride(this IConfigurationContext configurationContext)
         {
             configurationContext.RemoveStrategy<EqualsOverrideComparisonStrategy>();
+            return configurationContext;
+        }
+
+        /// <summary>
+        ///     Ignores any overridden Equals() definition of equality for specified type.
+        /// </summary>
+        /// <typeparam name="T">type to ignore Equals() override</typeparam>
+        /// <param name="configurationContext"></param>
+        /// <returns></returns>
+        public static IConfigurationContext IgnoreEqualsOverrideForType<T>(this IConfigurationContext configurationContext)
+        {
+            configurationContext.MapStrategy<T>(new ClassComparisonStrategy());
             return configurationContext;
         }
     }
