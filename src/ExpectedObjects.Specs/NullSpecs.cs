@@ -8,6 +8,7 @@ namespace ExpectedObjects.Specs
 {
     class NullSpecs
     {
+        [Subject("Nulls")]
         class when_comparing_equal_types_with_missing_nullable_members
         {
             static ExpectedObject _expected;
@@ -37,6 +38,7 @@ namespace ExpectedObjects.Specs
             It should_ignore_nullable_types = () => _exception.Message.ShouldEqual(Resources.ExceptionMessage_014);
         }
 
+        [Subject("Nulls")]
         class when_comparing_equal_types_with_differing_ignored_nullable_members
         {
             static ExpectedObject _expected;

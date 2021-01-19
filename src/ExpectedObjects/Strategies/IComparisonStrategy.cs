@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ExpectedObjects.Strategies
+﻿namespace ExpectedObjects.Strategies
 {
     public interface IComparisonStrategy
     {

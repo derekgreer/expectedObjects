@@ -13,7 +13,7 @@ namespace ExpectedObjects
 
         public void UsesComparison(IComparison comparison)
         {
-            _memberConfigurationContext.ConfigureMember(new RelativeMemberStrategy(comparison, _memberPath));
+            _memberConfigurationContext.ConfigureMember(new RelativeMemberComparison(comparison, _memberPath));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using ExpectedObjects.Reporting;
+﻿using ExpectedObjects.Reporting;
 
 namespace ExpectedObjects
 {

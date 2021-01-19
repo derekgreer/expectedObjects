@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Linq;
 
 namespace ExpectedObjects
 {
-    class AbsolutePathMemberStrategy : IMemberStrategy
+    class AbsolutePathMemberComparison : IMemberComparison
     {
         readonly Type _rootType;
         readonly string _memberPath;
 
-        public AbsolutePathMemberStrategy(IComparison comparison, Type rootType, string memberPath)
+        public AbsolutePathMemberComparison(IComparison comparison, Type rootType, string memberPath)
         {
             _rootType = rootType;
             _memberPath = memberPath;

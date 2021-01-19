@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ExpectedObjects.Specs.Extensions;
 using ExpectedObjects.Specs.Properties;
 using ExpectedObjects.Specs.TestTypes;
 using Machine.Specifications;

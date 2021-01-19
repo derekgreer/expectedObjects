@@ -453,11 +453,52 @@ namespace ExpectedObjects.Specs.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The expected object did not match the actual object.
+        ///
+        ///The following issues were found:
+        ///
+        ///1) TypeWithNullableMember.TestNullDateTime:
+        ///
+        ///  Expected:
+        ///    [null]
+        ///
+        ///  Actual:
+        ///    DateTime.Parse(&quot;1/1/2000 12:00:00 AM&quot;)
+        ///.
         /// </summary>
         internal static string ExceptionMessage_014 {
             get {
                 return ResourceManager.GetString("ExceptionMessage_014", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The expected object did not match the actual object.
+        ///
+        ///The following issues were found:
+        ///
+        ///1) ComplexType2:
+        ///
+        ///  Expected:
+        ///    ComplexType
+        ///    { 
+        ///        IntegerProperty = 0,
+        ///        StringProperty = &quot;this is a test&quot;,
+        ///        DecimalProperty = 0m
+        ///    }
+        ///
+        ///  Actual:
+        ///    ComplexType2
+        ///    { 
+        ///        IntegerProperty = 42,
+        ///        StringProperty = &quot;this is a test&quot;,
+        ///        DecimalProperty = 0m
+        ///    }
+        ///.
+        /// </summary>
+        internal static string ExceptionMessage_015 {
+            get {
+                return ResourceManager.GetString("ExceptionMessage_015", resourceCulture);
             }
         }
     }

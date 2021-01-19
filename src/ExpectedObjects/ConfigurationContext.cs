@@ -11,16 +11,23 @@ namespace ExpectedObjects
     {
         MemberType _memberType = MemberType.PublicFields;
         Stack<IComparisonStrategy> _strategies = new Stack<IComparisonStrategy>();
-        readonly IList<IMemberStrategy> _memberStrategies = new List<IMemberStrategy>();
+        readonly IList<IMemberComparison> _memberComparisons = new List<IMemberComparison>();
+        IDictionary<Type, IComparisonStrategy> _typeStrategies = new Dictionary<Type, IComparisonStrategy>();
 
         public ConfigurationContext(TExpected @object)
         {
             Object = @object;
         }
 
-        public IEnumerable<IComparisonStrategy> Strategies => _strategies;
+        public IEnumerable<IComparisonStrategy> ComparisonStrategies => _strategies;
 
-        public IEnumerable<IMemberStrategy> MemberStrategies => _memberStrategies;
+        public IEnumerable<IMemberComparison> MemberComparisons => _memberComparisons;
+
+        public IComparisonStrategy GetTypeStrategy(Type type)
+        {
+            _typeStrategies.TryGetValue(type, out var strategy);
+            return strategy;
+        }
 
         public BindingFlags GetFieldBindingFlags()
         {
@@ -85,6 +92,11 @@ namespace ExpectedObjects
             _strategies.Clear();
         }
 
+        public void MapStrategy<T>(IComparisonStrategy comparisonStrategy)
+        {
+            _typeStrategies.Add(typeof(T), comparisonStrategy);
+        }
+
         public IMemberContext Member<TMember>(Expression<Func<TExpected, TMember>> memberExpression)
         {
             return new ExpressionMemberContext<TExpected, TMember>(this, Object.GetType(), memberExpression);
@@ -100,9 +112,9 @@ namespace ExpectedObjects
             return new RelativePathMemberContext(this, memberPath);
         }
 
-        void IMemberConfigurationContext.ConfigureMember(IMemberStrategy memberStrategy)
+        void IMemberConfigurationContext.ConfigureMember(IMemberComparison memberComparison)
         {
-            _memberStrategies.Add(memberStrategy);
+            _memberComparisons.Add(memberComparison);
         }
     }
 }

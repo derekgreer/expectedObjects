@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ExceptionMessage_010" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -142,7 +142,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_007" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -166,7 +166,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_001" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -180,7 +180,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_002" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -216,7 +216,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_005" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -230,7 +230,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_008" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -276,7 +276,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_006" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -330,7 +330,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_003" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -354,7 +354,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_011" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -384,7 +384,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_004" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -408,7 +408,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_009" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -422,7 +422,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_012" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -444,7 +444,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_013" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -458,7 +458,7 @@ The following issues were found:
 </value>
   </data>
   <data name="ExceptionMessage_014" xml:space="preserve">
-	  <value>The expected object did not match the actual object.
+    <value>The expected object did not match the actual object.
 
 The following issues were found:
 
@@ -469,6 +469,30 @@ The following issues were found:
 
   Actual:
     DateTime.Parse("1/1/2000 12:00:00 AM")
+</value>
+  </data>
+  <data name="ExceptionMessage_015" xml:space="preserve">
+    <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) ComplexType2:
+
+  Expected:
+    ComplexType
+    { 
+        IntegerProperty = 0,
+        StringProperty = "this is a test",
+        DecimalProperty = 0m
+    }
+
+  Actual:
+    ComplexType2
+    { 
+        IntegerProperty = 42,
+        StringProperty = "this is a test",
+        DecimalProperty = 0m
+    }
 </value>
   </data>
 </root>

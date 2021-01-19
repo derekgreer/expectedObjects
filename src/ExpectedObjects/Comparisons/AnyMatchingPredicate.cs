@@ -20,7 +20,7 @@ namespace ExpectedObjects.Comparisons
 
         public object GetExpectedResult()
         {
-            return string.Format("any instance of {0} where {1}", typeof(T).ToUsefulTypeName(), _predicate.Body.ToString());
+            return $"any instance of {typeof(T).ToUsefulTypeName()} where {_predicate.Body}";
         }
     }
 }

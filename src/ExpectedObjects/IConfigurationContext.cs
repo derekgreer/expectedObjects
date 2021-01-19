@@ -45,6 +45,13 @@ namespace ExpectedObjects
         ///     Remove all strategies.
         /// </summary>
         void ClearStrategies();
+
+        /// <summary>
+        ///     Maps the specified strategy to a specific type.
+        /// </summary>
+        /// <typeparam name="T">type for which strategy should apply</typeparam>
+        /// <param name="comparisonStrategy">strategy to use</param>
+        void MapStrategy<T>(IComparisonStrategy comparisonStrategy);
     }
 
     public interface IConfigurationContext<T> : IConfigurationContext
