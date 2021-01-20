@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/derekgreer/expectedObjects/compare/v3.4.0...v3.5.0) (2021-01-20)
+
+
+### Features
+
+* Add ability to ignore object-defined equality by type ([d0f1f49](https://github.com/derekgreer/expectedObjects/commit/d0f1f499f88dc6513615ca09dab6928d41459de5))
+
 ## [3.4.0](https://github.com/derekgreer/expectedObjects/compare/v3.3.1...v3.4.0) (2021-01-11)
 
 
