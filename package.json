@@ -1,7 +1,7 @@
 {
   "name": "ExpectedObjects",
   "projectName": "ExpectedObjects",
-  "version": "3.5.1",
+  "version": "3.5.2",
   "configuration": "Release",
   "description": "A testing library for creating Expected Objects",
   "publishSource": "https://www.nuget.org/api/v2/package",
