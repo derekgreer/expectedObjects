@@ -32,7 +32,7 @@ namespace ExpectedObjects.Specs
         }
 
         [Subject("Ignoring Equals Override")]
-        public class when_comparing_unequal_record_types_for_equality_with_equals_override_ignored_by_type
+        public class when_comparing_unequal_record_types_for_equality_configured_for_value_based_equality
         {
             static Person _actual;
             static ExpectedObject _expected;
@@ -42,7 +42,7 @@ namespace ExpectedObjects.Specs
             Establish context = () =>
             {
                 _expected = new Person {FirstName = "firstName1", LastName = "lastName"}
-                    .ToExpectedObject(ctx => ctx.IgnoreEqualsOverrideForType<Person>());
+                    .ToExpectedObject(ctx => ctx.CompareByValue<Person>());
 
                 _actual = new Person {FirstName = "firstName2", LastName = "lastName"};
             };

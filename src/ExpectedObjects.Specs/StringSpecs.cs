@@ -33,7 +33,7 @@ namespace ExpectedObjects.Specs
                 _expected = new TypeWithString {StringProperty = "test"}.ToExpectedObject(ctx =>
                 {
                     ctx.PushStrategy<ComparableComparisonStrategy>();
-                    ctx.PushStrategy<ClassComparisonStrategy>();
+                    ctx.PushStrategy<ValueComparisonStrategy>();
                 });
 
                 _actual = new TypeWithString {StringProperty = "error"};

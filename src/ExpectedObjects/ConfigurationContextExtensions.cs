@@ -16,7 +16,7 @@ namespace ExpectedObjects
         {
             configurationContext.PushStrategy<DefaultComparisonStrategy>();
             configurationContext.PushStrategy<KeyValuePairComparisonStrategy>();
-            configurationContext.PushStrategy<ClassComparisonStrategy>();
+            configurationContext.PushStrategy<ValueComparisonStrategy>();
             configurationContext.PushStrategy<EnumerableComparisonStrategy>();
             configurationContext.PushStrategy<EqualsOverrideComparisonStrategy>();
             configurationContext.PushStrategy<PrimitiveComparisonStrategy>();
@@ -104,14 +104,14 @@ namespace ExpectedObjects
         }
 
         /// <summary>
-        ///     Ignores any overridden Equals() definition of equality for specified type.
+        ///     Configures types to be compared by value
         /// </summary>
         /// <typeparam name="T">type to ignore Equals() override</typeparam>
         /// <param name="configurationContext"></param>
         /// <returns></returns>
-        public static IConfigurationContext IgnoreEqualsOverrideForType<T>(this IConfigurationContext configurationContext)
+        public static IConfigurationContext CompareByValue<T>(this IConfigurationContext configurationContext)
         {
-            configurationContext.MapStrategy<T>(new ClassComparisonStrategy());
+            configurationContext.MapStrategy<T>(new ValueComparisonStrategy());
             return configurationContext;
         }
     }
