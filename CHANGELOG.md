@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.3](https://github.com/derekgreer/expectedObjects/compare/v3.5.2...v3.5.3) (2021-02-26)
+
+
+### Bug Fixes
+
+* Correct issue with display of static members in exception messages ([88e1152](https://github.com/derekgreer/expectedObjects/commit/88e115287952f7963d2c4d13a4a5d2567f3fac72))
+
 ### [3.5.2](https://github.com/derekgreer/expectedObjects/compare/v3.5.1...v3.5.2) (2021-01-21)
 
 
