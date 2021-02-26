@@ -501,5 +501,42 @@ namespace ExpectedObjects.Specs.Properties {
                 return ResourceManager.GetString("ExceptionMessage_015", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The expected object did not match the actual object.
+        ///
+        ///The following issues were found:
+        ///
+        ///1) TypeWithTypeSafeEnumArray.Inners[0]:
+        ///
+        ///  Expected:
+        ///    TypeWithTypeSafeEnumField
+        ///    { 
+        ///        Id = 1,
+        ///        TypeSafeTypeSafeEnumProperty = new TypeSafeEnumType
+        ///        { 
+        ///            Id = 1,
+        ///            Name = &quot;One&quot;
+        ///        }
+        ///    }
+        ///
+        ///  Actual:
+        ///    element was missing
+        ///
+        ///
+        ///
+        ///2) TypeWithTypeSafeEnumArray.Inners:
+        ///
+        ///  The following elements were unexpected:
+        ///  
+        ///  TypeWithTypeSafeEnumField
+        ///  { 
+        ///     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ExceptionMessage_016 {
+            get {
+                return ResourceManager.GetString("ExceptionMessage_016", resourceCulture);
+            }
+        }
     }
 }

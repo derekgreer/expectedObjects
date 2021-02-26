@@ -495,4 +495,42 @@ The following issues were found:
     }
 </value>
   </data>
+  <data name="ExceptionMessage_016" xml:space="preserve">
+	  <value>The expected object did not match the actual object.
+
+The following issues were found:
+
+1) TypeWithTypeSafeEnumArray.Enums[0]:
+
+  Expected:
+    TypeWithTypeSafeEnumField
+    { 
+        Id = 1,
+        TypeSafeTypeSafeEnumProperty = new TypeSafeEnumType
+        { 
+            Id = 1,
+            Name = "One"
+        }
+    }
+
+  Actual:
+    element was missing
+
+
+
+2) TypeWithTypeSafeEnumArray.Enums:
+
+  The following elements were unexpected:
+  
+  TypeWithTypeSafeEnumField
+  { 
+      Id = 10,
+      TypeSafeTypeSafeEnumProperty = new TypeSafeEnumType
+      { 
+          Id = 1,
+          Name = "One"
+      }
+  }
+</value>
+  </data>
 </root>

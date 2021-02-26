@@ -62,7 +62,10 @@ namespace ExpectedObjects.Strategies
             if (unexpectedValues.Any())
             {
                 var unexpectedElements = string.Join($",{Environment.NewLine}{Environment.NewLine}", unexpectedValues.Select(s => $"{s}"));
-                comparisonContext.Report(false, $"The following elements were unexpected:{Environment.NewLine}{Environment.NewLine}{unexpectedElements}", null,
+                comparisonContext.Report(
+                    false,
+                    $"The following elements were unexpected:{Environment.NewLine}{Environment.NewLine}{unexpectedElements}",
+                    null,
                     null);
                 areEqual = false;
             }

@@ -1,20 +1,22 @@
 {
   "name": "ExpectedObjects",
-  "projectName": "ExpectedObjects",
   "version": "3.5.2",
-  "configuration": "Release",
   "description": "A testing library for creating Expected Objects",
-  "publishSource": "https://www.nuget.org/api/v2/package",
+  "config": {
+    "projectName": "ExpectedObjects",
+    "configuration": "Release",
+    "publishSource": "https://www.nuget.org/api/v2/package"
+  },
   "scripts": {
     "ci:release": "standard-version -a --releaseCommitMessageFormat=\"chore(release): {{currentTag}}; [skip ci]\"",
     "clean": "rimraf dist build",
     "prebuild": "npm run clean",
     "build": "npm-run-all build:restore build:compile tests package",
-    "build:restore": "globstar -- dotnet restore **/*.sln /p:Version=${npm_config_version_prefix:-${npm_package_version}}",
-    "build:compile": "globstar -- dotnet build **/*.sln --configuration ${npm_package_configuration} /p:Version=${npm_config_version_prefix:-${npm_package_version}}",
-    "tests": "dotnet test src/*.Specs/*.csproj --no-build --configuration ${npm_package_configuration}",
+    "build:restore": "globstar -- dotnet restore **/*.sln /p:Version=${npm_package_config_version_prefix:-${npm_package_version}}",
+    "build:compile": "globstar -- dotnet build **/*.sln --configuration ${npm_package_config_configuration} /p:Version=${npm_package_config_version_prefix:-${npm_package_version}}",
+    "tests": "dotnet test src/*.Specs/*.csproj --no-build --configuration ${npm_package_config_configuration}",
     "package": "npm-run-all package:release:*",
-    "package:release:main": "globstar -- dotnet pack ./src/**/${npm_package_projectName}.csproj -c ${npm_package_configuration} --no-build -o dist --include-symbols -p:VersionPrefix=${npm_config_version_prefix:-${npm_package_version}} ${npm_config_version_suffix:+--version-suffix ${npm_config_version_suffix}}",
+    "package:release:main": "globstar -- dotnet pack ./src/**/${npm_package_config_projectName}.csproj -c ${npm_package_config_configuration} --no-build -o dist --include-symbols -p:VersionPrefix=${npm_config_version_prefix:-${npm_package_version}} ${npm_config_version_suffix:+--version-suffix ${npm_config_version_suffix}}",
     "publish": "globstar -- dotnet nuget push dist/*.nupkg --source ${npm_package_publishSource} --skip-duplicate",
     "publish:private": "copyfiles --flat --error dist/*.nupkg ${APPDATA}/Packages/"
   },

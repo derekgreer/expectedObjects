@@ -157,7 +157,14 @@ namespace ExpectedObjects
             _indentLevel++;
 
             var l = new List<string>();
-            foreach (var property in o.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static))
+            foreach (var fieldInfo in o.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance))
+            {
+                var value = fieldInfo.GetValue(o);
+                if (value != null)
+                    l.Add($"{Prefix()}{fieldInfo.Name} = {value.GetCSharpString(visited)}");
+            }
+
+            foreach (var property in o.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var value = property.GetValue(o, null);
                 if (value != null)
