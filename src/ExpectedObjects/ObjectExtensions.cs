@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using ExpectedObjects.Chain.Links;
 using ExpectedObjects.Strategies;
 
 namespace ExpectedObjects
@@ -148,8 +150,6 @@ namespace ExpectedObjects
 
             visited.Push(o);
 
-            
-
             if (_indentLevel > 0) builder.Append("new ");
             builder.Append($"{o.ToUsefulClassName()}{Environment.NewLine}{Prefix()}{{ ");
             _indentLevel++;
@@ -207,8 +207,15 @@ namespace ExpectedObjects
                 return $"DateTimeOffset.Parse(\"{o}\")";
             if (o is IEnumerable)
                 return $"new {o.ToUsefulClassName()} {{ {((IEnumerable) o).GetItems(visited)}}}";
+            if (IsExpression(o))
+                return o.ToString();
 
             return $"{o.CreateObject(visited)}";
+        }
+        
+        public static bool IsExpression(object instance)
+        {
+            return instance.GetType().GetTypeInfo().IsSubclassOf(typeof(Expression));
         }
 
         static string GetItems(this IEnumerable items, Stack<object> visited = null)

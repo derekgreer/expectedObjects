@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using ExpectedObjects.Specs.Extensions;
 using ExpectedObjects.Specs.Properties;
 using ExpectedObjects.Specs.TestTypes;
@@ -220,6 +222,56 @@ namespace ExpectedObjects.Specs
 
             It should_have_the_expected_exception_message =
                 () => _exception.Message.ShouldEqual(Resources.ExceptionMessage_008);
+        }
+
+        [Subject("Enumerables")]
+        class when_comparing_equal_enumerables_of_generic_types
+        {
+            static List<GenericType<string>> _actual;
+            static ExpectedObject _expected;
+            static Exception _exception;
+
+            Establish context = () =>
+            {
+                _expected = new List<GenericType<string>>
+                {
+                    new GenericType<string> {Property = "test"}
+                }.ToExpectedObject();
+
+                _actual = new List<GenericType<string>>
+                {
+                    new GenericType<string> {Property = "test"}
+                };
+            };
+
+            Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+            It should_not_throw_an_exception = () => _exception.ShouldBeNull();
+        }
+
+        [Subject("Enumerables")]
+        class when_comparing_unequal_enumerables_of_generic_types
+        {
+            static List<GenericType<string>> _actual;
+            static ExpectedObject _expected;
+            static Exception _exception;
+
+            Establish context = () =>
+            {
+                _expected = new List<GenericType<string>>
+                {
+                    new GenericType<string> {Property = "test1"}
+                }.ToExpectedObject();
+
+                _actual = new List<GenericType<string>>
+                {
+                    new GenericType<string> {Property = "test2"}
+                };
+            };
+
+            Because of = () => _exception = Catch.Exception(() => _expected.ShouldMatch(_actual));
+
+            It should_throw_a_comparison_exception = () => _exception.ShouldBeOfExactType<ComparisonException>();
         }
 
         [Subject("Enumerables")]
